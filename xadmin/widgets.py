@@ -112,6 +112,8 @@ class AdminCheckboxSelect(forms.CheckboxSelectMultiple):
             value = []
         has_id = attrs and 'id' in attrs
         final_attrs = self.build_attrs(attrs, name=name)
+        final_attrs['class'] = final_attrs.get('class', '').replace('form-control', '')
+
         output = []
         # Normalize to strings
         str_values = set([force_str(v) for v in value])

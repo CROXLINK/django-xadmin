@@ -17,7 +17,10 @@ RELATE_PREFIX = '_rel_'
 class RelateMenuPlugin(BaseAdminPlugin):
 
     related_list = []
-    use_related_menu = True
+    use_related_menu = False
+
+    def init_request(self, *args, **kwargs):
+        return bool(self.use_related_menu)
 
     def get_related_list(self):
         if hasattr(self, '_related_acts'):

@@ -275,16 +275,16 @@ class DateFieldListFilter(ListFieldFilter):
                 self.lookup_since_name: str(today),
                 self.lookup_until_name: str(tomorrow),
             }),
+            (_('Tomorrow'), {
+                self.lookup_since_name: str(tomorrow),
+                self.lookup_until_name: str(tomorrow + datetime.timedelta(days=1)),
+            }),
             (_('Past 7 days'), {
                 self.lookup_since_name: str(today - datetime.timedelta(days=7)),
                 self.lookup_until_name: str(tomorrow),
             }),
             (_('This month'), {
                 self.lookup_since_name: str(today.replace(day=1)),
-                self.lookup_until_name: str(tomorrow),
-            }),
-            (_('This year'), {
-                self.lookup_since_name: str(today.replace(month=1, day=1)),
                 self.lookup_until_name: str(tomorrow),
             }),
         )

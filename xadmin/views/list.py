@@ -193,10 +193,10 @@ class ListAdminView(ModelAdminView):
                 self.result_list = self.paginator.page(
                     self.page_num + 1).object_list
             except InvalidPage:
-                if ERROR_FLAG in self.request.GET.keys():
-                    return SimpleTemplateResponse('xadmin/views/invalid_setup.html', {
-                        'title': _('Database error'),
-                    })
+#                 if ERROR_FLAG in self.request.GET.keys():
+#                     return SimpleTemplateResponse('xadmin/views/invalid_setup.html', {
+#                         'title': _('Database error'),
+#                     })
                 return HttpResponseRedirect(self.request.path + '?' + ERROR_FLAG + '=1')
         self.has_more = self.result_count > (
             self.list_per_page * self.page_num + len(self.result_list))

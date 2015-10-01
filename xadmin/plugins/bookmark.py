@@ -26,7 +26,10 @@ class BookmarkPlugin(BaseAdminPlugin):
 
     # [{'title': "Female", 'query': {'gender': True}, 'order': ('-age'), 'cols': ('first_name', 'age', 'phones'), 'search': 'Tom'}]
     list_bookmarks = []
-    show_bookmarks = True
+    show_bookmarks = False
+
+    def init_request(self, *args, **kwargs):
+        return bool(self.show_bookmarks)
 
     def has_change_permission(self, obj=None):
         if not obj or self.user.is_superuser:
