@@ -4,7 +4,7 @@ from django.db import models
 from django.http import HttpResponseRedirect
 from django.template.response import SimpleTemplateResponse, TemplateResponse
 from django.utils.datastructures import SortedDict
-from django.utils.encoding import force_unicode, smart_unicode
+from django.utils.encoding import force_str, smart_unicode
 from django.utils.html import escape, conditional_escape
 from django.utils.safestring import mark_safe
 from django.utils.text import capfirst
@@ -65,7 +65,7 @@ class ResultItem(object):
     def label(self):
         text = mark_safe(
             self.text) if self.allow_tags else conditional_escape(self.text)
-        if force_unicode(text) == '':
+        if force_str(text) == '':
             text = mark_safe('&nbsp;')
         for wrap in self.wraps:
             text = mark_safe(wrap % text)
@@ -369,13 +369,13 @@ class ListAdminView(ModelAdminView):
         """
         Prepare the context for templates.
         """
-        self.title = _('%s List') % force_unicode(self.opts.verbose_name)
+        self.title = _('%s List') % force_str(self.opts.verbose_name)
 
         model_fields = [(f, f.name in self.list_display, self.get_check_field_url(f))
-                        for f in (self.opts.fields + self.get_model_method_fields()) if f.name not in self.list_exclude]
+                        for f in (list(self.opts.fields) + self.get_model_method_fields()) if f.name not in self.list_exclude]
 
         new_context = {
-            'model_name': force_unicode(self.opts.verbose_name_plural),
+            'model_name': force_str(self.opts.verbose_name_plural),
             'title': self.title,
             'cl': self,
             'model_fields': model_fields,
@@ -571,7 +571,10 @@ class ListAdminView(ModelAdminView):
             if self.list_display_links_details:
                 item_res_uri = self.model_admin_url("detail", getattr(obj, self.pk_attname))
                 if item_res_uri:
-                    edit_url = self.model_admin_url("change", getattr(obj, self.pk_attname))
+                    if self.has_change_permission(obj):
+                        edit_url = self.model_admin_url("change", getattr(obj, self.pk_attname))
+                    else:
+                        edit_url = ""
                     item.wraps.append('<a data-res-uri="%s" data-edit-uri="%s" class="details-handler" rel="tooltip" title="%s">%%s</a>'
                                      % (item_res_uri, edit_url, _(u'Details of %s') % str(obj)))
             else:
