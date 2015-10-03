@@ -3,6 +3,8 @@ import urllib
 from django.template import loader
 from django.core.cache import cache
 from django.utils.translation import ugettext as _
+from django.conf import settings
+
 from xadmin.sites import site
 from xadmin.models import UserSettings
 from xadmin.views import BaseAdminPlugin, BaseAdminView
@@ -60,14 +62,32 @@ class ThemePlugin(BaseAdminPlugin):
             else:
                 ex_themes = []
                 try:
-                    watch_themes = json.loads(urllib.urlopen(
-                        'http://api.bootswatch.com/3/').read())['themes']
+                    use_local_watch_themes = getattr(settings, 'USE_LOCAL_WATCH_THEMES', False)
+                    
+                    if use_local_watch_themes:
+                        # fetching themes from local web server
+#                         requesting_host = self.request.get_host() or ''
+#                         print requesting_host
+                        watch_themes_str = urllib.urlopen(self.request.build_absolute_uri('/static/xadmin/vendor/bootswatch/api.bootswatch.com.3')).read()
+# 
+                        from django.template import Context, Template
+                        watch_themes_template = Template(watch_themes_str)
+                        watch_themes_str = watch_themes_template.render(Context())
+                        
+                    else:
+                        # fetching themes from bootswatch
+                        watch_themes_str = urllib.urlopen('http://api.bootswatch.com/3/').read()
+
+#                     print watch_themes_str
+
+                    watch_themes = json.loads(watch_themes_str)['themes']
                     ex_themes.extend([
                         {'name': t['name'], 'description': t['description'],
                             'css': t['cssMin'], 'thumbnail': t['thumbnail']}
                         for t in watch_themes])
-                except Exception:
-                    pass
+                except Exception, e:
+                    print unicode(e)
+#                     pass
 
                 cache.set(THEME_CACHE_KEY, json.dumps(ex_themes), 24 * 3600)
                 themes.extend(ex_themes)

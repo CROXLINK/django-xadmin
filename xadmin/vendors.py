@@ -4,12 +4,12 @@ vendors = {
         'js': {
             'dev': 'xadmin/vendor/bootstrap/js/bootstrap.js',
             'production': 'xadmin/vendor/bootstrap/js/bootstrap.min.js',
-            'cdn': 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js'
+            'cdn': 'http://libs.useso.com/js/bootstrap/3.0.2/js/bootstrap.min.js'
         },
         'css': {
             'dev': 'xadmin/vendor/bootstrap/css/bootstrap.css',
-            'production': 'xadmin/vendor/bootstrap/css/bootstrap.css',
-            'cdn': 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css'
+            'production': 'xadmin/vendor/bootstrap/css/bootstrap.min.css',
+            'cdn': 'http://libs.useso.com/js/bootstrap/3.0.2/css/bootstrap.min.css'
         },
         'responsive': {'css':{
                 'dev': 'xadmin/vendor/bootstrap/bootstrap-responsive.css',
@@ -20,6 +20,7 @@ vendors = {
         "js": {
             'dev': 'xadmin/vendor/jquery/jquery.js',
             'production': 'xadmin/vendor/jquery/jquery.min.js',
+            'cdn': 'http://libs.useso.com/js/jquery/2.0.0/jquery.min.js'
         }
     },
     'jquery-ui-effect': {
