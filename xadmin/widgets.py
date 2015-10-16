@@ -110,6 +110,10 @@ class AdminCheckboxSelect(forms.CheckboxSelectMultiple):
     def render(self, name, value, attrs=None, choices=()):
         if value is None:
             value = []
+
+        attrs = attrs or self.attrs
+        attrs['class'] = attrs.get('class', '').replace('form-control', '')
+
         has_id = attrs and 'id' in attrs
         final_attrs = self.build_attrs(attrs, name=name)
         final_attrs['class'] = final_attrs.get('class', '').replace('form-control', '')
