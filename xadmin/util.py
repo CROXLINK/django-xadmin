@@ -496,6 +496,8 @@ def display_for_field(value, field):
         return formats.number_format(value)
     elif isinstance(field, models.FileField) and value:
         return format_html('<a href="{}">{}</a>', value.url, value)
+    elif isinstance(field.rel, models.ManyToManyRel):
+        return ', '.join([smart_text(obj) for obj in value.all()])
     else:
         return smart_text(value)
 
