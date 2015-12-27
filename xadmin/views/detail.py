@@ -36,7 +36,7 @@ class ShowField(Field):
 
         self.results = [(field, callback(field)) for field in self.fields]
 
-    def render(self, form, form_style, context):
+    def render(self, form, form_style, context, *args, **kwargs):
         if hasattr(self, 'wrapper_class'):
             context['wrapper_class'] = self.wrapper_class
 
@@ -198,12 +198,19 @@ class DetailAdminView(ModelAdminView):
         # if exclude is an empty list we pass None to be consistant with the
         # default on modelform_factory
         exclude = exclude or None
+        
         defaults = {
             "form": self.form,
             "fields": self.fields and list(self.fields) or None,
             "exclude": exclude,
         }
         defaults.update(kwargs)
+        
+        # check if both fields and exclude are empty?
+        if not defaults['fields'] and not defaults['exclude']:
+            # exclude id field -- OTHERWISE will cause exceptions!
+            defaults['exclude'] = ['id']
+
         return modelform_factory(self.model, **defaults)
 
     @filter_hook
@@ -213,6 +220,7 @@ class DetailAdminView(ModelAdminView):
         layout = self.get_form_layout()
         replace_field_to_value(layout, self.get_field_result)
         helper.add_layout(layout)
+        
         helper.filter(six.string_types, max_level=20).wrap(ShowField, admin_view=self)
         return helper
 
