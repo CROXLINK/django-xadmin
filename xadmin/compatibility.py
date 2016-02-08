@@ -12,8 +12,10 @@ PY3 = sys.version_info[0] == 3
 if PY3:
     smart_unicode = smart_str
     force_unicode = force_str
+    unicode = str
 
 if PY2:
+    unicode = unicode
     from django.utils.encoding import smart_unicode, force_unicode
 
 if 4 < django.VERSION[1] < 7:
