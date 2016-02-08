@@ -1,5 +1,5 @@
 #coding:utf-8
-import urllib
+import urllib, httplib2
 from django.template import loader
 from django.core.cache import cache
 from django.utils.translation import ugettext as _
@@ -61,9 +61,10 @@ class ThemePlugin(BaseAdminPlugin):
                 themes.extend(json.loads(ex_themes))
             else:
                 ex_themes = []
-                try:
-                    use_local_watch_themes = getattr(settings, 'USE_LOCAL_WATCH_THEMES', False)
-                    
+
+                use_local_watch_themes = getattr(settings, 'USE_LOCAL_WATCH_THEMES', False)
+
+                try:                    
                     if use_local_watch_themes:
                         # fetching themes from local web server
 #                         requesting_host = self.request.get_host() or ''
@@ -76,18 +77,18 @@ class ThemePlugin(BaseAdminPlugin):
                         
                     else:
                         # fetching themes from bootswatch
-                        watch_themes_str = urllib.urlopen('http://api.bootswatch.com/3/').read()
-
-#                     print watch_themes_str
+                        h = httplib2.Http(".cache", disable_ssl_certificate_validation=True)
+                        resp, watch_themes_str = h.request("http://bootswatch.com/api/3.json", 'GET', \
+                            "", headers={"Accept": "application/json", "User-Agent": self.request.META['HTTP_USER_AGENT']})
 
                     watch_themes = json.loads(watch_themes_str)['themes']
                     ex_themes.extend([
                         {'name': t['name'], 'description': t['description'],
                             'css': t['cssMin'], 'thumbnail': t['thumbnail']}
                         for t in watch_themes])
+
                 except Exception, e:
                     print unicode(e)
-#                     pass
 
                 cache.set(THEME_CACHE_KEY, json.dumps(ex_themes), 24 * 3600)
                 themes.extend(ex_themes)
