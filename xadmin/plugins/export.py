@@ -6,7 +6,9 @@ from xadmin.compatibility import force_str, smart_unicode
 from django.utils.html import escape
 from django.utils.translation import ugettext as _
 from django.utils.xmlutils import SimplerXMLGenerator
-from django.db.models import BooleanField, NullBooleanField
+from django.db.models import BooleanField, NullBooleanField, DateField, DateTimeField
+from django.conf import settings
+
 from xadmin.sites import site
 from xadmin.views import BaseAdminPlugin, ListAdminView
 from xadmin.util import json
@@ -62,7 +64,8 @@ class ExportPlugin(BaseAdminPlugin):
 
     def _format_value(self, o):
         if (o.field is None and getattr(o.attr, 'boolean', False)) or \
-           (o.field and isinstance(o.field, (BooleanField, NullBooleanField))):
+           (o.field and isinstance(o.field, (BooleanField, NullBooleanField))) or \
+           (o.field and isinstance(o.field, (DateField, DateTimeField)) and not settings.USE_TZ):
                 value = o.value
         elif str(o.text).startswith("<span class='text-muted'>"):
             value = escape(str(o.text)[25:-7])
@@ -88,7 +91,7 @@ class ExportPlugin(BaseAdminPlugin):
 
     def get_xlsx_export(self, context):
         datas = self._get_datas(context)
-        output = StringIO.StringIO()
+        output = StringIO()
         export_header = (
             self.request.GET.get('export_xlsx_header', 'off') == 'on')
 
@@ -125,7 +128,7 @@ class ExportPlugin(BaseAdminPlugin):
 
     def get_xls_export(self, context):
         datas = self._get_datas(context)
-        output = StringIO.StringIO()
+        output = StringIO()
         export_header = (
             self.request.GET.get('export_xls_header', 'off') == 'on')
 
@@ -197,7 +200,7 @@ class ExportPlugin(BaseAdminPlugin):
 
     def get_xml_export(self, context):
         results = self._get_objects(context)
-        stream = StringIO.StringIO()
+        stream = StringIO()
 
         xml = SimplerXMLGenerator(stream, "utf-8")
         xml.startDocument()
