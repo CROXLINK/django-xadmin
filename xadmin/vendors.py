@@ -4,12 +4,14 @@ vendors = {
         'js': {
             'dev': 'xadmin/vendor/bootstrap/js/bootstrap.js',
             'production': 'xadmin/vendor/bootstrap/js/bootstrap.min.js',
-            'cdn': 'http://libs.useso.com/js/bootstrap/3.0.2/js/bootstrap.min.js'
+#            'cdn': 'http://libs.useso.com/js/bootstrap/3.0.2/js/bootstrap.min.js'
+            'cdn': 'https://cdn.bootcss.com/bootstrap/3.0.3/js/bootstrap.min.js'
         },
         'css': {
             'dev': 'xadmin/vendor/bootstrap/css/bootstrap.css',
             'production': 'xadmin/vendor/bootstrap/css/bootstrap.min.css',
-            'cdn': 'http://libs.useso.com/js/bootstrap/3.0.2/css/bootstrap.min.css'
+#             'cdn': 'http://libs.useso.com/js/bootstrap/3.0.2/css/bootstrap.min.css'
+            'cdn': 'https://cdn.bootcss.com/bootstrap/3.0.3/css/bootstrap.min.css'
         },
         'responsive': {'css':{
                 'dev': 'xadmin/vendor/bootstrap/bootstrap-responsive.css',
@@ -20,7 +22,8 @@ vendors = {
         "js": {
             'dev': 'xadmin/vendor/jquery/jquery.js',
             'production': 'xadmin/vendor/jquery/jquery.min.js',
-            'cdn': 'http://libs.useso.com/js/jquery/2.0.0/jquery.min.js'
+#             'cdn': 'http://libs.useso.com/js/jquery/2.0.0/jquery.min.js'
+            'cdn': 'https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js'
         }
     },
     'jquery-ui-effect': {
@@ -41,6 +44,7 @@ vendors = {
         "css": {
             'dev': 'xadmin/vendor/font-awesome/css/font-awesome.css',
             'production': 'xadmin/vendor/font-awesome/css/font-awesome.min.css',
+            'cdn': 'https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css'
         }
     },
     "timepicker": {
@@ -55,10 +59,12 @@ vendors = {
     },
     "datepicker": {
         "css": {
-            'dev': 'xadmin/vendor/bootstrap-datepicker/css/datepicker.css'
+            'dev': 'xadmin/vendor/bootstrap-datepicker/css/datepicker.css',
+            'cdn': 'https://cdn.bootcss.com/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.min.css'
         },
         "js": {
             'dev': 'xadmin/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js',
+            'cdn': 'https://cdn.bootcss.com/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js'
         }
     },
     "flot": {
