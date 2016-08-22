@@ -1,6 +1,7 @@
 import copy
 import inspect
 from collections import OrderedDict
+
 from django import forms
 from django.forms.formsets import all_valid, DELETION_FIELD_NAME
 from django.forms.models import inlineformset_factory, BaseInlineFormSet, modelform_defines_fields
@@ -9,14 +10,13 @@ from django.template import loader
 from django.template.loader import render_to_string
 from django.contrib.auth import get_permission_codename
 from django.utils import six
+from django.conf import settings
+
 from xadmin.layout import FormHelper, Layout, flatatt, Container, Column, Field, Fieldset
 from xadmin.sites import site
 from xadmin.views import BaseAdminPlugin, ModelFormAdminView, DetailAdminView, filter_hook
 
-try:
-    from crispy_forms.utils import TEMPLATE_PACK
-except:
-    TEMPLATE_PACK = 'bootstrap3'
+TEMPLATE_PACK = getattr(settings, 'CRISPY_TEMPLATE_PACK', 'bootstrap3')
 
 
 class ShowField(Field):
@@ -28,7 +28,7 @@ class ShowField(Field):
         if admin_view.style == 'table':
             self.template = "xadmin/layout/field_value_td.html"
 
-    def render(self, form, form_style, context,template_pack=TEMPLATE_PACK):
+    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
         html = ''
         detail = form.detail
         for field in self.fields:
@@ -41,10 +41,10 @@ class ShowField(Field):
 
 class DeleteField(Field):
 
-    def render(self, form, form_style, context,template_pack=TEMPLATE_PACK):
+    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
         if form.instance.pk:
             self.attrs['type'] = 'hidden'
-            return super(DeleteField, self).render(form, form_style, context)
+            return super(DeleteField, self).render(form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs)
         else:
             return ""
 
@@ -344,7 +344,7 @@ class InlineFormset(Fieldset):
         link_template = self.link_template % template_pack
         return render_to_string(link_template, {'link': self})
     
-    def render(self, form, form_style, context,template_pack=TEMPLATE_PACK):
+    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK):
         return render_to_string(
             self.template, dict({'formset': self, 'prefix': self.formset.prefix, 'inline_style': self.inline_style}, **self.extra_attrs),
             context_instance=context)

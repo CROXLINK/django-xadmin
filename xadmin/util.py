@@ -106,6 +106,8 @@ def prepare_lookup_value(key, value):
     Returns a lookup value prepared to be used in queryset filtering.
     """
     # if key ends with __in, split parameter into separate values
+    if value is not None:
+        value = str(value)
     if key.endswith('__in'):
         value = value.split(',')
     # if key ends with __isnull, special case '' and false
@@ -241,7 +243,8 @@ class NestedObjects(Collector):
 
     def collect(self, objs, source=None, source_attr=None, **kwargs):
         for obj in objs:
-            if source_attr and not source_attr.endswith('+'):
+            if source_attr and hasattr(obj, source_attr):
+#             if source_attr and not source_attr.endswith('+'):
                 related_name = source_attr % {
                     'class': source._meta.model_name,
                     'app_label': source._meta.app_label,

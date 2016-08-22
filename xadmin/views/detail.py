@@ -19,8 +19,16 @@ from xadmin.util import unquote, lookup_field, display_for_field, boolean_icon, 
 
 from .base import ModelAdminView, filter_hook, csrf_protect_m
 
+try:
+    from crispy_forms.utils import TEMPLATE_PACK
+except:
+    TEMPLATE_PACK = 'bootstrap3'
+
+
 # Text to display within change-list table cells if the value is blank.
 EMPTY_CHANGELIST_VALUE = _('Null')
+
+
 
 
 class ShowField(Field):
@@ -36,7 +44,7 @@ class ShowField(Field):
 
         self.results = [(field, callback(field)) for field in self.fields]
 
-    def render(self, form, form_style, context, *args, **kwargs):
+    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
         if hasattr(self, 'wrapper_class'):
             context['wrapper_class'] = self.wrapper_class
 
@@ -188,6 +196,9 @@ class DetailAdminView(ModelAdminView):
         add_view and change_view.
         """
         if self.exclude is None:
+            # Since Django 1.8, modelform_factory requires either the `fields` or `exclude`
+            # parameter to set explicitly. We include all model fields by default, thus the
+            # the exclude parameter should be a empty list instead of `None`(Django 1.7 behavior)
             exclude = []
         else:
             exclude = list(self.exclude)
@@ -195,22 +206,13 @@ class DetailAdminView(ModelAdminView):
             # Take the custom ModelForm's Meta.exclude into account only if the
             # ModelAdmin doesn't define its own.
             exclude.extend(self.form._meta.exclude)
-        # if exclude is an empty list we pass None to be consistant with the
-        # default on modelform_factory
-        exclude = exclude or None
-        
+
         defaults = {
             "form": self.form,
             "fields": self.fields and list(self.fields) or None,
             "exclude": exclude,
         }
         defaults.update(kwargs)
-        
-        # check if both fields and exclude are empty?
-        if not defaults['fields'] and not defaults['exclude']:
-            # exclude id field -- OTHERWISE will cause exceptions!
-            defaults['exclude'] = ['id']
-
         return modelform_factory(self.model, **defaults)
 
     @filter_hook
@@ -220,7 +222,6 @@ class DetailAdminView(ModelAdminView):
         layout = self.get_form_layout()
         replace_field_to_value(layout, self.get_field_result)
         helper.add_layout(layout)
-        
         helper.filter(six.string_types, max_level=20).wrap(ShowField, admin_view=self)
         return helper
 
@@ -264,8 +265,10 @@ class DetailAdminView(ModelAdminView):
 
     @filter_hook
     def get_media(self):
-        return super(DetailAdminView, self).get_media() + self.form_obj.media + \
-            self.vendor('xadmin.page.form.js', 'xadmin.form.css')
+        media = super(DetailAdminView, self).get_media()
+        media = media + self.form_obj.media
+        media.add_css({'screen': [self.static('xadmin/css/xadmin.form.css')]})
+        return media
 
     @filter_hook
     def get_field_result(self, field_name):

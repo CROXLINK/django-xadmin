@@ -1,3 +1,6 @@
+from django.conf import settings
+from django.template import Context, Template
+
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import *
 from crispy_forms.bootstrap import *
@@ -8,6 +11,8 @@ from crispy_forms import bootstrap
 
 import math
 
+TEMPLATE_PACK = getattr(settings, 'CRISPY_TEMPLATE_PACK', 'bootstrap3')
+
 
 class Fieldset(layout.Fieldset):
     template = "xadmin/layout/fieldset.html"
@@ -16,6 +21,17 @@ class Fieldset(layout.Fieldset):
         self.description = kwargs.pop('description', None)
         self.collapsed = kwargs.pop('collapsed', None)
         super(Fieldset, self).__init__(legend, *fields, **kwargs)
+
+    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK):
+        fields = ''
+        for field in self.fields:
+            fields += render_field(field, form, form_style, context,
+                                   template_pack=template_pack)
+
+        legend = ''
+        if self.legend:
+            legend = u'%s' % Template(text_type(self.legend)).render(context)
+        return render_to_string(self.template, Context({'fieldset': self, 'legend': legend, 'fields': fields, 'form_style': form_style}))
 
 
 class Row(layout.Div):
@@ -70,9 +86,9 @@ class InputGroup(layout.Field):
         if '@@' not in args:
             self.inputs.append('@@')
 
-        super(InputGroup, self).__init__(field, **kwargs)
+        super(InputGroup, self).__init__(field, *args, **kwargs)
 
-    def render(self, form, form_style, context, template_pack='bootstrap'):
+    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
         classes = form.fields[self.field].widget.attrs.get('class', '')
         context.update(
             {'inputs': self.inputs, 'classes': classes.replace('form-control', '')})
@@ -80,7 +96,7 @@ class InputGroup(layout.Field):
             context['wrapper_class'] = self.wrapper_class
         return render_field(
             self.field, form, form_style, context, template=self.template,
-            attrs=self.attrs, template_pack=template_pack)
+            attrs=self.attrs, template_pack=template_pack, **kwargs)
 
 
 class PrependedText(InputGroup):
