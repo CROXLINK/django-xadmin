@@ -380,8 +380,8 @@ a[class^="icon-"]:before, a[class*=" icon-"]:before {
 .navbar-collapse {max-height: none !important;}
 .nav-header {
   display: block;
-  padding: 3px 15px;
-  font-size: 11px;
+  padding: 3px 6px;
+  font-size: 14px;
   font-weight: bold;
   line-height: 1.428571429;
   color: #999999;

@@ -131,8 +131,21 @@ class EditPatchView(ModelFormAdminView, ListAdminView):
     @csrf_protect_m
     @transaction.atomic
     def post(self, request, object_id):
-        model_fields = [f.name for f in self.opts.fields]
-        fields = [f for f in request.POST.keys() if f in model_fields]
+        model_fields_dict = {}
+        for f in self.opts.fields:
+            if isinstance(f, models.fields.DateTimeField):
+                # date
+                model_fields_dict['%s_0' % f.name] = f.name
+                # time
+                model_fields_dict['%s_1' % f.name] = f.name
+            else:
+                model_fields_dict[f.name] = f.name
+
+        fields = [model_fields_dict[f] for f in request.POST.keys() if f in model_fields_dict]
+        
+        # eliminate duplicates
+        fields = list(set(fields))
+
         defaults = {
             "form": self.form,
             "fields": fields,
