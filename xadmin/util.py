@@ -65,8 +65,13 @@ def xstatic(*tags):
             if not settings.DEBUG:
                 mode = getattr(settings, 'STATIC_USE_CDN',
                                False) and 'cdn' or 'production'
+                
+                if mode == 'cdn':
+                    # 指定不同的cdn来源
+                    mode = getattr(settings, 'CDN_SOURCE', 'cdn')
 
-            if mode == 'cdn' and mode not in node:
+            if mode not in ('dev', 'production') and mode not in node:
+                # cdn
                 mode = 'production'
             if mode == 'production' and mode not in node:
                 mode = 'dev'
