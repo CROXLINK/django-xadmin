@@ -161,7 +161,11 @@ class ListRelateDisplayPlugin(BaseRelateDisplayPlugin):
 
     def get_context(self, context):
         context['brand_name'] = self.relate_obj.get_brand_name()
-        context['rel_objs'] = self.relate_obj.to_objs
+        if len(self.relate_obj.to_objs) == 1:
+            context['rel_obj'] = self.relate_obj.to_objs[0]
+        else:
+            context['rel_objs'] = self.relate_obj.to_objs
+
         if 'add_url' in context:
             context['add_url'] = self._get_url(context['add_url'])
         return context

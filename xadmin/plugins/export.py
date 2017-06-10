@@ -35,7 +35,7 @@ except:
 class ExportMenuPlugin(BaseAdminPlugin):
 
     list_export = ('xlsx', 'xls', 'csv', 'xml', 'json')
-    export_names = {'xlsx': 'Excel 2007', 'xls': 'Excel', 'csv': 'CSV',
+    export_names = {'xlsx': 'Excel', 'xls': 'Excel 97-2004', 'csv': 'CSV',
                     'xml': 'XML', 'json': 'JSON'}
 
     def init_request(self, *args, **kwargs):

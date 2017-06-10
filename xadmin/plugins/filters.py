@@ -80,6 +80,10 @@ class FilterPlugin(BaseAdminPlugin):
         for p_key, p_val in six.iteritems(lookup_params):
             if p_val == "False":
                 lookup_params[p_key] = False
+
+            if p_key.endswith('__in'):
+                lookup_params[p_key] = p_val.split(',')
+
         use_distinct = False
 
         # for clean filters
