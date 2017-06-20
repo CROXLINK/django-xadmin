@@ -1,19 +1,23 @@
 import operator
+from future.utils import iteritems
 from xadmin import widgets
+from xadmin.plugins.utils import get_context_dict
 
-from xadmin.util import get_fields_from_path, lookup_needs_distinct
+from django.contrib.admin.utils import get_fields_from_path, lookup_needs_distinct
 from django.core.exceptions import SuspiciousOperation, ImproperlyConfigured, ValidationError
 from django.db import models
 from django.db.models.fields import FieldDoesNotExist
-from django.db.models.related import RelatedObject
 from django.db.models.sql.query import LOOKUP_SEP, QUERY_TERMS
 from django.template import loader
+from django.utils import six
 from django.utils.encoding import smart_str
 from django.utils.translation import ugettext as _
 
 from xadmin.filters import manager as filter_manager, FILTER_PREFIX, SEARCH_VAR, DateFieldListFilter, RelatedFieldSearchFilter
 from xadmin.sites import site
 from xadmin.views import BaseAdminPlugin, ListAdminView
+from xadmin.util import is_related_field
+from functools import reduce
 
 
 class IncorrectLookupParameters(Exception):
@@ -49,7 +53,7 @@ class FilterPlugin(BaseAdminPlugin):
         rel_name = None
         for part in parts[:-1]:
             try:
-                field, _, _, _ = model._meta.get_field_by_name(part)
+                field = model._meta.get_field(part)
             except FieldDoesNotExist:
                 # Lookups on non-existants fields are ok, since they're ignored
                 # later.
@@ -57,7 +61,7 @@ class FilterPlugin(BaseAdminPlugin):
             if hasattr(field, 'rel'):
                 model = field.rel.to
                 rel_name = field.rel.get_related_field().name
-            elif isinstance(field, RelatedObject):
+            elif is_related_field(field):
                 model = field.model
                 rel_name = model._meta.pk.name
             else:
@@ -73,7 +77,7 @@ class FilterPlugin(BaseAdminPlugin):
     def get_list_queryset(self, queryset):
         lookup_params = dict([(smart_str(k)[len(FILTER_PREFIX):], v) for k, v in self.admin_view.params.items()
                               if smart_str(k).startswith(FILTER_PREFIX) and v != ''])
-        for p_key, p_val in lookup_params.iteritems():
+        for p_key, p_val in iteritems(lookup_params):
             if p_val == "False":
                 lookup_params[p_key] = False
         use_distinct = False
@@ -127,7 +131,7 @@ class FilterPlugin(BaseAdminPlugin):
                 if spec and spec.has_output():
                     try:
                         new_qs = spec.do_filte(queryset)
-                    except ValidationError, e:
+                    except ValidationError as e:
                         new_qs = None
                         self.admin_view.message_user(_("<b>Filtering error:</b> %s") % e.messages[0], 'error')
                     if new_qs is not None:
@@ -137,21 +141,23 @@ class FilterPlugin(BaseAdminPlugin):
 
         self.has_filters = bool(self.filter_specs)
         self.admin_view.filter_specs = self.filter_specs
-        self.admin_view.used_filter_num = len(
-            filter(lambda f: f.is_used, self.filter_specs))
+        obj = filter(lambda f: f.is_used, self.filter_specs)
+        if six.PY3:
+            obj = list(obj)
+        self.admin_view.used_filter_num = len(obj)
 
         try:
             for key, value in lookup_params.items():
                 use_distinct = (
                     use_distinct or lookup_needs_distinct(self.opts, key))
-        except FieldDoesNotExist, e:
+        except FieldDoesNotExist as e:
             raise IncorrectLookupParameters(e)
 
         try:
             queryset = queryset.filter(**lookup_params)
         except (SuspiciousOperation, ImproperlyConfigured):
             raise
-        except Exception, e:
+        except Exception as e:
             raise IncorrectLookupParameters(e)
 
         query = self.request.GET.get(SEARCH_VAR, '')
@@ -188,10 +194,16 @@ class FilterPlugin(BaseAdminPlugin):
 
     # Media
     def get_media(self, media):
-        if bool(filter(lambda s: isinstance(s, DateFieldListFilter), self.filter_specs)):
+        arr = filter(lambda s: isinstance(s, DateFieldListFilter), self.filter_specs)
+        if six.PY3:
+            arr = list(arr)
+        if bool(arr):
             media = media + self.vendor('datepicker.css', 'datepicker.js',
                                         'xadmin.widget.datetime.js')
-        if bool(filter(lambda s: isinstance(s, RelatedFieldSearchFilter), self.filter_specs)):
+        arr = filter(lambda s: isinstance(s, RelatedFieldSearchFilter), self.filter_specs)
+        if six.PY3:
+            arr = list(arr)
+        if bool(arr):
             media = media + self.vendor(
                 'select.js', 'select.css', 'xadmin.widget.select.js')
         return media + self.vendor('xadmin.plugin.filters.js')
@@ -199,16 +211,21 @@ class FilterPlugin(BaseAdminPlugin):
     # Block Views
     def block_nav_menu(self, context, nodes):
         if self.has_filters:
-            nodes.append(loader.render_to_string('xadmin/blocks/model_list.nav_menu.filters.html', context_instance=context))
+            nodes.append(loader.render_to_string('xadmin/blocks/model_list.nav_menu.filters.html',
+                                                 context=get_context_dict(context)))
 
     def block_nav_form(self, context, nodes):
         if self.search_fields:
+            context = get_context_dict(context or {})  # no error!
+            context.update({
+                'search_var': SEARCH_VAR,
+                'remove_search_url': self.admin_view.get_query_string(remove=[SEARCH_VAR]),
+                'search_form_params': self.admin_view.get_form_params(remove=[SEARCH_VAR])
+            })
             nodes.append(
                 loader.render_to_string(
                     'xadmin/blocks/model_list.nav_form.search_form.html',
-                    {'search_var': SEARCH_VAR,
-                        'remove_search_url': self.admin_view.get_query_string(remove=[SEARCH_VAR]),
-                        'search_form_params': self.admin_view.get_form_params(remove=[SEARCH_VAR])},
-                    context_instance=context))
+                    context=context)
+            )
 
 site.register_plugin(FilterPlugin, ListAdminView)

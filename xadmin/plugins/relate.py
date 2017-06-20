@@ -1,15 +1,20 @@
 # coding=UTF-8
+from itertools import chain
+
 from django.core.urlresolvers import reverse
-from django.utils.encoding import force_unicode
+from django.db.models.options import PROXY_PARENTS
+from django.utils import six
+from django.utils.encoding import force_text
 from django.utils.encoding import smart_str
 from django.utils.safestring import mark_safe
 from django.db.models.sql.query import LOOKUP_SEP
-from django.db.models.related import RelatedObject
 from django.utils.translation import ugettext as _
 from django.db import models
 
+
 from xadmin.sites import site
 from xadmin.views import BaseAdminPlugin, ListAdminView, CreateAdminView, UpdateAdminView, DeleteAdminView
+from xadmin.util import is_related_field2
 
 RELATE_PREFIX = '_rel_'
 
@@ -19,36 +24,63 @@ class RelateMenuPlugin(BaseAdminPlugin):
     related_list = []
     use_related_menu = True
 
+    def _get_all_related_objects(self, local_only=False, include_hidden=False,
+                                 include_proxy_eq=False):
+        """
+        Returns a list of related fields (also many to many)
+        :param local_only:
+        :param include_hidden:
+        :return: list
+        """
+        include_parents = True if local_only is False else PROXY_PARENTS
+        fields = self.opts._get_fields(
+            forward=False, reverse=True,
+            include_parents=include_parents,
+            include_hidden=include_hidden
+        )
+        if include_proxy_eq:
+            children = chain.from_iterable(c._relation_tree
+                                           for c in self.opts.concrete_model._meta.proxied_children
+                                           if c is not self.opts)
+            relations = (f.remote_field for f in children
+                         if include_hidden or not f.remote_field.field.remote_field.is_hidden())
+            fields = chain(fields, relations)
+        return list(fields)
+
+
     def get_related_list(self):
         if hasattr(self, '_related_acts'):
             return self._related_acts
 
         _related_acts = []
-        for r in self.opts.get_all_related_objects() + self.opts.get_all_related_many_to_many_objects():
-            if self.related_list and (r.get_accessor_name() not in self.related_list):
+        for rel in self._get_all_related_objects():
+            if self.related_list and (rel.get_accessor_name() not in self.related_list):
                 continue
-            if r.model not in self.admin_site._registry.keys():
+            if rel.related_model not in self.admin_site._registry.keys():
                 continue
-            has_view_perm = self.has_model_perm(r.model, 'view')
-            has_add_perm = self.has_model_perm(r.model, 'add')
+            has_view_perm = self.has_model_perm(rel.related_model, 'view')
+            has_add_perm = self.has_model_perm(rel.related_model, 'add')
             if not (has_view_perm or has_add_perm):
                 continue
 
-            _related_acts.append((r, has_view_perm, has_add_perm))
+            _related_acts.append((rel, has_view_perm, has_add_perm))
 
         self._related_acts = _related_acts
         return self._related_acts
 
     def related_link(self, instance):
         links = []
-        for r, view_perm, add_perm in self.get_related_list():
-            label = r.opts.app_label
-            model_name = r.opts.model_name
-            f = r.field
-            rel_name = f.rel.get_related_field().name
+        for rel, view_perm, add_perm in self.get_related_list():
+            opts = rel.related_model._meta
 
-            verbose_name = force_unicode(r.opts.verbose_name)
-            lookup_name = '%s__%s__exact' % (f.name, rel_name)
+            label = opts.app_label
+            model_name = opts.model_name
+
+            field = rel.field
+            rel_name = rel.get_related_field().name
+
+            verbose_name = force_text(opts.verbose_name)
+            lookup_name = '%s__%s__exact' % (field.name, rel_name)
 
             link = ''.join(('<li class="with_menu_btn">',
 
@@ -93,19 +125,14 @@ class RelateObject(object):
         self.value = value
 
         parts = lookup.split(LOOKUP_SEP)
-        field = self.opts.get_field_by_name(parts[0])[0]
+        field = self.opts.get_field(parts[0])
 
-        if not hasattr(field, 'rel') and not isinstance(field, RelatedObject):
+        if not is_related_field2(field):
             raise Exception(u'Relate Lookup field must a related field')
 
-        if hasattr(field, 'rel'):
-            self.to_model = field.rel.to
-            self.rel_name = field.rel.get_related_field().name
-            self.is_m2m = isinstance(field.rel, models.ManyToManyRel)
-        else:
-            self.to_model = field.model
-            self.rel_name = self.to_model._meta.pk.name
-            self.is_m2m = False
+        self.to_model = field.related_model
+        self.rel_name = '__'.join(parts[1:])
+        self.is_m2m = bool(field.many_to_many)
 
         to_qs = self.to_model._default_manager.get_queryset()
         self.to_objs = to_qs.filter(**{self.rel_name: value}).all()
@@ -119,16 +146,16 @@ class RelateObject(object):
         if len(self.to_objs) == 1:
             to_model_name = str(self.to_objs[0])
         else:
-            to_model_name = force_unicode(self.to_model._meta.verbose_name)
+            to_model_name = force_text(self.to_model._meta.verbose_name)
 
-        return mark_safe(u"<span class='rel-brand'>%s <i class='fa fa-caret-right'></i></span> %s" % (to_model_name, force_unicode(self.opts.verbose_name_plural)))
+        return mark_safe(u"<span class='rel-brand'>%s <i class='fa fa-caret-right'></i></span> %s" % (to_model_name, force_text(self.opts.verbose_name_plural)))
 
 
 class BaseRelateDisplayPlugin(BaseAdminPlugin):
 
     def init_request(self, *args, **kwargs):
         self.relate_obj = None
-        for k, v in self.request.REQUEST.items():
+        for k, v in self.request.GET.items():
             if smart_str(k).startswith(RELATE_PREFIX):
                 self.relate_obj = RelateObject(
                     self.admin_view, smart_str(k)[len(RELATE_PREFIX):], v)
@@ -158,6 +185,8 @@ class ListRelateDisplayPlugin(BaseRelateDisplayPlugin):
     def get_context(self, context):
         context['brand_name'] = self.relate_obj.get_brand_name()
         context['rel_objs'] = self.relate_obj.to_objs
+        if len(self.relate_obj.to_objs) == 1:
+            context['rel_obj'] = self.relate_obj.to_objs[0]
         if 'add_url' in context:
             context['add_url'] = self._get_url(context['add_url'])
         return context
@@ -180,7 +209,8 @@ class EditRelateDisplayPlugin(BaseRelateDisplayPlugin):
         return datas
 
     def post_response(self, response):
-        if isinstance(response, basestring) and response != self.get_admin_url('index'):
+        cls_str = str if six.PY3 else basestring
+        if isinstance(response, cls_str) and response != self.get_admin_url('index'):
             return self._get_url(response)
         return response
 
@@ -196,7 +226,8 @@ class EditRelateDisplayPlugin(BaseRelateDisplayPlugin):
 class DeleteRelateDisplayPlugin(BaseRelateDisplayPlugin):
 
     def post_response(self, response):
-        if isinstance(response, basestring) and response != self.get_admin_url('index'):
+        cls_str = str if six.PY3 else basestring
+        if isinstance(response, cls_str) and response != self.get_admin_url('index'):
             return self._get_url(response)
         return response
 

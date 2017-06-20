@@ -1,12 +1,38 @@
 
-PLUGINS = ('actions', 'filters', 'bookmark', 'export', 'layout', 'refresh', 'sortable', 'details',
-    'editable', 'relate', 'chart', 'ajax', 'relfield', 'inline', 'topnav', 'portal', 'quickform',
-    'wizard', 'images', 'auth', 'multiselect', 'themes', 'aggregation', 'mobile', 'passwords',
-    'sitemenu', 'language', 'quickfilter')
+PLUGINS = (
+    'actions', 
+    'filters', 
+    'bookmark', 
+    'export', 
+    'layout', 
+    'refresh',
+    'details',
+    'editable', 
+    'relate', 
+    'chart', 
+    'ajax', 
+    'relfield', 
+    'inline', 
+    'topnav', 
+    'portal', 
+    'quickform',
+    'wizard', 
+    'images', 
+    'auth', 
+    'multiselect', 
+    'themes', 
+    'aggregation', 
+    'mobile', 
+    'passwords',
+    'sitemenu', 
+    'language', 
+    'quickfilter',
+    'sortablelist'
+)
 
 
 def register_builtin_plugins(site):
-    from django.utils.importlib import import_module
+    from importlib import import_module
     from django.conf import settings
 
     exclude_plugins = getattr(settings, 'XADMIN_EXCLUDE_PLUGINS', [])

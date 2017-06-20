@@ -1,21 +1,21 @@
 
+import calendar
 import datetime
 import decimal
-import calendar
 
-from django.template import loader
-from django.http import HttpResponseNotFound
 from django.core.serializers.json import DjangoJSONEncoder
-from django.http import HttpResponse
-from django.utils.encoding import smart_unicode
 from django.db import models
+from django.http import HttpResponse, HttpResponseNotFound
+from django.template import loader
 from django.utils.http import urlencode
+from django.utils.encoding import force_text, smart_text
 from django.utils.translation import ugettext_lazy as _, ugettext
 
+from xadmin.plugins.utils import get_context_dict
 from xadmin.sites import site
 from xadmin.views import BaseAdminPlugin, ListAdminView
 from xadmin.views.dashboard import ModelBaseWidget, widget_manager
-from xadmin.util import lookup_field, label_for_field, force_unicode, json
+from xadmin.util import lookup_field, label_for_field, json
 
 
 @widget_manager.register
@@ -76,7 +76,7 @@ class JSONEncoder(DjangoJSONEncoder):
             try:
                 return super(JSONEncoder, self).default(o)
             except Exception:
-                return smart_unicode(o)
+                return smart_text(o)
 
 
 class ChartsPlugin(BaseAdminPlugin):
@@ -98,7 +98,8 @@ class ChartsPlugin(BaseAdminPlugin):
         context.update({
             'charts': [{"name": name, "title": v['title'], 'url': self.get_chart_url(name, v)} for name, v in self.data_charts.items()],
         })
-        nodes.append(loader.render_to_string('xadmin/blocks/model_list.results_top.charts.html', context_instance=context))
+        nodes.append(loader.render_to_string('xadmin/blocks/model_list.results_top.charts.html',
+                                             context=get_context_dict(context)))
 
 
 class ChartsView(ListAdminView):
@@ -122,7 +123,7 @@ class ChartsView(ListAdminView):
         self.y_fields = (
             y_fields,) if type(y_fields) not in (list, tuple) else y_fields
 
-        datas = [{"data":[], "label": force_unicode(label_for_field(
+        datas = [{"data":[], "label": force_text(label_for_field(
             i, self.model, model_admin=self))} for i in self.y_fields]
 
         self.make_result_list()

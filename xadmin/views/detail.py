@@ -1,5 +1,7 @@
+from __future__ import absolute_import
 import copy
 
+from crispy_forms.utils import TEMPLATE_PACK
 from django import forms
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
@@ -8,7 +10,8 @@ from django.forms.models import modelform_factory
 from django.http import Http404
 from django.template import loader
 from django.template.response import TemplateResponse
-from django.utils.encoding import force_unicode, smart_unicode
+from django.utils import six
+from django.utils.encoding import force_text, smart_text
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
@@ -16,7 +19,7 @@ from django.utils.html import conditional_escape
 from xadmin.layout import FormHelper, Layout, Fieldset, Container, Column, Field, Col, TabHolder
 from xadmin.util import unquote, lookup_field, display_for_field, boolean_icon, label_for_field
 
-from base import ModelAdminView, filter_hook, csrf_protect_m
+from .base import ModelAdminView, filter_hook, csrf_protect_m
 
 # Text to display within change-list table cells if the value is blank.
 EMPTY_CHANGELIST_VALUE = _('Null')
@@ -26,35 +29,32 @@ class ShowField(Field):
     template = "xadmin/layout/field_value.html"
 
     def __init__(self, callback, *args, **kwargs):
-        super(ShowField, self).__init__(*args)
-
-        if 'attrs' in kwargs:
-            self.attrs = kwargs.pop('attrs')
-        if 'wrapper_class' in kwargs:
-            self.wrapper_class = kwargs.pop('wrapper_class')
-
+        super(ShowField, self).__init__(*args, **kwargs)
         self.results = [(field, callback(field)) for field in self.fields]
 
-    def render(self, form, form_style, context):
+    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, extra_context=None, **kwargs):
+        super(ShowField, self).render(form, form_style, context, template_pack, extra_context, **kwargs)
+        if extra_context is None:
+            extra_context = {}
         if hasattr(self, 'wrapper_class'):
-            context['wrapper_class'] = self.wrapper_class
+            extra_context['wrapper_class'] = self.wrapper_class
 
         if self.attrs:
             if 'detail-class' in self.attrs:
-                context['input_class'] = self.attrs['detail-class']
+                extra_context['input_class'] = self.attrs['detail-class']
             elif 'class' in self.attrs:
-                context['input_class'] = self.attrs['class']
+                extra_context['input_class'] = self.attrs['class']
 
         html = ''
         for field, result in self.results:
-            context['result'] = result
+            extra_context['result'] = result
             if field in form.fields:
                 if form.fields[field].widget != forms.HiddenInput:
-                    context['field'] = form[field]
-                    html += loader.render_to_string(self.template, context)
+                    extra_context['field'] = form[field]
+                    html += loader.render_to_string(self.template, extra_context)
             else:
-                context['field'] = field
-                html += loader.render_to_string(self.template, context)
+                extra_context['field'] = field
+                html += loader.render_to_string(self.template, extra_context)
         return html
 
 
@@ -92,7 +92,7 @@ class ResultField(object):
                     self.allow_tags = True
                     self.text = boolean_icon(value)
                 else:
-                    self.text = smart_unicode(value)
+                    self.text = smart_text(value)
             else:
                 if isinstance(f.rel, models.ManyToOneRel):
                     self.text = getattr(self.obj, f.name)
@@ -106,7 +106,7 @@ class ResultField(object):
     def val(self):
         text = mark_safe(
             self.text) if self.allow_tags else conditional_escape(self.text)
-        if force_unicode(text) == '' or text == 'None' or text == EMPTY_CHANGELIST_VALUE:
+        if force_text(text) == '' or text == 'None' or text == EMPTY_CHANGELIST_VALUE:
             text = mark_safe(
                 '<span class="text-muted">%s</span>' % EMPTY_CHANGELIST_VALUE)
         for wrap in self.wraps:
@@ -115,11 +115,12 @@ class ResultField(object):
 
 
 def replace_field_to_value(layout, cb):
+    cls_str = str if six.PY3 else basestring
     for i, lo in enumerate(layout.fields):
         if isinstance(lo, Field) or issubclass(lo.__class__, Field):
             layout.fields[i] = ShowField(
                 cb, *lo.fields, attrs=lo.attrs, wrapper_class=lo.wrapper_class)
-        elif isinstance(lo, basestring):
+        elif isinstance(lo, cls_str):
             layout.fields[i] = ShowField(cb, lo)
         elif hasattr(lo, 'get_field_names'):
             replace_field_to_value(lo, cb)
@@ -142,7 +143,7 @@ class DetailAdminView(ModelAdminView):
         if self.obj is None:
             raise Http404(
                 _('%(name)s object with primary key %(key)r does not exist.') %
-                {'name': force_unicode(self.opts.verbose_name), 'key': escape(object_id)})
+                {'name': force_text(self.opts.verbose_name), 'key': escape(object_id)})
         self.org_obj = self.obj
 
     @filter_hook
@@ -199,7 +200,7 @@ class DetailAdminView(ModelAdminView):
         exclude = exclude or None
         defaults = {
             "form": self.form,
-            "fields": self.fields and list(self.fields) or None,
+            "fields": self.fields and list(self.fields) or '__all__',
             "exclude": exclude,
         }
         defaults.update(kwargs)
@@ -209,11 +210,12 @@ class DetailAdminView(ModelAdminView):
     def get_form_helper(self):
         helper = FormHelper()
         helper.form_tag = False
+        helper.include_media = False
         layout = self.get_form_layout()
         replace_field_to_value(layout, self.get_field_result)
         helper.add_layout(layout)
-        helper.filter(
-            basestring, max_level=20).wrap(ShowField, admin_view=self)
+        cls_str = str if six.PY3 else basestring
+        helper.filter(cls_str, max_level=20).wrap(ShowField, admin_view=self)
         return helper
 
     @csrf_protect_m
@@ -230,7 +232,7 @@ class DetailAdminView(ModelAdminView):
     @filter_hook
     def get_context(self):
         new_context = {
-            'title': _('%s Detail') % force_unicode(self.opts.verbose_name),
+            'title': _('%s Detail') % force_text(self.opts.verbose_name),
             'form': self.form_obj,
 
             'object': self.obj,
@@ -248,7 +250,7 @@ class DetailAdminView(ModelAdminView):
     @filter_hook
     def get_breadcrumb(self):
         bcs = super(DetailAdminView, self).get_breadcrumb()
-        item = {'title': force_unicode(self.obj)}
+        item = {'title': force_text(self.obj)}
         if self.has_view_permission():
             item['url'] = self.model_admin_url('detail', self.obj.pk)
         bcs.append(item)
@@ -256,10 +258,8 @@ class DetailAdminView(ModelAdminView):
 
     @filter_hook
     def get_media(self):
-        media = super(DetailAdminView, self).get_media()
-        media = media + self.form_obj.media
-        media.add_css({'screen': [self.static('xadmin/css/xadmin.form.css')]})
-        return media
+        return super(DetailAdminView, self).get_media() + self.form_obj.media + \
+            self.vendor('xadmin.page.form.js', 'xadmin.form.css')
 
     @filter_hook
     def get_field_result(self, field_name):
@@ -269,11 +269,11 @@ class DetailAdminView(ModelAdminView):
     def get_response(self, *args, **kwargs):
         context = self.get_context()
         context.update(kwargs or {})
-
-        return TemplateResponse(self.request, self.detail_template or
-                                self.get_template_list(
-                                    'views/model_detail.html'),
-                                context, current_app=self.admin_site.name)
+        self.request.current_app = self.admin_site.name
+        response = TemplateResponse(self.request, self.detail_template or
+                                    self.get_template_list('views/model_detail.html'),
+                                    context)
+        return response
 
 
 class DetailAdminUtil(DetailAdminView):

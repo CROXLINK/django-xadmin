@@ -1,14 +1,15 @@
-from django.contrib.contenttypes.generic import GenericRelation
+from crispy_forms.utils import TEMPLATE_PACK
+from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.db import models
 from django.db.models.query import QuerySet
-from django.db.models.related import RelatedObject
 from django.forms.models import model_to_dict
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
-from django.utils.encoding import force_unicode
+from django.utils import six
+from django.utils.encoding import force_text, smart_text
 from django.utils.safestring import mark_safe
 from django.utils.text import capfirst
 from django.utils.translation import ugettext as _
@@ -17,12 +18,13 @@ from xadmin.plugins.inline import Inline
 from xadmin.plugins.actions import BaseActionView
 from xadmin.plugins.inline import InlineModelAdmin
 from xadmin.sites import site
-from xadmin.util import unquote, quote, model_format_dict
+from xadmin.util import unquote, quote, model_format_dict, is_related_field2
 from xadmin.views import BaseAdminPlugin, ModelAdminView, CreateAdminView, UpdateAdminView, DetailAdminView, ModelFormAdminView, DeleteAdminView, ListAdminView
 from xadmin.views.base import csrf_protect_m, filter_hook
 from xadmin.views.detail import DetailAdminUtil
 from reversion.models import Revision, Version
-from reversion.revisions import default_revision_manager, RegistrationError
+from reversion.revisions import is_active, register, is_registered, set_comment, create_revision, set_user
+from contextlib import contextmanager
 from functools import partial
 
 
@@ -30,22 +32,19 @@ def _autoregister(admin, model, follow=None):
     """Registers a model with reversion, if required."""
     if model._meta.proxy:
         raise RegistrationError("Proxy models cannot be used with django-reversion, register the parent class instead")
-    if not admin.revision_manager.is_registered(model):
+    if not is_registered(model):
         follow = follow or []
         for parent_cls, field in model._meta.parents.items():
             follow.append(field.name)
             _autoregister(admin, parent_cls)
-        admin.revision_manager.register(
-            model, follow=follow, format=admin.reversion_format)
+        register(model, follow=follow, format=admin.reversion_format)
 
 
 def _register_model(admin, model):
-    if not hasattr(admin, 'revision_manager'):
-        admin.revision_manager = default_revision_manager
     if not hasattr(admin, 'reversion_format'):
         admin.reversion_format = 'json'
 
-    if not admin.revision_manager.is_registered(model):
+    if not is_registered(model):
         inline_fields = []
         for inline in getattr(admin, 'inlines', []):
             inline_model = inline.model
@@ -53,7 +52,10 @@ def _register_model(admin, model):
                 ct_field = getattr(inline, 'ct_field', 'content_type')
                 ct_fk_field = getattr(inline, 'ct_fk_field', 'object_id')
                 for field in model._meta.many_to_many:
-                    if isinstance(field, GenericRelation) and field.rel.to == inline_model and field.object_id_field_name == ct_fk_field and field.content_type_field_name == ct_field:
+                    if isinstance(field, GenericRelation) \
+                            and field.rel.to == inline_model \
+                            and field.object_id_field_name == ct_fk_field \
+                            and field.content_type_field_name == ct_field:
                         inline_fields.append(field.name)
                 _autoregister(admin, inline_model)
             else:
@@ -64,8 +66,7 @@ def _register_model(admin, model):
                             fk_name = field.name
                 _autoregister(admin, inline_model, follow=[fk_name])
                 if not inline_model._meta.get_field(fk_name).rel.is_hidden():
-                    accessor = inline_model._meta.get_field(
-                        fk_name).related.get_accessor_name()
+                    accessor = inline_model._meta.get_field(fk_name).remote_field.get_accessor_name()
                     inline_fields.append(accessor)
         _autoregister(admin, model, inline_fields)
 
@@ -78,11 +79,13 @@ def register_models(admin_site=None):
         if getattr(admin, 'reversion_enable', False):
             _register_model(admin, model)
 
+@contextmanager
+def do_create_revision(request):
+    with create_revision():
+        set_user(request.user)
+        yield
 
 class ReversionPlugin(BaseAdminPlugin):
-
-    # The revision manager instance used to manage revisions.
-    revision_manager = default_revision_manager
 
     # The serialization format to use when registering models with reversion.
     reversion_format = "json"
@@ -94,32 +97,6 @@ class ReversionPlugin(BaseAdminPlugin):
 
     def init_request(self, *args, **kwargs):
         return self.reversion_enable
-
-    @property
-    def revision_context_manager(self):
-        """The revision context manager for this VersionAdmin."""
-        return self.revision_manager._revision_context_manager
-
-    def get_revision_instances(self, obj):
-        """Returns all the instances to be used in the object's revision."""
-        return [obj]
-
-    def get_revision_data(self, obj, flag):
-        """Returns all the revision data to be used in the object's revision."""
-        return dict(
-            (o, self.revision_manager.get_adapter(
-                o.__class__).get_version_data(o, flag))
-            for o in self.get_revision_instances(obj)
-        )
-
-    def save_revision(self, obj, tag, comment):
-        self.revision_manager.save_revision(
-            self.get_revision_data(obj, tag),
-            user=self.user,
-            comment=comment,
-            ignore_duplicates=self.ignore_duplicate_revisions,
-            db=self.revision_context_manager.get_db(),
-        )
 
     def do_post(self, __):
         def _method():
@@ -142,23 +119,8 @@ class ReversionPlugin(BaseAdminPlugin):
         return _method
 
     def post(self, __, request, *args, **kwargs):
-        return self.revision_context_manager.create_revision(manage_manually=False)(self.do_post(__))()
-
-    # def save_models(self, __):
-    #     self.revision_context_manager.create_revision(manage_manually=True)(__)()
-
-    #     if self.admin_view.org_obj is None:
-    #         self.save_revision(self.admin_view.new_obj, VERSION_ADD, _(u"Initial version."))
-    #     else:
-    #         self.save_revision(self.admin_view.new_obj, VERSION_CHANGE, _(u"Change version."))
-
-    # def save_related(self, __):
-    #     self.revision_context_manager.create_revision(manage_manually=True)(__)()
-
-    # def delete_model(self, __):
-    #     self.save_revision(self.admin_view.obj, VERSION_DELETE, \
-    #         _(u"Deleted %(verbose_name)s.") % {"verbose_name": self.opts.verbose_name})
-    #     self.revision_context_manager.create_revision(manage_manually=True)(__)()
+        with do_create_revision(request):
+            return __()
 
     # Block Views
     def block_top_toolbar(self, context, nodes):
@@ -171,7 +133,7 @@ class ReversionPlugin(BaseAdminPlugin):
         if obj:
             revisionlist_url = self.admin_view.model_admin_url(
                 'revisionlist', quote(obj.pk))
-            nodes.append(mark_safe('<a href="%s" class="navbar-toggle pull-right"><i class="fa fa-time"></i></a>' % revisionlist_url))
+            nodes.append(mark_safe('<a href="%s" class="navbar-toggle pull-right"><i class="fa fa-calendar"></i></a>' % revisionlist_url))
 
     def block_nav_btns(self, context, nodes):
         obj = getattr(
@@ -179,13 +141,22 @@ class ReversionPlugin(BaseAdminPlugin):
         if obj:
             revisionlist_url = self.admin_view.model_admin_url(
                 'revisionlist', quote(obj.pk))
-            nodes.append(mark_safe('<a href="%s" class="btn btn-default"><i class="fa fa-time"></i> <span>%s</span></a>' % (revisionlist_url, _(u'History'))))
+            nodes.append(mark_safe('<a href="%s" class="btn btn-default"><i class="fa fa-calendar"></i> <span>%s</span></a>' % (revisionlist_url, _(u'History'))))
+
+# action revision
+class ActionRevisionPlugin(BaseAdminPlugin):
+
+    reversion_enable = False
+
+    def init_request(self, *args, **kwargs):
+        return self.reversion_enable
+
+    def do_action(self, __, queryset):
+        with do_create_revision(self.request):
+            return __()
 
 
 class BaseReversionView(ModelAdminView):
-
-    # The revision manager instance used to manage revisions.
-    revision_manager = default_revision_manager
 
     # The serialization format to use when registering models with reversion.
     reversion_format = "json"
@@ -216,13 +187,12 @@ class RecoverListView(BaseReversionView):
     def get_context(self):
         context = super(RecoverListView, self).get_context()
         opts = self.opts
-        deleted = self._order_version_queryset(
-            self.revision_manager.get_deleted(self.model))
+        deleted = self._order_version_queryset(Version.objects.get_deleted(self.model))
         context.update({
             "opts": opts,
             "app_label": opts.app_label,
             "model_name": capfirst(opts.verbose_name),
-            "title": _("Recover deleted %(name)s") % {"name": force_unicode(opts.verbose_name_plural)},
+            "title": _("Recover deleted %(name)s") % {"name": force_text(opts.verbose_name_plural)},
             "deleted": deleted,
             "changelist_url": self.model_admin_url("changelist"),
         })
@@ -234,14 +204,20 @@ class RecoverListView(BaseReversionView):
 
         return TemplateResponse(
             request, self.recover_list_template or self.get_template_list(
-                "views/recover_list.html"),
-            context, current_app=self.admin_site.name)
+                "views/recover_list.html"), 
+            context)
 
 
 class RevisionListView(BaseReversionView):
 
     object_history_template = None
     revision_diff_template = None
+
+    def _reversion_order_version_queryset(self, queryset):
+        """Applies the correct ordering to the given version queryset."""
+        if not self.history_latest_first:
+            queryset = queryset.order_by("pk")
+        return queryset
 
     def get_context(self):
         context = super(RevisionListView, self).get_context()
@@ -254,15 +230,15 @@ class RevisionListView(BaseReversionView):
                 "version": version
             }
             for version
-            in self._order_version_queryset(self.revision_manager.get_for_object_reference(
+            in self._reversion_order_version_queryset(Version.objects.get_for_object_reference(
                 self.model,
                 self.obj.pk,
             ).select_related("revision__user"))
         ]
         context.update({
-            'title': _('Change history: %s') % force_unicode(self.obj),
+            'title': _('Change history: %s') % force_text(self.obj),
             'action_list': action_list,
-            'model_name': capfirst(force_unicode(opts.verbose_name_plural)),
+            'model_name': capfirst(force_text(opts.verbose_name_plural)),
             'object': self.obj,
             'app_label': opts.app_label,
             "changelist_url": self.model_admin_url("changelist"),
@@ -284,10 +260,10 @@ class RevisionListView(BaseReversionView):
         context = self.get_context()
 
         return TemplateResponse(self.request, self.object_history_template or
-                                self.get_template_list('views/model_history.html'), context, current_app=self.admin_site.name)
+                                self.get_template_list('views/model_history.html'), context)
 
     def get_version_object(self, version):
-        obj_version = version.object_version
+        obj_version = version._object_version
         obj = obj_version.object
         obj._state.db = self.obj._state.db
 
@@ -330,7 +306,7 @@ class RevisionListView(BaseReversionView):
         obj_b, detail_b = self.get_version_object(version_b)
 
         for f in (self.opts.fields + self.opts.many_to_many):
-            if isinstance(f, RelatedObject):
+            if is_related_field2(f):
                 label = f.opts.verbose_name
             else:
                 label = f.verbose_name
@@ -365,7 +341,7 @@ class RevisionListView(BaseReversionView):
 
         return TemplateResponse(
             self.request, self.revision_diff_template or self.get_template_list('views/revision_diff.html'),
-            context, current_app=self.admin_site.name)
+            context)
 
     @filter_hook
     def get_media(self):
@@ -401,11 +377,11 @@ class BaseRevisionView(ModelFormAdminView):
 
 class DiffField(Field):
 
-    def render(self, form, form_style, context):
+    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
         html = ''
         for field in self.fields:
             html += ('<div class="diff_field" rel="tooltip"><textarea class="org-data" style="display:none;">%s</textarea>%s</div>' %
-                    (_('Current: %s') % self.attrs.pop('orgdata', ''), render_field(field, form, form_style, context, template=self.template, attrs=self.attrs)))
+                    (_('Current: %s') % self.attrs.pop('orgdata', ''), render_field(field, form, form_style, context, template_pack=template_pack, attrs=self.attrs)))
         return html
 
 
@@ -418,7 +394,7 @@ class RevisionView(BaseRevisionView):
             DetailAdminView, self.model, object_id)
         self.org_obj = self.detail.obj
         self.version = get_object_or_404(
-            Version, pk=version_id, object_id=unicode(self.org_obj.pk))
+            Version, pk=version_id, object_id=smart_text(self.org_obj.pk))
 
         self.prepare_form()
 
@@ -426,8 +402,17 @@ class RevisionView(BaseRevisionView):
         helper = super(RevisionView, self).get_form_helper()
         diff_fields = {}
         version_data = self.version.field_dict
+        
         for f in self.opts.fields:
-            if f.value_from_object(self.org_obj) != version_data.get(f.name, None):
+            fvalue = f.value_from_object(self.org_obj)
+            vvalue = version_data.get(f.name, None)
+
+            if fvalue is None and vvalue == '':
+                vvalue = None
+            if is_related_field2(f):
+                vvalue = version_data.get(f.name + '_' + f.rel.get_related_field().name, None)
+
+            if fvalue != vvalue:
                 diff_fields[f.name] = self.detail.get_field_result(f.name).val
         for k, v in diff_fields.items():
             helper[k].wrap(DiffField, orgdata=v)
@@ -437,7 +422,7 @@ class RevisionView(BaseRevisionView):
     def get_context(self):
         context = super(RevisionView, self).get_context()
         context["title"] = _(
-            "Revert %s") % force_unicode(self.model._meta.verbose_name)
+            "Revert %s") % force_text(self.model._meta.verbose_name)
         return context
 
     @filter_hook
@@ -449,12 +434,12 @@ class RevisionView(BaseRevisionView):
         return TemplateResponse(
             self.request, form_template or self.get_template_list(
                 'views/revision_form.html'),
-            context, current_app=self.admin_site.name)
+            context)
 
     @filter_hook
     def post_response(self):
         self.message_user(_('The %(model)s "%(name)s" was reverted successfully. You may edit it again below.') %
-                          {"model": force_unicode(self.opts.verbose_name), "name": unicode(self.new_obj)}, 'success')
+                          {"model": force_text(self.opts.verbose_name), "name": smart_text(self.new_obj)}, 'success')
         return HttpResponseRedirect(self.model_admin_url('change', self.new_obj.pk))
 
 
@@ -467,7 +452,7 @@ class RecoverView(BaseRevisionView):
             raise PermissionDenied
 
         self.version = get_object_or_404(Version, pk=version_id)
-        self.org_obj = self.version.object_version.object
+        self.org_obj = self.version._object_version.object
 
         self.prepare_form()
 
@@ -486,18 +471,18 @@ class RecoverView(BaseRevisionView):
         return TemplateResponse(
             self.request, form_template or self.get_template_list(
                 'views/recover_form.html'),
-            context, current_app=self.admin_site.name)
+            context)
 
     @filter_hook
     def post_response(self):
         self.message_user(_('The %(model)s "%(name)s" was recovered successfully. You may edit it again below.') %
-                          {"model": force_unicode(self.opts.verbose_name), "name": unicode(self.new_obj)}, 'success')
+                          {"model": force_text(self.opts.verbose_name), "name": smart_text(self.new_obj)}, 'success')
         return HttpResponseRedirect(self.model_admin_url('change', self.new_obj.pk))
 
 
 class InlineDiffField(Field):
 
-    def render(self, form, form_style, context):
+    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
         html = ''
         instance = form.instance
         if not instance.pk:
@@ -509,7 +494,7 @@ class InlineDiffField(Field):
         for field in self.fields:
             f = opts.get_field(field)
             f_html = render_field(field, form, form_style, context,
-                                  template=self.template, attrs=self.attrs)
+                                  template_pack=template_pack, attrs=self.attrs)
             if f.value_from_object(instance) != initial.get(field, None):
                 current_val = detail.get_field_result(f.name).val
                 html += ('<div class="diff_field" rel="tooltip"><textarea class="org-data" style="display:none;">%s</textarea>%s</div>'
@@ -528,7 +513,7 @@ class InlineRevisionPlugin(BaseAdminPlugin):
         object_id = obj.pk
         # Get the fk name.
         try:
-            fk_name = formset.fk.name
+            fk_name = formset.fk.name + '_' + formset.fk.rel.get_related_field().name
         except AttributeError:
             # This is a GenericInlineFormset, or similar.
             fk_name = formset.ct_fk_field.name
@@ -537,7 +522,7 @@ class InlineRevisionPlugin(BaseAdminPlugin):
         related_versions = dict([(related_version.object_id, related_version)
                                  for related_version in revision_versions
                                  if ContentType.objects.get_for_id(related_version.content_type_id).model_class() == formset.model
-                                 and unicode(related_version.field_dict[fk_name]) == unicode(object_id)])
+                                 and smart_text(related_version.field_dict[fk_name]) == smart_text(object_id)])
         return related_versions
 
     def _hack_inline_formset_initial(self, revision_view, formset):
@@ -548,9 +533,9 @@ class InlineRevisionPlugin(BaseAdminPlugin):
             revision_view.org_obj, revision_view.version, formset)
         formset.related_versions = related_versions
         for related_obj in formset.queryset:
-            if unicode(related_obj.pk) in related_versions:
+            if smart_text(related_obj.pk) in related_versions:
                 initial.append(
-                    related_versions.pop(unicode(related_obj.pk)).field_dict)
+                    related_versions.pop(smart_text(related_obj.pk)).field_dict)
             else:
                 initial_data = model_to_dict(related_obj)
                 initial_data["DELETE"] = True
@@ -579,7 +564,8 @@ class InlineRevisionPlugin(BaseAdminPlugin):
 
         if self.request.method == 'GET' and formset.helper and formset.helper.layout:
             helper = formset.helper
-            helper.filter(basestring).wrap(InlineDiffField)
+            cls_str = str if six.PY3 else basestring
+            helper.filter(cls_str).wrap(InlineDiffField)
             fake_admin_class = type(str('%s%sFakeAdmin' % (self.opts.app_label, self.opts.model_name)), (object, ), {'model': self.model})
             for form in formset.forms:
                 instance = form.instance
@@ -592,34 +578,6 @@ class InlineRevisionPlugin(BaseAdminPlugin):
         if hasattr(admin_view, 'version') and hasattr(admin_view, 'org_obj'):
             self._hack_inline_formset_initial(admin_view, formset)
         return formset
-
-# action revision
-
-
-class ActionRevisionPlugin(BaseAdminPlugin):
-
-    revision_manager = default_revision_manager
-    reversion_enable = False
-
-    def init_request(self, *args, **kwargs):
-        return self.reversion_enable
-
-    @property
-    def revision_context_manager(self):
-        return self.revision_manager._revision_context_manager
-
-    def do_action_func(self, __):
-        def _method():
-            self.revision_context_manager.set_user(self.user)
-            action_view = self.admin_view
-            comment = action_view.description % model_format_dict(self.opts)
-
-            self.revision_context_manager.set_comment(comment)
-            return __()
-        return _method
-
-    def do_action(self, __, queryset):
-        return self.revision_context_manager.create_revision(manage_manually=False)(self.do_action_func(__))()
 
 
 class VersionInline(object):

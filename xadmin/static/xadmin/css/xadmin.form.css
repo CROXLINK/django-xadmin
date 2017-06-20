@@ -85,7 +85,7 @@ select.selectmultiple {
    {
     max-width: 300px;
   }
-  .input-group.date{ max-width: 220px;}
+  .input-group.date{ max-width: 300px;}
   .input-group.time{ max-width: 180px;}
   .int-field {
     max-width: 100px;
@@ -187,4 +187,9 @@ img.field_img {
 /** tabs **/
 .nav.nav-tabs {
   margin-bottom: 15px;
+}
+
+/** selectize **/
+.selectize-input {
+  vertical-align: bottom;
 }

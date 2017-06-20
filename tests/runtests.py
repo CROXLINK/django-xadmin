@@ -1,10 +1,13 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import os
 import shutil
 import sys
 import tempfile
 
 import django
+from django.apps import AppConfig,apps
+from django.utils.encoding import smart_text
 
 
 TEST_ROOT = os.path.realpath(os.path.dirname(__file__))
@@ -31,9 +34,13 @@ ALWAYS_INSTALLED_APPS = [
 def get_test_modules():
     modules = []
     for f in os.listdir(RUNTESTS_DIR):
-        if (f.startswith('__init__') or
-            f.startswith('.') or
-            f.startswith('sql') or not os.path.isdir(os.path.join(RUNTESTS_DIR, f))):
+        if (
+                f.startswith('__init__')
+                or f.startswith('__pycache__')
+                or f.startswith('.')
+                or f.startswith('sql')
+                or not os.path.isdir(os.path.join(RUNTESTS_DIR, f))
+                ):
             continue
         modules.append(f)
     return modules
@@ -76,14 +83,10 @@ def setup(verbosity, test_labels):
     # (This import statement is intentionally delayed until after we
     # access settings because of the USE_I18N dependency.)
 
-    django.setup()
-    from django.db.models.loading import get_apps, load_app
-    get_apps()
 
     # Load all the test model apps.
     test_labels_set = set([label.split('.')[0] for label in test_labels])
     test_modules = get_test_modules()
-
     for module_name in test_modules:
         module_label = module_name
         # if the module was named on the command line, or
@@ -91,12 +94,12 @@ def setup(verbosity, test_labels):
         # this module and add it to the list to test.
         if not test_labels or module_name in test_labels_set:
             if verbosity >= 2:
-                print "Importing application %s" % module_name
-            mod = load_app(module_label)
-            if mod:
-                if module_label not in settings.INSTALLED_APPS:
-                    settings.INSTALLED_APPS.append(module_label)
+                print("Importing application %s" % module_name)
+            if module_label not in settings.INSTALLED_APPS:
+                settings.INSTALLED_APPS.append(module_label)
 
+    django.setup()
+    [a.models_module for a in apps.get_app_configs()]
     return state
 
 def teardown(state):
@@ -105,7 +108,7 @@ def teardown(state):
     # so that it will successfully remove temp trees containing
     # non-ASCII filenames on Windows. (We're assuming the temp dir
     # name itself does not contain non-ASCII characters.)
-    shutil.rmtree(unicode(TEMP_DIR))
+    shutil.rmtree(smart_text(TEMP_DIR))
     # Restore the old settings.
     for key, value in state.items():
         setattr(settings, key, value)
@@ -164,7 +167,6 @@ if __name__ == "__main__":
 
     if options.liveserver is not None:
         os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = options.liveserver
-
     failures = django_tests(int(options.verbosity), options.interactive,
                             options.failfast, args)
     if failures:

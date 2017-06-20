@@ -1,10 +1,13 @@
+from __future__ import absolute_import
+from collections import OrderedDict
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.core.paginator import InvalidPage, Paginator
+from django.core.urlresolvers import NoReverseMatch
 from django.db import models
 from django.http import HttpResponseRedirect
 from django.template.response import SimpleTemplateResponse, TemplateResponse
-from django.utils.datastructures import SortedDict
-from django.utils.encoding import force_unicode, smart_unicode
+from django.utils import six
+from django.utils.encoding import force_text, smart_text
 from django.utils.html import escape, conditional_escape
 from django.utils.safestring import mark_safe
 from django.utils.text import capfirst
@@ -12,7 +15,7 @@ from django.utils.translation import ugettext as _
 
 from xadmin.util import lookup_field, display_for_field, label_for_field, boolean_icon
 
-from base import ModelAdminView, filter_hook, inclusion_tag, csrf_protect_m
+from .base import ModelAdminView, filter_hook, inclusion_tag, csrf_protect_m
 
 # List settings
 ALL_VAR = 'all'
@@ -65,7 +68,7 @@ class ResultItem(object):
     def label(self):
         text = mark_safe(
             self.text) if self.allow_tags else conditional_escape(self.text)
-        if force_unicode(text) == '':
+        if force_text(text) == '':
             text = mark_safe('&nbsp;')
         for wrap in self.wraps:
             text = mark_safe(wrap % text)
@@ -172,15 +175,6 @@ class ListAdminView(ModelAdminView):
 
         # Get the number of objects, with admin filters applied.
         self.result_count = self.paginator.count
-
-        # Get the total number of objects, with no admin filters applied.
-        # Perform a slight optimization: Check to see whether any filters were
-        # given. If not, use paginator.hits to calculate the number of objects,
-        # because we've already done paginator.hits and the value is cached.
-        if not self.list_queryset.query.where:
-            self.full_result_count = self.result_count
-        else:
-            self.full_result_count = self.base_queryset.count()
 
         self.can_show_all = self.result_count <= self.list_max_show_all
         self.multi_page = self.result_count > self.list_per_page
@@ -290,11 +284,14 @@ class ListAdminView(ModelAdminView):
                         or self._get_default_ordering())
         if ORDER_VAR in self.params and self.params[ORDER_VAR]:
             # Clear ordering and used params
-            ordering = [pfx + self.get_ordering_field(field_name) for n, pfx, field_name in
-                        map(
-                        lambda p: p.rpartition('-'),
-                        self.params[ORDER_VAR].split('.'))
-                        if self.get_ordering_field(field_name)]
+            ordering = [
+                    pfx + self.get_ordering_field(field_name)
+                    for n, pfx, field_name in map(
+                            lambda p: p.rpartition('-'),
+                            self.params[ORDER_VAR].split('.')
+                            )
+                        if self.get_ordering_field(field_name)
+                    ]
 
         # Ensure that the primary key is systematically present in the list of
         # ordering fields so we can guarantee a deterministic order across all
@@ -310,13 +307,13 @@ class ListAdminView(ModelAdminView):
     @filter_hook
     def get_ordering_field_columns(self):
         """
-        Returns a SortedDict of ordering field column numbers and asc/desc
+        Returns a OrderedDict of ordering field column numbers and asc/desc
         """
 
         # We must cope with more than one column having the same underlying sort
         # field, so we base things on column numbers.
         ordering = self._get_default_ordering()
-        ordering_fields = SortedDict()
+        ordering_fields = OrderedDict()
         if ORDER_VAR not in self.params or not self.params[ORDER_VAR]:
             # for ordering specified on ModelAdmin or model Meta, we don't know
             # the right column numbers absolutely, because there might be more
@@ -369,13 +366,12 @@ class ListAdminView(ModelAdminView):
         """
         Prepare the context for templates.
         """
-        self.title = _('%s List') % force_unicode(self.opts.verbose_name)
-
+        self.title = _('%s List') % force_text(self.opts.verbose_name)
         model_fields = [(f, f.name in self.list_display, self.get_check_field_url(f))
-                        for f in (self.opts.fields + self.get_model_method_fields()) if f.name not in self.list_exclude]
+                        for f in (list(self.opts.fields) + self.get_model_method_fields()) if f.name not in self.list_exclude]
 
         new_context = {
-            'model_name': force_unicode(self.opts.verbose_name_plural),
+            'model_name': force_text(self.opts.verbose_name_plural),
             'title': self.title,
             'cl': self,
             'model_fields': model_fields,
@@ -410,9 +406,8 @@ class ListAdminView(ModelAdminView):
         context.update(kwargs or {})
 
         response = self.get_response(context, *args, **kwargs)
-
         return response or TemplateResponse(request, self.object_list_template or
-                                            self.get_template_list('views/model_list.html'), context, current_app=self.admin_site.name)
+                                            self.get_template_list('views/model_list.html'), context)
 
     @filter_hook
     def post_response(self, *args, **kwargs):
@@ -460,7 +455,10 @@ class ListAdminView(ModelAdminView):
         if field_name in ordering_field_columns:
             sorted = True
             order_type = ordering_field_columns.get(field_name).lower()
-            sort_priority = ordering_field_columns.keys().index(field_name) + 1
+            arr = ordering_field_columns.keys()
+            if six.PY3:
+                arr = list(arr)
+            sort_priority = arr.index(field_name) + 1
             th_classes.append('sorted %sending' % order_type)
             new_order_type = {'asc': 'desc', 'desc': 'asc'}[order_type]
 
@@ -534,7 +532,7 @@ class ListAdminView(ModelAdminView):
         item = ResultItem(field_name, row)
         try:
             f, attr, value = lookup_field(field_name, obj, self)
-        except (AttributeError, ObjectDoesNotExist):
+        except (AttributeError, ObjectDoesNotExist, NoReverseMatch):
             item.text = mark_safe("<span class='text-muted'>%s</span>" % EMPTY_CHANGELIST_VALUE)
         else:
             if f is None:
@@ -544,7 +542,7 @@ class ListAdminView(ModelAdminView):
                     item.allow_tags = True
                     item.text = boolean_icon(value)
                 else:
-                    item.text = smart_unicode(value)
+                    item.text = smart_text(value)
             else:
                 if isinstance(f.rel, models.ManyToOneRel):
                     field_val = getattr(obj, f.name)

@@ -1,5 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import Group
+from django.conf import settings
+from django.utils.encoding import python_2_unicode_compatible
 
+AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 SERVER_STATUS = (
     (0, u"Normal"),
@@ -19,7 +23,7 @@ SERVICE_TYPES = (
     ('mix', u"Mix"),
 )
 
-
+@python_2_unicode_compatible
 class IDC(models.Model):
     name = models.CharField(max_length=64)
     description = models.TextField()
@@ -28,10 +32,11 @@ class IDC(models.Model):
     telphone = models.CharField(max_length=32)
     address = models.CharField(max_length=128)
     customer_id = models.CharField(max_length=128)
+    groups = models.ManyToManyField(Group)  # many
 
     create_time = models.DateField(auto_now=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -39,12 +44,13 @@ class IDC(models.Model):
         verbose_name_plural = verbose_name
 
 
+@python_2_unicode_compatible
 class Host(models.Model):
     idc = models.ForeignKey(IDC)
     name = models.CharField(max_length=64)
     nagios_name = models.CharField(u"Nagios Host ID", max_length=64, blank=True, null=True)
-    ip = models.IPAddressField(blank=True, null=True)
-    internal_ip = models.IPAddressField(blank=True, null=True)
+    ip = models.GenericIPAddressField(blank=True, null=True)
+    internal_ip = models.GenericIPAddressField(blank=True, null=True)
     user = models.CharField(max_length=64)
     password = models.CharField(max_length=128)
     ssh_port = models.IntegerField(blank=True, null=True)
@@ -66,7 +72,9 @@ class Host(models.Model):
     service_type = models.CharField(max_length=32, choices=SERVICE_TYPES)
     description = models.TextField()
 
-    def __unicode__(self):
+    administrator = models.ForeignKey(AUTH_USER_MODEL, verbose_name="Admin")
+
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -74,6 +82,7 @@ class Host(models.Model):
         verbose_name_plural = verbose_name
 
 
+@python_2_unicode_compatible
 class MaintainLog(models.Model):
     host = models.ForeignKey(Host)
     maintain_type = models.CharField(max_length=32)
@@ -82,7 +91,7 @@ class MaintainLog(models.Model):
     operator = models.CharField(max_length=16)
     note = models.TextField()
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s maintain-log [%s] %s %s' % (self.host.name, self.time.strftime('%Y-%m-%d %H:%M:%S'),
                                                self.maintain_type, self.hard_type)
 
@@ -91,6 +100,7 @@ class MaintainLog(models.Model):
         verbose_name_plural = verbose_name
 
 
+@python_2_unicode_compatible
 class HostGroup(models.Model):
 
     name = models.CharField(max_length=32)
@@ -102,10 +112,11 @@ class HostGroup(models.Model):
         verbose_name = u"Host Group"
         verbose_name_plural = verbose_name
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
+@python_2_unicode_compatible
 class AccessRecord(models.Model):
     date = models.DateField()
     user_count = models.IntegerField()
@@ -115,5 +126,5 @@ class AccessRecord(models.Model):
         verbose_name = u"Access Record"
         verbose_name_plural = verbose_name
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s Access Record" % self.date.strftime('%Y-%m-%d')

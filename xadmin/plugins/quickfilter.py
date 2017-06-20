@@ -3,9 +3,12 @@ Created on Mar 26, 2014
 
 @author: LAB_ADM
 '''
+from future.utils import iteritems
+from django.utils import six
 from django.utils.translation import ugettext_lazy as _
 from xadmin.filters import manager,MultiSelectFieldListFilter
 from xadmin.plugins.filters import *
+from xadmin.util import is_related_field
 
 @manager.register
 class QuickFilterMultiSelectFieldListFilter(MultiSelectFieldListFilter):
@@ -56,7 +59,7 @@ class QuickFilterPlugin(BaseAdminPlugin):
         rel_name = None
         for part in parts[:-1]:
             try:
-                field, _, _, _ = model._meta.get_field_by_name(part)
+                field = model._meta.get_field(part)
             except FieldDoesNotExist:
                 # Lookups on non-existants fields are ok, since they're ignored
                 # later.
@@ -64,7 +67,7 @@ class QuickFilterPlugin(BaseAdminPlugin):
             if hasattr(field, 'rel'):
                 model = field.rel.to
                 rel_name = field.rel.get_related_field().name
-            elif isinstance(field, RelatedObject):
+            elif is_related_field(field):
                 model = field.model
                 rel_name = model._meta.pk.name
             else:
@@ -79,7 +82,7 @@ class QuickFilterPlugin(BaseAdminPlugin):
  
     def get_list_queryset(self, queryset):
         lookup_params = dict([(smart_str(k)[len(FILTER_PREFIX):], v) for k, v in self.admin_view.params.items() if smart_str(k).startswith(FILTER_PREFIX) and v != ''])
-        for p_key, p_val in lookup_params.iteritems():
+        for p_key, p_val in iteritems(lookup_params):
             if p_val == "False":
                 lookup_params[p_key] = False
         use_distinct = False
@@ -135,7 +138,7 @@ class QuickFilterPlugin(BaseAdminPlugin):
                 if spec and spec.has_output():
                     try:
                         new_qs = spec.do_filte(queryset)
-                    except ValidationError, e:
+                    except ValidationError as e:
                         new_qs = None
                         self.admin_view.message_user(_("<b>Filtering error:</b> %s") % e.messages[0], 'error')
                     if new_qs is not None:
@@ -145,7 +148,10 @@ class QuickFilterPlugin(BaseAdminPlugin):
  
         self.has_filters = bool(self.filter_specs)
         self.admin_view.quickfilter['filter_specs'] = self.filter_specs
-        self.admin_view.quickfilter['used_filter_num'] = len(filter(lambda f: f.is_used, self.filter_specs))
+        obj = filter(lambda f: f.is_used, self.filter_specs)
+        if six.PY3:
+            obj = list(obj)
+        self.admin_view.quickfilter['used_filter_num'] = len(obj)
  
         if use_distinct:
             return queryset.distinct()
@@ -153,6 +159,7 @@ class QuickFilterPlugin(BaseAdminPlugin):
             return queryset
     
     def block_left_navbar(self, context, nodes):
-        nodes.append(loader.render_to_string('xadmin/blocks/modal_list.left_navbar.quickfilter.html',context))
+        nodes.append(loader.render_to_string('xadmin/blocks/modal_list.left_navbar.quickfilter.html',
+                                             get_context_dict(context)))
         
 site.register_plugin(QuickFilterPlugin, ListAdminView)

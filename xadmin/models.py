@@ -1,25 +1,23 @@
 import json
 import django
 from django.db import models
+from django.utils import timezone
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _, ugettext
+from django.core.urlresolvers import NoReverseMatch, reverse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models.base import ModelBase
-from django.utils.encoding import smart_unicode
+from django.utils.encoding import python_2_unicode_compatible, smart_text
 
-from django.db.models.signals import post_syncdb
+from django.db.models.signals import post_migrate
 from django.contrib.auth.models import Permission
 
 import datetime
 import decimal
+from xadmin.util import quote
 
-if 4 < django.VERSION[1] < 7:
-    AUTH_USER_MODEL = django.contrib.auth.get_user_model()
-else:
-    AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
-
+AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 def add_view_permissions(sender, **kwargs):
     """
@@ -40,9 +38,10 @@ def add_view_permissions(sender, **kwargs):
             #print "Added view permission for %s" % content_type.name
 
 # check for all our view permissions after a syncdb
-post_syncdb.connect(add_view_permissions)
+post_migrate.connect(add_view_permissions)
 
 
+@python_2_unicode_compatible
 class Bookmark(models.Model):
     title = models.CharField(_(u'Title'), max_length=128)
     user = models.ForeignKey(AUTH_USER_MODEL, verbose_name=_(u"user"), blank=True, null=True)
@@ -58,7 +57,7 @@ class Bookmark(models.Model):
             base_url = base_url + '?' + self.query
         return base_url
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     class Meta:
@@ -68,10 +67,10 @@ class Bookmark(models.Model):
 
 class JSONEncoder(DjangoJSONEncoder):
     def default(self, o):
-        if isinstance(o, datetime.date):
-            return o.strftime('%Y-%m-%d')
-        elif isinstance(o, datetime.datetime):
+        if isinstance(o, datetime.datetime):
             return o.strftime('%Y-%m-%d %H:%M:%S')
+        elif isinstance(o, datetime.date):
+            return o.strftime('%Y-%m-%d')
         elif isinstance(o, decimal.Decimal):
             return str(o)
         elif isinstance(o, ModelBase):
@@ -80,9 +79,10 @@ class JSONEncoder(DjangoJSONEncoder):
             try:
                 return super(JSONEncoder, self).default(o)
             except Exception:
-                return smart_unicode(o)
+                return smart_text(o)
 
 
+@python_2_unicode_compatible
 class UserSettings(models.Model):
     user = models.ForeignKey(AUTH_USER_MODEL, verbose_name=_(u"user"))
     key = models.CharField(_('Settings Key'), max_length=256)
@@ -94,7 +94,7 @@ class UserSettings(models.Model):
     def set_json(self, obj):
         self.value = json.dumps(obj, cls=JSONEncoder, ensure_ascii=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s %s" % (self.user, self.key)
 
     class Meta:
@@ -102,6 +102,7 @@ class UserSettings(models.Model):
         verbose_name_plural = _('User Settings')
 
 
+@python_2_unicode_compatible
 class UserWidget(models.Model):
     user = models.ForeignKey(AUTH_USER_MODEL, verbose_name=_(u"user"))
     page_id = models.CharField(_(u"Page"), max_length=256)
@@ -129,9 +130,60 @@ class UserWidget(models.Model):
             except Exception:
                 pass
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s %s widget" % (self.user, self.widget_type)
 
     class Meta:
         verbose_name = _(u'User Widget')
         verbose_name_plural = _('User Widgets')
+
+
+@python_2_unicode_compatible
+class Log(models.Model):
+    action_time = models.DateTimeField(
+        _('action time'),
+        default=timezone.now,
+        editable=False,
+    )
+    user = models.ForeignKey(
+        AUTH_USER_MODEL,
+        models.CASCADE,
+        verbose_name=_('user'),
+    )
+    ip_addr = models.GenericIPAddressField(_('action ip'), blank=True, null=True)
+    content_type = models.ForeignKey(
+        ContentType,
+        models.SET_NULL,
+        verbose_name=_('content type'),
+        blank=True, null=True,
+    )
+    object_id = models.TextField(_('object id'), blank=True, null=True)
+    object_repr = models.CharField(_('object repr'), max_length=200)
+    action_flag = models.CharField(_('action flag'), max_length=32)
+    message = models.TextField(_('change message'), blank=True)
+
+    class Meta:
+        verbose_name = _('log entry')
+        verbose_name_plural = _('log entries')
+        ordering = ('-action_time',)
+
+    def __repr__(self):
+        return smart_text(self.action_time)
+
+    def __str__(self):
+        if self.action_flag == 'create':
+            return ugettext('Added "%(object)s".') % {'object': self.object_repr}
+        elif self.action_flag == 'change':
+            return ugettext('Changed "%(object)s" - %(changes)s') % {
+                'object': self.object_repr,
+                'changes': self.message,
+            }
+        elif self.action_flag == 'delete' and self.object_repr:
+            return ugettext('Deleted "%(object)s."') % {'object': self.object_repr}
+
+        return self.message
+
+    def get_edited_object(self):
+        "Returns the edited object represented by this log entry"
+        return self.content_type.get_object_for_this_type(pk=self.object_id)
+

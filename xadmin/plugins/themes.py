@@ -1,7 +1,9 @@
 #coding:utf-8
-import urllib, httplib2
+from __future__ import print_function
+import httplib2
 from django.template import loader
 from django.core.cache import cache
+from django.utils import six
 from django.utils.translation import ugettext as _
 from django.conf import settings
 
@@ -9,6 +11,11 @@ from xadmin.sites import site
 from xadmin.models import UserSettings
 from xadmin.views import BaseAdminPlugin, BaseAdminView
 from xadmin.util import static, json
+import six
+if six.PY2:
+    import urllib
+else:
+    import urllib.parse
 
 THEME_CACHE_KEY = 'xadmin_themes'
 
@@ -32,7 +39,11 @@ class ThemePlugin(BaseAdminPlugin):
             except Exception:
                 pass
         if '_theme' in self.request.COOKIES:
-            return urllib.unquote(self.request.COOKIES['_theme'])
+            if six.PY2:
+                func = urllib.unquote
+            else:
+                func = urllib.parse.unquote
+            return func(self.request.COOKIES['_theme'])
         return self.default_theme
 
     def get_context(self, context):
@@ -46,10 +57,10 @@ class ThemePlugin(BaseAdminPlugin):
     # Block Views
     def block_top_navmenu(self, context, nodes):
 
-        themes = [{'name': _(u"Default"), 'description': _(
-            u"Default bootstrap theme"), 'css': self.default_theme},
-            {'name': _(u"Bootstrap2"), 'description': _(u"Bootstrap 2.x theme"),
-            'css': self.bootstrap2_theme}]
+        themes = [
+            {'name': _(u"Default"), 'description': _(u"Default bootstrap theme"), 'css': self.default_theme},
+            {'name': _(u"Bootstrap2"), 'description': _(u"Bootstrap 2.x theme"), 'css': self.bootstrap2_theme},
+            ]
         select_css = context.get('site_theme', self.default_theme)
 
         if self.user_themes:
@@ -64,33 +75,32 @@ class ThemePlugin(BaseAdminPlugin):
 
                 use_local_watch_themes = getattr(settings, 'USE_LOCAL_WATCH_THEMES', False)
 
-                try:                    
-                    if use_local_watch_themes:
-                        # fetching themes from local web server
-#                         requesting_host = self.request.get_host() or ''
-#                         print requesting_host
-                        watch_themes_str = urllib.urlopen(self.request.build_absolute_uri('/static/xadmin/vendor/bootswatch/api.bootswatch.com.3')).read()
+                if use_local_watch_themes:
+                    # fetching themes from local web server
+#                   requesting_host = self.request.get_host() or ''
+#                   print requesting_host
+                    content = urllib.urlopen(self.request.build_absolute_uri('/static/xadmin/vendor/bootswatch/api.bootswatch.com.3')).read()
 # 
-                        from django.template import Context, Template
-                        watch_themes_template = Template(watch_themes_str)
-                        watch_themes_str = watch_themes_template.render(Context())
+                    from django.template import Context, Template
+                    watch_themes_template = Template(content)
+                    content = watch_themes_template.render(Context())
                         
-                    else:
-                        # fetching themes from bootswatch
-                        h = httplib2.Http(".cache", disable_ssl_certificate_validation=True)
-                        resp, watch_themes_str = h.request("http://bootswatch.com/api/3.json", 'GET', \
-                            "", headers={"Accept": "application/json", "User-Agent": self.request.META['HTTP_USER_AGENT']})
+                else:
+                    # fetching themes from bootswatch
+                    h = httplib2.Http()
+                    resp, content = h.request("http://bootswatch.com/api/3.json", 'GET', '',
+                        headers={"Accept": "application/json", "User-Agent": self.request.META['HTTP_USER_AGENT']})
+                    if six.PY3:
+                        content = content.decode()
 
-#                     print watch_themes_str
-
-                    watch_themes = json.loads(watch_themes_str)['themes']
+                try:
+                    watch_themes = json.loads(content)['themes']
                     ex_themes.extend([
                         {'name': t['name'], 'description': t['description'],
                             'css': t['cssMin'], 'thumbnail': t['thumbnail']}
                         for t in watch_themes])
-
-                except Exception, e:
-                    print unicode(e)
+                except Exception as e:
+                    print(e)
 
                 cache.set(THEME_CACHE_KEY, json.dumps(ex_themes), 24 * 3600)
                 themes.extend(ex_themes)
