@@ -1,0 +1,1302 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# eddiep <eddiep@163.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: xadmin-core\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-01-10 10:31+0800\n"
+"PO-Revision-Date: 2014-11-07 07:45+0000\n"
+"Last-Translator: eddiep <eddiep@163.com>\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/xadmin-core/language/zh_TW/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: filters.py:157 filters.py:189 filters.py:401 filters.py:451
+msgid "All"
+msgstr "全部"
+
+#: filters.py:158 plugins/export.py:117
+msgid "Yes"
+msgstr "是"
+
+#: filters.py:159 plugins/export.py:117
+msgid "No"
+msgstr "否"
+
+#: filters.py:173
+msgid "Unknown"
+msgstr "未知"
+
+#: filters.py:265
+msgid "Any date"
+msgstr "任意日期"
+
+#: filters.py:266
+msgid "Has date"
+msgstr "有日期"
+
+#: filters.py:269
+msgid "Has no date"
+msgstr "無日期"
+
+#: filters.py:272 widgets.py:30
+msgid "Today"
+msgstr "今日"
+
+#: filters.py:276
+msgid "Past 7 days"
+msgstr "過去7天"
+
+#: filters.py:280
+msgid "This month"
+msgstr "本月"
+
+#: filters.py:284
+msgid "This year"
+msgstr "今年"
+
+#: forms.py:10
+msgid ""
+"Please enter the correct username and password for a staff account. Note "
+"that both fields are case-sensitive."
+msgstr "請輸入正確的用戶名及密碼、確認您已具備登入的權限，並注意大小寫的區別"
+
+#: forms.py:21
+msgid "Please log in again, because your session has expired."
+msgstr "連線已逾時，請重新登入"
+
+#: forms.py:41
+#, python-format
+msgid "Your e-mail address is not your username. Try '%s' instead."
+msgstr "您的郵箱與用戶名不同，請嘗試 '%s'"
+
+#: models.py:47
+msgid "Title"
+msgstr "標題"
+
+#: models.py:48 models.py:87 models.py:106
+msgid "user"
+msgstr "用戶"
+
+#: models.py:49
+msgid "Url Name"
+msgstr "網址"
+
+#: models.py:51
+msgid "Query String"
+msgstr "查詢字串"
+
+#: models.py:52
+msgid "Is Share"
+msgstr "已分享"
+
+#: models.py:65 plugins/bookmark.py:49 plugins/bookmark.py:177
+msgid "Bookmark"
+msgstr "書籤"
+
+#: models.py:66
+msgid "Bookmarks"
+msgstr "書籤"
+
+#: models.py:88
+msgid "Settings Key"
+msgstr "設定 Key"
+
+#: models.py:89
+msgid "Settings Content"
+msgstr "Settings 內容"
+
+#: models.py:101
+msgid "User Setting"
+msgstr "用戶設定"
+
+#: models.py:102
+msgid "User Settings"
+msgstr "用戶設定"
+
+#: models.py:107
+msgid "Page"
+msgstr "頁"
+
+#: models.py:108 views/dashboard.py:81 views/dashboard.py:91
+msgid "Widget Type"
+msgstr "小工具類型"
+
+#: models.py:109 views/dashboard.py:82
+msgid "Widget Params"
+msgstr "小工具參數"
+
+#: models.py:136
+msgid "User Widget"
+msgstr "用戶小工具"
+
+#: models.py:137
+msgid "User Widgets"
+msgstr "用戶小工具"
+
+#: widgets.py:48
+msgid "Now"
+msgstr "現在"
+
+#: plugins/actions.py:54
+#, python-format
+msgid "Delete selected %(verbose_name_plural)s"
+msgstr "刪除選擇的 %(verbose_name_plural)s"
+
+#: plugins/actions.py:67
+#, python-format
+msgid "Successfully deleted %(count)d %(items)s."
+msgstr "%(count)d %(items)s 刪除成功"
+
+#: plugins/actions.py:99 views/delete.py:68
+#, python-format
+msgid "Cannot delete %(name)s"
+msgstr "無法刪除 %(name)s"
+
+#: plugins/actions.py:101 views/delete.py:71
+msgid "Are you sure?"
+msgstr "確定？"
+
+#: plugins/actions.py:147
+#, python-format
+msgid "%(total_count)s selected"
+msgid_plural "All %(total_count)s selected"
+msgstr[0] "已選擇全部 %(total_count)s"
+
+#: plugins/actions.py:151
+#, python-format
+msgid "0 of %(cnt)s selected"
+msgstr "已選擇0-%(cnt)s"
+
+#: plugins/actions.py:168 plugins/actions.py:178
+msgid ""
+"Items must be selected in order to perform actions on them. No items have "
+"been changed."
+msgstr "操作前請先選擇項目."
+
+#: plugins/aggregation.py:14
+msgid "Min"
+msgstr "最小"
+
+#: plugins/aggregation.py:14
+msgid "Max"
+msgstr "最大"
+
+#: plugins/aggregation.py:14
+msgid "Avg"
+msgstr "平均"
+
+#: plugins/aggregation.py:14
+msgid "Sum"
+msgstr "總和"
+
+#: plugins/aggregation.py:14
+msgid "Count"
+msgstr "數量"
+
+#: plugins/auth.py:21
+#, python-format
+msgid "Can add %s"
+msgstr "可以新增 %s"
+
+#: plugins/auth.py:22
+#, python-format
+msgid "Can change %s"
+msgstr "可以修改 %s"
+
+#: plugins/auth.py:23
+#, python-format
+msgid "Can edit %s"
+msgstr "可以編輯 %s"
+
+#: plugins/auth.py:24
+#, python-format
+msgid "Can delete %s"
+msgstr "可以刪除 %s"
+
+#: plugins/auth.py:25
+#, python-format
+msgid "Can view %s"
+msgstr "可以查看 %s"
+
+#: plugins/auth.py:87
+msgid "Personal info"
+msgstr "個人訊息"
+
+#: plugins/auth.py:91
+msgid "Permissions"
+msgstr "權限"
+
+#: plugins/auth.py:94
+msgid "Important dates"
+msgstr "重要日期"
+
+#: plugins/auth.py:99
+msgid "Status"
+msgstr "狀態"
+
+#: plugins/auth.py:111
+msgid "Permission Name"
+msgstr "權限名稱"
+
+#: plugins/auth.py:159
+msgid "Change Password"
+msgstr "變更密碼"
+
+#: plugins/auth.py:189
+#, python-format
+msgid "Change password: %s"
+msgstr "修改密碼: %s"
+
+#: plugins/auth.py:214 plugins/auth.py:246
+msgid "Password changed successfully."
+msgstr "密碼修改成功."
+
+#: plugins/auth.py:233 templates/xadmin/auth/user/change_password.html:11
+#: templates/xadmin/auth/user/change_password.html:22
+#: templates/xadmin/auth/user/change_password.html:55
+msgid "Change password"
+msgstr "修改密碼"
+
+#: plugins/batch.py:44
+msgid "Change this field"
+msgstr "修改這個欄位"
+
+#: plugins/batch.py:65
+#, python-format
+msgid "Batch Change selected %(verbose_name_plural)s"
+msgstr "批次修改所選的 %(verbose_name_plural)s"
+
+#: plugins/batch.py:90
+#, python-format
+msgid "Successfully change %(count)d %(items)s."
+msgstr "%(count)d %(items)s 已成功修改."
+
+#: plugins/batch.py:138
+#, python-format
+msgid "Batch change %s"
+msgstr "批次修改 %s"
+
+#: plugins/bookmark.py:171
+msgid "bookmark"
+msgstr "書簽"
+
+#: plugins/bookmark.py:173
+msgid "Bookmark Widget, can show user's bookmark list data in widget."
+msgstr "書籤小工具，可以顯示用戶的書籤列表資料"
+
+#: plugins/chart.py:24
+msgid "Show models simple chart."
+msgstr "顯示models的簡單圖表"
+
+#: plugins/chart.py:49
+#, python-format
+msgid "%s Charts"
+msgstr "%s 圖表"
+
+#: plugins/comments.py:33
+msgid "Metadata"
+msgstr "Metadata"
+
+#: plugins/comments.py:60
+msgid "flagged"
+msgid_plural "flagged"
+msgstr[0] "旗標"
+
+#: plugins/comments.py:61
+msgid "Flag selected comments"
+msgstr "為所選的評論加上旗標"
+
+#: plugins/comments.py:66
+msgid "approved"
+msgid_plural "approved"
+msgstr[0] "核准"
+
+#: plugins/comments.py:67
+msgid "Approve selected comments"
+msgstr "核准所選的評論"
+
+#: plugins/comments.py:72
+msgid "removed"
+msgid_plural "removed"
+msgstr[0] "已移除"
+
+#: plugins/comments.py:73
+msgid "Remove selected comments"
+msgstr "刪除所選的評論"
+
+#: plugins/comments.py:86
+#, python-format
+msgid "1 comment was successfully %(action)s."
+msgid_plural "%(count)s comments were successfully %(action)s."
+msgstr[0] "%(count)s 評論已成功 %(action)s."
+
+#: plugins/details.py:52 views/list.py:576
+#, python-format
+msgid "Details of %s"
+msgstr "%s 詳細"
+
+#: plugins/editable.py:47
+#, python-format
+msgid "Enter %s"
+msgstr "輸入 %s"
+
+#: plugins/editable.py:74 views/dashboard.py:638 views/delete.py:26
+#: views/detail.py:144 views/edit.py:428
+#, python-format
+msgid "%(name)s object with primary key %(key)r does not exist."
+msgstr "主鍵為%(key)r的物件%(name)s不存在"
+
+#: plugins/export.py:87
+msgid "Sheet"
+msgstr "工作表"
+
+#: plugins/filters.py:125
+#, python-format
+msgid "<b>Filtering error:</b> %s"
+msgstr "<b>過濾結果錯誤：</b> %s"
+
+#: plugins/images.py:29
+msgid "Previous"
+msgstr "上一步"
+
+#: plugins/images.py:29
+msgid "Next"
+msgstr "下一步"
+
+#: plugins/images.py:29
+msgid "Slideshow"
+msgstr "幻燈片播放"
+
+#: plugins/images.py:29
+msgid "Download"
+msgstr "下載"
+
+#: plugins/images.py:50
+msgid "Change:"
+msgstr "修改:"
+
+#: plugins/layout.py:15
+msgid "Table"
+msgstr "表"
+
+#: plugins/layout.py:21
+msgid "Thumbnails"
+msgstr "縮略圖"
+
+#: plugins/passwords.py:64
+msgid "Forgotten your password or username?"
+msgstr "忘記密碼或用戶名？"
+
+#: plugins/quickform.py:77
+#, python-format
+msgid "Create New %s"
+msgstr "建立新的 %s"
+
+#: plugins/relate.py:73
+msgid "Related Objects"
+msgstr "相關物件"
+
+#: plugins/relfield.py:29 plugins/topnav.py:35
+#, python-format
+msgid "Search %s"
+msgstr "搜尋 %s"
+
+#: plugins/themes.py:47
+msgid "Default"
+msgstr "預設值"
+
+#: plugins/themes.py:48
+msgid "Default bootstrap theme"
+msgstr "預設的bootstrap主題"
+
+#: plugins/themes.py:49
+msgid "Bootstrap2"
+msgstr "Bootstrap2"
+
+#: plugins/themes.py:49
+msgid "Bootstrap 2.x theme"
+msgstr "Bootstrap 2.x 主題"
+
+#: plugins/topnav.py:58 views/dashboard.py:455 views/edit.py:361
+#: views/edit.py:370
+#, python-format
+msgid "Add %s"
+msgstr "新增 %s"
+
+#: plugins/xversion.py:130
+msgid "Initial version."
+msgstr "原始版本."
+
+#: plugins/xversion.py:132
+msgid "Change version."
+msgstr "修改版本."
+
+#: plugins/xversion.py:134
+msgid "Revert version."
+msgstr "還原版本."
+
+#: plugins/xversion.py:136
+msgid "Rercover version."
+msgstr "恢復版本."
+
+#: plugins/xversion.py:138
+#, python-format
+msgid "Deleted %(verbose_name)s."
+msgstr "%(verbose_name)s 已刪除"
+
+#: plugins/xversion.py:166 templates/xadmin/views/recover_form.html:26
+msgid "Recover"
+msgstr "恢復"
+
+#: plugins/xversion.py:182 templates/xadmin/views/model_history.html:11
+#: templates/xadmin/views/revision_diff.html:11
+#: templates/xadmin/views/revision_form.html:15
+msgid "History"
+msgstr "歷史"
+
+#: plugins/xversion.py:225 templates/xadmin/views/recover_form.html:14
+#: templates/xadmin/views/recover_list.html:10
+#, python-format
+msgid "Recover deleted %(name)s"
+msgstr "恢復已刪除的 %(name)s"
+
+#: plugins/xversion.py:263
+#, python-format
+msgid "Change history: %s"
+msgstr "變更歷史: %s"
+
+#: plugins/xversion.py:313
+msgid "Must select two versions."
+msgstr "必須選擇兩個版本"
+
+#: plugins/xversion.py:321
+msgid "Please select two different versions."
+msgstr "請選擇兩個不同的版本"
+
+#: plugins/xversion.py:408 plugins/xversion.py:516
+#, python-format
+msgid "Current: %s"
+msgstr "當前: %s"
+
+#: plugins/xversion.py:440
+#, python-format
+msgid "Revert %s"
+msgstr "還原 %s"
+
+#: plugins/xversion.py:456
+#, python-format
+msgid ""
+"The %(model)s \"%(name)s\" was reverted successfully. You may edit it again "
+"below."
+msgstr "%(model)s \"%(name)s\"已成功還原. 您現在可以再次編輯："
+
+#: plugins/xversion.py:477
+#, python-format
+msgid "Recover %s"
+msgstr "恢復 %s"
+
+#: plugins/xversion.py:493
+#, python-format
+msgid ""
+"The %(model)s \"%(name)s\" was recovered successfully. You may edit it again"
+" below."
+msgstr "%(model)s \"%(name)s\"已成功恢復. 您現在可以再次編輯："
+
+#: templates/xadmin/404.html:4 templates/xadmin/404.html.py:8
+msgid "Page not found"
+msgstr "頁面找不到"
+
+#: templates/xadmin/404.html:10
+msgid "We're sorry, but the requested page could not be found."
+msgstr "很抱歉，無法找到請求頁面"
+
+#: templates/xadmin/500.html:7 templates/xadmin/base_site.html:53
+#: templates/xadmin/auth/user/change_password.html:10
+#: templates/xadmin/auth/user/change_password.html:15
+#: templates/xadmin/includes/sitemenu_default.html:7
+#: templates/xadmin/views/app_index.html:9
+#: templates/xadmin/views/batch_change_form.html:9
+#: templates/xadmin/views/invalid_setup.html:7
+#: templates/xadmin/views/model_dashboard.html:7
+#: templates/xadmin/views/model_delete_selected_confirm.html:8
+#: templates/xadmin/views/model_history.html:8
+#: templates/xadmin/views/recover_form.html:8
+#: templates/xadmin/views/recover_list.html:8
+#: templates/xadmin/views/revision_diff.html:8
+#: templates/xadmin/views/revision_form.html:8 views/base.py:448
+msgid "Home"
+msgstr "首頁"
+
+#: templates/xadmin/500.html:8
+msgid "Server error"
+msgstr "伺服器錯誤"
+
+#: templates/xadmin/500.html:12
+msgid "Server error (500)"
+msgstr "伺服器錯誤 (500)"
+
+#: templates/xadmin/500.html:15
+msgid "Server Error <em>(500)</em>"
+msgstr "伺服器錯誤 <em>(500)</em>"
+
+#: templates/xadmin/500.html:16
+msgid ""
+"There's been an error. It's been reported to the site administrators via "
+"e-mail and should be fixed shortly. Thanks for your patience."
+msgstr "啊～發生錯誤，已通過郵件通知網站管理員，很快就會被修復，感謝您的耐心與包涵～～"
+
+#: templates/xadmin/base_site.html:19
+msgid "Welcome,"
+msgstr "歡迎，"
+
+#: templates/xadmin/base_site.html:25
+msgid "Log out"
+msgstr "登出"
+
+#: templates/xadmin/base_site.html:37
+msgid "You don't have permission to edit anything."
+msgstr "您沒有編輯的權限"
+
+#: templates/xadmin/auth/password_reset/complete.html:11
+#: templates/xadmin/auth/password_reset/done.html:11
+msgid "Password reset successful"
+msgstr "密碼重設成功"
+
+#: templates/xadmin/auth/password_reset/complete.html:14
+msgid "Your password has been set.  You may go ahead and log in now."
+msgstr "密碼已設定完成，您現在可以登入"
+
+#: templates/xadmin/auth/password_reset/complete.html:15
+msgid "Log in"
+msgstr "登入"
+
+#: templates/xadmin/auth/password_reset/confirm.html:12
+msgid "Enter new password"
+msgstr "輸入新密碼"
+
+#: templates/xadmin/auth/password_reset/confirm.html:17
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr "請再輸入一次新密碼"
+
+#: templates/xadmin/auth/password_reset/confirm.html:19
+msgid "Change my password"
+msgstr "變更我的密碼"
+
+#: templates/xadmin/auth/password_reset/confirm.html:24
+msgid "Password reset unsuccessful"
+msgstr "密碼重設失敗"
+
+#: templates/xadmin/auth/password_reset/confirm.html:27
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr "無效的密碼重設鏈接，可能因為已經被使用過？請重新申請密碼重設。"
+
+#: templates/xadmin/auth/password_reset/done.html:14
+msgid ""
+"We've e-mailed you instructions for setting your password to the e-mail "
+"address you submitted. You should be receiving it shortly."
+msgstr "設定密碼的郵件已發送到您的郵箱，您稍後可以登入郵箱查看。"
+
+#: templates/xadmin/auth/password_reset/email.html:2
+#, python-format
+msgid ""
+"You're receiving this e-mail because you requested a password reset for your"
+" user account at %(site_name)s."
+msgstr "您收到這封郵件，是因為您在 %(site_name)s 申請了重新設定密碼."
+
+#: templates/xadmin/auth/password_reset/email.html:4
+msgid "Please go to the following page and choose a new password:"
+msgstr "請打開這個頁面，並設定一個新密碼："
+
+#: templates/xadmin/auth/password_reset/email.html:8
+msgid "Your username, in case you've forgotten:"
+msgstr "您的用戶名（以防忘記）:"
+
+#: templates/xadmin/auth/password_reset/email.html:10
+msgid "Thanks for using our site!"
+msgstr "謝謝使用！"
+
+#: templates/xadmin/auth/password_reset/email.html:12
+#, python-format
+msgid "The %(site_name)s team"
+msgstr "%(site_name)s團隊"
+
+#: templates/xadmin/auth/password_reset/form.html:13
+msgid "Password reset"
+msgstr "密碼重設"
+
+#: templates/xadmin/auth/password_reset/form.html:17
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll e-mail "
+"instructions for setting a new one."
+msgstr "忘記密碼？請輸入您的郵箱，我們會發送重新設定密碼的郵件給您。"
+
+#: templates/xadmin/auth/password_reset/form.html:25
+msgid "E-mail address:"
+msgstr "郵箱"
+
+#: templates/xadmin/auth/password_reset/form.html:33
+msgid "Reset my password"
+msgstr "重設我的密碼"
+
+#: templates/xadmin/auth/user/add_form.html:6
+msgid ""
+"First, enter a username and password. Then, you'll be able to edit more user"
+" options."
+msgstr "請先輸入一個用戶名及密碼，然後您才可以編輯更多的用戶選項。"
+
+#: templates/xadmin/auth/user/add_form.html:8
+msgid "Enter a username and password."
+msgstr "輸入用戶名及密碼"
+
+#: templates/xadmin/auth/user/change_password.html:31
+#: templates/xadmin/views/batch_change_form.html:24
+#: templates/xadmin/views/form.html:18
+#: templates/xadmin/views/model_form.html:20
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] "請修正下列錯誤"
+
+#: templates/xadmin/auth/user/change_password.html:38
+msgid "Enter your new password."
+msgstr "請輸入新密碼"
+
+#: templates/xadmin/auth/user/change_password.html:40
+#, python-format
+msgid "Enter a new password for the user <strong>%(username)s</strong>."
+msgstr "請輸入<strong>%(username)s</strong>的新密碼"
+
+#: templates/xadmin/blocks/comm.top.theme.html:4
+msgid "Themes"
+msgstr "主題"
+
+#: templates/xadmin/blocks/comm.top.topnav.html:8
+#: templates/xadmin/filters/char.html:7
+#: templates/xadmin/filters/fk_search.html:7
+#: templates/xadmin/filters/fk_search.html:14
+#: templates/xadmin/filters/number.html:7
+msgid "Search"
+msgstr "搜尋"
+
+#: templates/xadmin/blocks/comm.top.topnav.html:22
+msgid "Add"
+msgstr "新增"
+
+#: templates/xadmin/blocks/model_form.submit_line.wizard.html:9
+#: templates/xadmin/blocks/model_form.submit_line.wizard.html:26
+msgid "Prev step"
+msgstr "上一步"
+
+#: templates/xadmin/blocks/model_form.submit_line.wizard.html:13
+#: templates/xadmin/blocks/model_form.submit_line.wizard.html:29
+msgid "Next step"
+msgstr "下一步"
+
+#: templates/xadmin/blocks/model_form.submit_line.wizard.html:15
+#: templates/xadmin/blocks/model_form.submit_line.wizard.html:31
+#: templates/xadmin/includes/submit_line.html:10
+#: templates/xadmin/includes/submit_line.html:13
+#: templates/xadmin/views/form.html:30
+msgid "Save"
+msgstr "儲存"
+
+#: templates/xadmin/blocks/model_list.nav_menu.bookmarks.html:7
+msgid "Clean Bookmarks"
+msgstr "清除書籤"
+
+#: templates/xadmin/blocks/model_list.nav_menu.bookmarks.html:18
+msgid "No Bookmarks"
+msgstr "沒有書籤"
+
+#: templates/xadmin/blocks/model_list.nav_menu.bookmarks.html:22
+msgid "New Bookmark"
+msgstr "新增書籤"
+
+#: templates/xadmin/blocks/model_list.nav_menu.bookmarks.html:26
+msgid "Save current page as Bookmark"
+msgstr "將本頁存為書籤"
+
+#: templates/xadmin/blocks/model_list.nav_menu.bookmarks.html:32
+msgid "Enter bookmark title"
+msgstr "輸入書籤標題"
+
+#: templates/xadmin/blocks/model_list.nav_menu.bookmarks.html:33
+msgid "Waiting"
+msgstr "等待中"
+
+#: templates/xadmin/blocks/model_list.nav_menu.bookmarks.html:33
+msgid "Save Bookmark"
+msgstr "儲存書籤"
+
+#: templates/xadmin/blocks/model_list.nav_menu.filters.html:4
+msgid "Filters"
+msgstr "過濾器"
+
+#: templates/xadmin/blocks/model_list.nav_menu.filters.html:8
+msgid "Clean Filters"
+msgstr "清除過濾器"
+
+#: templates/xadmin/blocks/model_list.results_bottom.actions.html:19
+msgid "Click here to select the objects across all pages"
+msgstr "點擊這裡選擇所有頁面裏的全部物件"
+
+#: templates/xadmin/blocks/model_list.results_bottom.actions.html:19
+#, python-format
+msgid "Select all %(total_count)s %(module_name)s"
+msgstr "選擇全部 %(total_count)s %(module_name)s"
+
+#: templates/xadmin/blocks/model_list.results_bottom.actions.html:20
+msgid "Clear selection"
+msgstr "清除選擇"
+
+#: templates/xadmin/blocks/model_list.results_top.charts.html:4
+msgid "Charts"
+msgstr "圖表"
+
+#: templates/xadmin/blocks/model_list.top_toolbar.exports.html:4
+#: templates/xadmin/blocks/model_list.top_toolbar.exports.html:8
+#: templates/xadmin/blocks/model_list.top_toolbar.exports.html:19
+#: templates/xadmin/blocks/model_list.top_toolbar.exports.html:44
+msgid "Export"
+msgstr "匯出"
+
+#: templates/xadmin/blocks/model_list.top_toolbar.exports.html:26
+#: templates/xadmin/blocks/model_list.top_toolbar.exports.html:29
+msgid "Export with table header."
+msgstr "匯出帶標題"
+
+#: templates/xadmin/blocks/model_list.top_toolbar.exports.html:32
+#: templates/xadmin/blocks/model_list.top_toolbar.exports.html:35
+msgid "Export with format."
+msgstr "匯出帶格式"
+
+#: templates/xadmin/blocks/model_list.top_toolbar.exports.html:39
+msgid "Export all datas."
+msgstr "匯出全部資料"
+
+#: templates/xadmin/blocks/model_list.top_toolbar.exports.html:43
+#: templates/xadmin/widgets/base.html:40
+msgid "Close"
+msgstr "關閉"
+
+#: templates/xadmin/blocks/model_list.top_toolbar.layouts.html:4
+msgid "Layout"
+msgstr "版式"
+
+#: templates/xadmin/blocks/model_list.top_toolbar.refresh.html:8
+msgid "Clean Refresh"
+msgstr "清除自動刷新"
+
+#: templates/xadmin/blocks/model_list.top_toolbar.refresh.html:14
+#, python-format
+msgid "Every %(t)s seconds"
+msgstr "每 %(t)s 秒"
+
+#: templates/xadmin/edit_inline/blank.html:5 views/detail.py:22
+#: views/edit.py:100 views/list.py:28
+msgid "Null"
+msgstr "Null"
+
+#: templates/xadmin/filters/char.html:13
+msgid "Enter"
+msgstr "換行"
+
+#: templates/xadmin/filters/date.html:10 templates/xadmin/filters/date.html:13
+msgid "Choice Date"
+msgstr "選擇的日期"
+
+#: templates/xadmin/filters/date.html:18
+msgid "YY"
+msgstr "YY"
+
+#: templates/xadmin/filters/date.html:19
+msgid "year"
+msgstr "年"
+
+#: templates/xadmin/filters/date.html:22
+msgid "MM"
+msgstr "MM"
+
+#: templates/xadmin/filters/date.html:23
+msgid "month"
+msgstr "月"
+
+#: templates/xadmin/filters/date.html:26
+msgid "DD"
+msgstr "DD"
+
+#: templates/xadmin/filters/date.html:27
+msgid "day"
+msgstr "日"
+
+#: templates/xadmin/filters/date.html:29 templates/xadmin/filters/date.html:46
+#: templates/xadmin/filters/date.html:54
+#: templates/xadmin/filters/fk_search.html:16
+#: templates/xadmin/filters/number.html:37
+msgid "Apply"
+msgstr "套用"
+
+#: templates/xadmin/filters/date.html:34
+msgid "Date Range"
+msgstr "日期範圍"
+
+#: templates/xadmin/filters/date.html:41
+msgid "Select Date"
+msgstr "選擇日期"
+
+#: templates/xadmin/filters/date.html:42
+msgid "From"
+msgstr "從："
+
+#: templates/xadmin/filters/date.html:44
+msgid "To"
+msgstr "到："
+
+#: templates/xadmin/filters/fk_search.html:18
+#: templates/xadmin/filters/number.html:39
+msgid "Clean"
+msgstr "清除"
+
+#: templates/xadmin/filters/number.html:17
+#: templates/xadmin/filters/number.html:25
+#: templates/xadmin/filters/number.html:33
+msgid "Enter Number"
+msgstr "請輸入數量"
+
+#: templates/xadmin/filters/rel.html:3
+#, python-format
+msgid " By %(filter_title)s "
+msgstr "By %(filter_title)s"
+
+#: templates/xadmin/forms/transfer.html:4
+msgid "Available"
+msgstr "可用"
+
+#: templates/xadmin/forms/transfer.html:12
+msgid "Click to choose all at once."
+msgstr "點擊全選"
+
+#: templates/xadmin/forms/transfer.html:12
+msgid "Choose all"
+msgstr "選擇全部"
+
+#: templates/xadmin/forms/transfer.html:16
+msgid "Choose"
+msgstr "選擇"
+
+#: templates/xadmin/forms/transfer.html:19
+#: templates/xadmin/widgets/base.html:39
+msgid "Remove"
+msgstr "刪除"
+
+#: templates/xadmin/forms/transfer.html:23
+msgid "Chosen"
+msgstr "已選"
+
+#: templates/xadmin/forms/transfer.html:27
+msgid "Click to remove all chosen at once."
+msgstr "取消所有選擇"
+
+#: templates/xadmin/forms/transfer.html:27
+msgid "Remove all"
+msgstr "刪除全部"
+
+#: templates/xadmin/includes/pagination.html:9
+msgid "Show all"
+msgstr "顯示全部"
+
+#: templates/xadmin/includes/submit_line.html:10
+#: templates/xadmin/includes/submit_line.html:13
+#: templates/xadmin/views/form.html:30
+msgid "Saving.."
+msgstr "儲存中.."
+
+#: templates/xadmin/includes/submit_line.html:17
+msgid "Save as new"
+msgstr "儲存為新記錄"
+
+#: templates/xadmin/includes/submit_line.html:18
+msgid "Save and add another"
+msgstr "儲存並新增"
+
+#: templates/xadmin/includes/submit_line.html:19
+msgid "Save and continue editing"
+msgstr "儲存並繼續編輯"
+
+#: templates/xadmin/includes/submit_line.html:24
+#: templates/xadmin/views/model_detail.html:28 views/delete.py:91
+msgid "Delete"
+msgstr "刪除"
+
+#: templates/xadmin/views/app_index.html:13
+#, python-format
+msgid "%(name)s"
+msgstr "%(name)s"
+
+#: templates/xadmin/views/batch_change_form.html:11
+msgid "Change multiple objects"
+msgstr "變更多個物件"
+
+#: templates/xadmin/views/batch_change_form.html:16
+#, python-format
+msgid "Change one %(objects_name)s"
+msgid_plural "Batch change %(counter)s %(objects_name)s"
+msgstr[0] "批次變更 %(counter)s %(objects_name)s"
+
+#: templates/xadmin/views/batch_change_form.html:38
+msgid "Change Multiple"
+msgstr "變更多個"
+
+#: templates/xadmin/views/dashboard.html:15
+#: templates/xadmin/views/dashboard.html:22
+#: templates/xadmin/views/dashboard.html:23
+msgid "Add Widget"
+msgstr "新增小工具"
+
+#: templates/xadmin/views/invalid_setup.html:13
+msgid ""
+"Something's wrong with your database installation. Make sure the appropriate"
+" database tables have been created, and make sure the database is readable "
+"by the appropriate user."
+msgstr "無法讀取資料庫，請確認資料庫內的資料表已建立，並可被指定用戶讀取。"
+
+#: templates/xadmin/views/logged_out.html:16
+msgid "Logout Success"
+msgstr "登出成功"
+
+#: templates/xadmin/views/logged_out.html:17
+msgid "Thanks for spending some quality time with the Web site today."
+msgstr "謝謝您的寶貴時間，歡迎隨時回來看看"
+
+#: templates/xadmin/views/logged_out.html:19
+msgid "Close Window"
+msgstr "關閉窗口"
+
+#: templates/xadmin/views/logged_out.html:20
+msgid "Log in again"
+msgstr "再次登入"
+
+#: templates/xadmin/views/login.html:39 views/website.py:38
+msgid "Please Login"
+msgstr "請登入"
+
+#: templates/xadmin/views/login.html:52
+msgid "Username"
+msgstr "用戶名"
+
+#: templates/xadmin/views/login.html:64
+msgid "Password"
+msgstr "密碼"
+
+#: templates/xadmin/views/login.html:75
+msgid "log in"
+msgstr "登入"
+
+#: templates/xadmin/views/model_dashboard.html:26
+#: templates/xadmin/views/model_detail.html:25
+msgid "Edit"
+msgstr "編輯"
+
+#: templates/xadmin/views/model_delete_confirm.html:11
+#, python-format
+msgid ""
+"Deleting the %(verbose_name)s '%(escaped_object)s' would result in deleting "
+"related objects, but your account doesn't have permission to delete the "
+"following types of objects:"
+msgstr "刪除 %(verbose_name)s '%(escaped_object)s' 將會同時刪除其相關物件，但您的帳號不具備刪除下列類型的物件:"
+
+#: templates/xadmin/views/model_delete_confirm.html:19
+#, python-format
+msgid ""
+"Deleting the %(verbose_name)s '%(escaped_object)s' would require deleting "
+"the following protected related objects:"
+msgstr "刪除 %(verbose_name)s '%(escaped_object)s'將會同時刪除下列相關物件:"
+
+#: templates/xadmin/views/model_delete_confirm.html:27
+#, python-format
+msgid ""
+"Are you sure you want to delete the %(verbose_name)s \"%(escaped_object)s\"?"
+" All of the following related items will be deleted:"
+msgstr "請再次確認是否刪除 %(verbose_name)s \"%(escaped_object)s\"? 下列所有的相關物件都將被同時刪除:"
+
+#: templates/xadmin/views/model_delete_confirm.html:34
+#: templates/xadmin/views/model_delete_selected_confirm.html:49
+msgid "Yes, I'm sure"
+msgstr "我確定"
+
+#: templates/xadmin/views/model_delete_confirm.html:35
+#: templates/xadmin/views/model_delete_selected_confirm.html:50
+msgid "Cancel"
+msgstr "取消"
+
+#: templates/xadmin/views/model_delete_selected_confirm.html:10
+msgid "Delete multiple objects"
+msgstr "刪除多個物件"
+
+#: templates/xadmin/views/model_delete_selected_confirm.html:18
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would result in deleting related "
+"objects, but your account doesn't have permission to delete the following "
+"types of objects:"
+msgstr "刪除所選的 %(objects_name)s 將會同時刪除其相關物件，但您的帳號不具備刪除下列類型的物件:"
+
+#: templates/xadmin/views/model_delete_selected_confirm.html:26
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would require deleting the following "
+"protected related objects:"
+msgstr "刪除所選的 %(objects_name)s 將會同時刪除下列相關物件:"
+
+#: templates/xadmin/views/model_delete_selected_confirm.html:34
+#, python-format
+msgid ""
+"Are you sure you want to delete the selected %(objects_name)s? All of the "
+"following objects and their related items will be deleted:"
+msgstr "請再次確認是否刪除所選的 %(objects_name)s? 下列所有的相關物件及項目都將被同時刪除:"
+
+#: templates/xadmin/views/model_history.html:26
+msgid "Diff"
+msgstr "差異"
+
+#: templates/xadmin/views/model_history.html:27
+#: templates/xadmin/views/recover_list.html:25
+msgid "Date/time"
+msgstr "日期/時間"
+
+#: templates/xadmin/views/model_history.html:28
+msgid "User"
+msgstr "用戶"
+
+#: templates/xadmin/views/model_history.html:29
+msgid "Comment"
+msgstr "評論"
+
+#: templates/xadmin/views/model_history.html:54
+msgid "Diff Select Versions"
+msgstr "比較選擇的版本"
+
+#: templates/xadmin/views/model_history.html:58
+msgid ""
+"This object doesn't have a change history. It probably wasn't added via this"
+" admin site."
+msgstr "這個物件沒有任何修改歷史. 可能因為不是通過這個管理網站所新增。"
+
+#: templates/xadmin/views/model_list.html:29
+#, python-format
+msgid "Add %(name)s"
+msgstr "新增 %(name)s"
+
+#: templates/xadmin/views/model_list.html:39
+msgid "Columns"
+msgstr "欄位"
+
+#: templates/xadmin/views/model_list.html:42
+msgid "Restore Selected"
+msgstr "還原已選擇"
+
+#: templates/xadmin/views/model_list.html:147
+#: templates/xadmin/widgets/list.html:33
+msgid "Empty list"
+msgstr "列表為空"
+
+#: templates/xadmin/views/recover_form.html:20
+msgid "Press the recover button below to recover this version of the object."
+msgstr "點擊\"恢復\"按鍵，以恢復這個版本的物件."
+
+#: templates/xadmin/views/recover_list.html:19
+msgid ""
+"Choose a date from the list below to recover a deleted version of an object."
+msgstr "請在列表中選擇一個日期，以恢復物件的被刪除版本."
+
+#: templates/xadmin/views/recover_list.html:39
+msgid "There are no deleted objects to recover."
+msgstr "沒有被刪除的物件可供恢復."
+
+#: templates/xadmin/views/revision_diff.html:12
+#: templates/xadmin/views/revision_diff.html:17
+#, python-format
+msgid "Diff %(verbose_name)s"
+msgstr "比較 %(verbose_name)s"
+
+#: templates/xadmin/views/revision_diff.html:25
+msgid "Field"
+msgstr "欄位"
+
+#: templates/xadmin/views/revision_diff.html:26
+msgid "Version A"
+msgstr "版本A"
+
+#: templates/xadmin/views/revision_diff.html:27
+msgid "Version B"
+msgstr "版本B"
+
+#: templates/xadmin/views/revision_diff.html:39
+msgid "Revert to"
+msgstr "恢復到"
+
+#: templates/xadmin/views/revision_diff.html:40
+#: templates/xadmin/views/revision_diff.html:41
+msgid "Revert"
+msgstr "恢復"
+
+#: templates/xadmin/views/revision_form.html:16
+#, python-format
+msgid "Revert %(verbose_name)s"
+msgstr "恢復 %(verbose_name)s"
+
+#: templates/xadmin/views/revision_form.html:21
+msgid "Press the revert button below to revert to this version of the object."
+msgstr "請按下面恢復按鈕，將物件恢復到這個版本"
+
+#: templates/xadmin/views/revision_form.html:27
+msgid "Revert this revision"
+msgstr "恢復到這個版本"
+
+#: templates/xadmin/widgets/addform.html:14
+msgid "Success"
+msgstr "成功"
+
+#: templates/xadmin/widgets/addform.html:14
+msgid "Add success, click <a id='change-link'>edit</a> to edit."
+msgstr "新增成功，點擊 <a id='change-link'>編輯</a>按鍵開始編輯."
+
+#: templates/xadmin/widgets/addform.html:17
+msgid "Quick Add"
+msgstr "快速新增"
+
+#: templates/xadmin/widgets/base.html:30
+msgid "Widget Options"
+msgstr "小工具選項"
+
+#: templates/xadmin/widgets/base.html:41
+msgid "Save changes"
+msgstr "儲存修改"
+
+#: views/base.py:430
+msgid "Django Xadmin"
+msgstr "Django Xadmin"
+
+#: views/dashboard.py:185
+msgid "Widget ID"
+msgstr "小工具ID"
+
+#: views/dashboard.py:186
+msgid "Widget Title"
+msgstr "小工具標題"
+
+#: views/dashboard.py:248
+msgid "Html Content Widget, can write any html content in widget."
+msgstr "網頁內容小工具，可以顯示任意網頁內容"
+
+#: views/dashboard.py:251
+msgid "Html Content"
+msgstr "Html內容"
+
+#: views/dashboard.py:314
+msgid "Target Model"
+msgstr "目標Model"
+
+#: views/dashboard.py:365
+msgid "Quick button Widget, quickly open any page."
+msgstr "快速按鍵Widget，快速打開任何網頁。"
+
+#: views/dashboard.py:367
+msgid "Quick Buttons"
+msgstr "快速按鍵"
+
+#: views/dashboard.py:408
+msgid "Any Objects list Widget."
+msgstr "物件列表小工具"
+
+#: views/dashboard.py:447
+msgid "Add any model object Widget."
+msgstr "新增Model小工具"
+
+#: views/dashboard.py:481
+msgid "Dashboard"
+msgstr "儀表板"
+
+#: views/dashboard.py:622
+#, python-format
+msgid "%s Dashboard"
+msgstr "%s 儀表板"
+
+#: views/delete.py:101
+#, python-format
+msgid "The %(name)s \"%(obj)s\" was deleted successfully."
+msgstr "%(name)s \"%(obj)s\" 已被成功刪除."
+
+#: views/detail.py:172 views/edit.py:199 views/form.py:72
+msgid "Other Fields"
+msgstr "其他欄位"
+
+#: views/detail.py:233
+#, python-format
+msgid "%s Detail"
+msgstr "%s 詳細內容"
+
+#: views/edit.py:394
+#, python-format
+msgid "The %(name)s \"%(obj)s\" was added successfully."
+msgstr "%(name)s \"%(obj)s\" 已成功新增."
+
+#: views/edit.py:399 views/edit.py:494
+msgid "You may edit it again below."
+msgstr "您可以再次編輯下列內容"
+
+#: views/edit.py:403 views/edit.py:497
+#, python-format
+msgid "You may add another %s below."
+msgstr "您可以使用下面內容，新增一個 %s"
+
+#: views/edit.py:445
+#, python-format
+msgid "Change %s"
+msgstr "修改 %s"
+
+#: views/edit.py:490
+#, python-format
+msgid "The %(name)s \"%(obj)s\" was changed successfully."
+msgstr "%(name)s \"%(obj)s\" 已成功修改."
+
+#: views/form.py:164
+#, python-format
+msgid "The %s was changed successfully."
+msgstr "%s 已成功變更"
+
+#: views/list.py:198
+msgid "Database error"
+msgstr "資料庫錯誤"
+
+#: views/list.py:372
+#, python-format
+msgid "%s List"
+msgstr "%s 列表"
+
+#: views/list.py:500
+msgid "Sort ASC"
+msgstr "遞增排序"
+
+#: views/list.py:501
+msgid "Sort DESC"
+msgstr "遞減排序"
+
+#: views/list.py:505
+msgid "Cancel Sort"
+msgstr "取消排序"
+
+#: views/website.py:16
+msgid "Main Dashboard"
+msgstr "主儀表板"
