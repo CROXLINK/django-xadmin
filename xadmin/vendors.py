@@ -72,12 +72,14 @@ vendors = {
     },
     "datepicker": {
         "css": {
-            'dev': 'xadmin/vendor/bootstrap-datepicker/css/datepicker.css'
+            'dev': 'xadmin/vendor/bootstrap-datepicker/css/datepicker.css',
+            'cdn': 'https://cdn.bootcss.com/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.min.css',
+            'common_cdn': 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css'
         },
         "js": {
             'dev': 'xadmin/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js',
-            'cdn': 'https://cdn.bootcss.com/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.min.css',
-            'common_cdn': 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css'
+            'cdn': 'https://cdn.bootcss.com/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js',
+            'common_cdn': 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js'
         }
     },
     "flot": {
