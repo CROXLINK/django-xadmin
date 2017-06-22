@@ -7,7 +7,7 @@ from django import forms
 try:
     from django.forms.widgets import ChoiceWidget as RadioChoiceInput
 except:
-    from django.forms.widgets import RadioFieldRenderer, RadioChoiceInput
+    from django.forms.widgets import RadioChoiceInput
 from django.utils.encoding import force_text
 
 from django.utils.safestring import mark_safe
