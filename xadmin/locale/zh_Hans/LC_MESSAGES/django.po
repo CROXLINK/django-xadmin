@@ -885,7 +885,7 @@ msgstr "保存排序"
 #: templates/xadmin/edit_inline/blank.html:5 views/detail.py:23
 #: views/edit.py:102 views/list.py:29
 msgid "Null"
-msgstr "空"
+msgstr "(空)"
 
 #: templates/xadmin/filters/char.html:13
 msgid "Enter"

@@ -806,7 +806,7 @@ msgstr "每 %(t)s 秒"
 #: templates/xadmin/edit_inline/blank.html:5 views/detail.py:22
 #: views/edit.py:100 views/list.py:28
 msgid "Null"
-msgstr "Null"
+msgstr "(空)"
 
 #: templates/xadmin/filters/char.html:13
 msgid "Enter"
