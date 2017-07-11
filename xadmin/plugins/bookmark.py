@@ -73,15 +73,17 @@ class BookmarkPlugin(BaseAdminPlugin):
                 params[COL_LIST_VAR] = '.'.join(bk['cols'])
             if 'search' in bk:
                 params[SEARCH_VAR] = bk['search']
+
             def check_item(i):
                 return bool(i[1]) or i[1] == False
-            bk_qs = '&'.join([
-                    '%s=%s' % (k, v)
-                    for k, v in sorted(filter(check_item, params.items()))
-                    ])
+            
+            # check selected status by checking every params -- by Eddie
+            bk_qs_list = ['%s=%s' % (k, v) for k, v in sorted(filter(check_item, params.items()))]
+            selected = not bool(filter(lambda x: x if x not in current_qs else None, bk_qs_list))
+
+            bk_qs = '&'.join(bk_qs_list)
 
             url = list_base_url + '?' + bk_qs
-            selected = (current_qs == bk_qs)
 
             bookmarks.append(
                 {'title': title, 'selected': selected, 'url': url})
