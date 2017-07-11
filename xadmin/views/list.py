@@ -552,6 +552,10 @@ class ListAdminView(ModelAdminView):
                         item.text = field_val
                 else:
                     item.text = display_for_field(value, f)
+                    if item.text == EMPTY_CHANGELIST_VALUE:
+                        # makes null value also in grey for non-rel fields
+                        item.text = mark_safe("<span class='text-muted'>%s</span>" % EMPTY_CHANGELIST_VALUE)
+
                 if isinstance(f, models.DateField)\
                     or isinstance(f, models.TimeField)\
                         or isinstance(f, models.ForeignKey):

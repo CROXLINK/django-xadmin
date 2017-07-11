@@ -159,11 +159,17 @@ class FilterPlugin(BaseAdminPlugin):
             if isinstance(queryset, models.query.QuerySet) and lookup_params:
                 new_lookup_parames = dict()
                 for k, v in lookup_params.iteritems():
-                    list_v = v.split(',')
-                    if len(list_v) > 0:
-                        new_lookup_parames.update({k: list_v})
+                    if not v:
+                        continue
+
+                    if k.endswith('__isnull') or '__gt' in k or '__lt' in k:
+                        # change v to int type under certain conditions -- by Eddie
+                        new_lookup_parames.update({k: int(v)})
+                    
                     else:
-                        new_lookup_parames.update({k: v})
+                        list_v = v.split(',')
+                        new_lookup_parames.update({k: list_v})
+
                 queryset = queryset.filter(**new_lookup_parames)
         except (SuspiciousOperation, ImproperlyConfigured):
             raise
