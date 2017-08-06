@@ -87,9 +87,19 @@ class ThemePlugin(BaseAdminPlugin):
                         
                 else:
                     # fetching themes from bootswatch
-                    h = httplib2.Http()
-                    resp, content = h.request("http://bootswatch.com/api/3.json", 'GET', '',
-                        headers={"Accept": "application/json", "User-Agent": self.request.META['HTTP_USER_AGENT']})
+                    try:
+                        # use requests library first to workaround TLS
+                        import requests
+
+                    except:
+                        # use httplib2 otherwise (not work if TLS is required)
+                        h = httplib2.Http()
+                        resp, content = h.request("https://bootswatch.com/api/3.json", 'GET', '',
+                            headers={"Accept": "application/json", "User-Agent": self.request.META['HTTP_USER_AGENT']})
+                    else:
+                        content = requests.get("https://bootswatch.com/api/3.json",
+                                               headers={"Accept": "application/json", "User-Agent": self.request.META['HTTP_USER_AGENT']})
+
                     if six.PY3:
                         content = content.decode()
 

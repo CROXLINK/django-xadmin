@@ -127,7 +127,7 @@
       $.when(this.save())
       .done($.proxy(function(data) {
         this.$mask.hide()
-        this.$mask.parents('.popover').hide()
+
         if(data['result'] != 'success' && data['errors']){
           var err_html = []
           for (var i = data['errors'].length - 1; i >= 0; i--) {
@@ -136,9 +136,10 @@
               err_html.push('<span class="help-block error">'+e['errors'][j]+'</span>')
             }
           }
-          this.$form.find(".control-group").addClass('has-error')
+          this.$form.find(".controls").addClass('has-error')
           this.$form.find('.controls').append(err_html.join('\n'))
         } else {
+          this.$mask.parents('.popover').hide()
           this.$text.html(data['new_html'][this.field])
           this.leave(this)
         }
@@ -151,7 +152,7 @@
   }
 
   Editpop.prototype.save = function(newValue) {
-    this.$form.find('.control-group').removeClass('has-error')
+    this.$form.find('.controls').removeClass('has-error')
     this.$form.find('.controls .help-block.error').remove()
 
     this.$mask.show()

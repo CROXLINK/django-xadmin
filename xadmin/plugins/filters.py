@@ -1,5 +1,6 @@
 import operator
 from future.utils import iteritems
+
 from xadmin import widgets
 from xadmin.plugins.utils import get_context_dict
 
@@ -18,6 +19,7 @@ from xadmin.filters import manager as filter_manager, FILTER_PREFIX, SEARCH_VAR,
 from xadmin.sites import site
 from xadmin.views import BaseAdminPlugin, ListAdminView
 from xadmin.util import is_related_field
+from xadmin.views.list import COL_LIST_VAR, ORDER_VAR
 from functools import reduce
 
 
@@ -86,7 +88,9 @@ class FilterPlugin(BaseAdminPlugin):
         # for clean filters
         self.admin_view.has_query_param = bool(lookup_params)
         self.admin_view.clean_query_url = self.admin_view.get_query_string(remove=[k for k in self.request.GET.keys() if
-                                                                                   k.startswith(FILTER_PREFIX)])
+                                                                                   k.startswith(FILTER_PREFIX) or\
+                                                                                   k.startswith(COL_LIST_VAR) or\
+                                                                                   k.startswith(ORDER_VAR)])
 
         # Normalize the types of keys
         if not self.free_query_filter:
