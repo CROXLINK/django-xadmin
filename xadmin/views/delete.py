@@ -104,6 +104,11 @@ class DeleteAdminView(ModelAdminView):
         self.message_user(_('The %(name)s "%(obj)s" was deleted successfully.') %
                           {'name': force_text(self.opts.verbose_name), 'obj': force_text(self.obj)}, 'success')
 
-        if not self.has_view_permission():
+        if "_redirect" in self.request.POST:
+            return self.request.POST["_redirect"]
+        elif "_redirect" in self.request.GET:
+            return self.request.GET["_redirect"]
+        elif not self.has_view_permission():
             return self.get_admin_url('index')
+
         return self.model_admin_url('changelist')

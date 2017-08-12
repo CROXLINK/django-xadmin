@@ -4,10 +4,10 @@ Form Widget classes specific to the Django admin site.
 from __future__ import absolute_import
 from itertools import chain
 from django import forms
-try:
-    from django.forms.widgets import ChoiceWidget as RadioChoiceInput
-except:
-    from django.forms.widgets import RadioChoiceInput
+# try:
+#     from django.forms.widgets import ChoiceWidget as RadioChoiceInput
+# except:
+#     from django.forms.widgets import RadioChoiceInput
 from django.utils.encoding import force_text
 
 from django.utils.safestring import mark_safe
@@ -87,40 +87,84 @@ class AdminSplitDateTime(forms.SplitDateTimeWidget):
                          (rendered_widgets[0], rendered_widgets[1]))
 
 
-class AdminRadioInput(RadioChoiceInput):
+class AdminRadioInput(forms.CheckboxInput):
+    input_type = 'radio'
 
-    def render(self, name=None, value=None, attrs=None, choices=()):
-        name = name or self.name
-        value = value or self.value
-        attrs = attrs or self.attrs
-        attrs['class'] = attrs.get('class', '').replace('form-control', '')
-        if 'id' in self.attrs:
-            label_for = ' for="%s_%s"' % (self.attrs['id'], self.index)
-        else:
-            label_for = ''
-        choice_label = conditional_escape(force_text(self.choice_label))
-        if attrs.get('inline', False):
-            return mark_safe(u'<label%s class="radio-inline">%s %s</label>' % (label_for, self.tag(), choice_label))
-        else:
-            return mark_safe(u'<div class="radio"><label%s>%s %s</label></div>' % (label_for, self.tag(), choice_label))
+    # move to AdminRadioSelect.render to be compatible with django 1.11
+#     def render(self, name=None, value=None, attrs=None, choices=()):
+#         name = name or self.name
+#         value = value or self.value
+#         attrs = attrs or self.attrs
+#         attrs['class'] = attrs.get('class', '').replace('form-control', '')
+#         if 'id' in self.attrs:
+#             label_for = ' for="%s_%s"' % (self.attrs['id'], self.index)
+#         else:
+#             label_for = ''
+#         choice_label = conditional_escape(force_text(self.choice_label))
+#         if attrs.get('inline', False):
+#             return mark_safe(u'<label%s class="radio-inline">%s %s</label>' % (label_for, self.tag(), choice_label))
+#         else:
+#             return mark_safe(u'<div class="radio"><label%s>%s %s</label></div>' % (label_for, self.tag(), choice_label))
 
 
-class AdminRadioFieldRenderer(forms.RadioSelect):
-
-    def __iter__(self):
-        for i, choice in enumerate(self.choices):
-            yield AdminRadioInput(self.name, self.value, self.attrs.copy(), choice, i)
-
-    def __getitem__(self, idx):
-        choice = self.choices[idx]  # Let the IndexError propogate
-        return AdminRadioInput(self.name, self.value, self.attrs.copy(), choice, idx)
-
-    def render(self):
-        return mark_safe(u'\n'.join([force_text(w) for w in self]))
+# class AdminRadioFieldRenderer(forms.RadioSelect):
+# 
+#     def __iter__(self):
+#         for i, choice in enumerate(self.choices):
+#             yield AdminRadioInput(self.name, self.value, self.attrs.copy(), choice, i)
+# 
+#     def __getitem__(self, idx):
+#         choice = self.choices[idx]  # Let the IndexError propogate
+#         return AdminRadioInput(self.name, self.value, self.attrs.copy(), choice, idx)
+# 
+#     def render(self):
+#         return mark_safe(u'\n'.join([force_text(w) for w in self]))
 
 
 class AdminRadioSelect(forms.RadioSelect):
-    renderer = AdminRadioFieldRenderer
+#     renderer = AdminRadioFieldRenderer
+    def render(self, name, value, attrs=None, choices=()):
+        if value is None:
+            value = []
+        elif type(value) not in (list, tuple):
+            # convert to list
+            value = [value]
+
+        if attrs:
+            attrs.update(self.attrs)
+        else:
+            attrs = self.attrs
+
+        attrs['class'] = attrs.get('class', '').replace('form-control', '')
+
+        has_id = attrs and 'id' in attrs
+        if DJANGO_11:
+            final_attrs = self.build_attrs(attrs, extra_attrs={'name': name})
+        else:
+            final_attrs = self.build_attrs(attrs, name=name)
+        output = []
+        # Normalize to strings
+        str_values = set([force_text(v) for v in value])
+        for i, (option_value, option_label) in enumerate(chain(self.choices, choices)):
+            # If an ID attribute was given, add a numeric index as a suffix,
+            # so that the checkboxes don't all have the same ID attribute.
+            if has_id:
+                label_for = ' for="%s_%s"' % (attrs['id'], i)
+                # label_for = u' for="%s"' % final_attrs['id']
+            else:
+                label_for = ''
+
+            radio_input = AdminRadioInput(final_attrs, check_test=lambda value: value in str_values)
+            option_value = force_text(option_value)
+            rendered_radio_input = radio_input.render(name, option_value)
+            option_label = conditional_escape(force_text(option_label))
+
+            if final_attrs.get('inline', False):
+                output.append(u'<label%s class="radio-inline">%s %s</label>' % (label_for, rendered_radio_input, option_label))
+            else:
+                output.append(u'<div class="radio"><label%s>%s %s</label></div>' % (label_for, rendered_radio_input, option_label))
+
+        return mark_safe(u'\n'.join(output))
 
 
 class AdminCheckboxSelect(forms.CheckboxSelectMultiple):
@@ -129,7 +173,11 @@ class AdminCheckboxSelect(forms.CheckboxSelectMultiple):
         if value is None:
             value = []
 
-        attrs = attrs or self.attrs
+        if attrs:
+            attrs.update(self.attrs)
+        else:
+            attrs=self.attrs
+
         attrs['class'] = attrs.get('class', '').replace('form-control', '')
 
         has_id = attrs and 'id' in attrs

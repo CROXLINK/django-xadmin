@@ -7,7 +7,7 @@
 <div class="container">
 
   <form action="" method="post" id="password-reset-form">
-    <div class="panel panel-default panel-single" style="max-width: 500px;">
+    <div class="panel panel-default panel-single" style="max-width: 450px;">
       {% csrf_token %}
       <div class="panel-heading">
         <h3 class="form-signin-heading">{% trans "Password reset" %}</h3>
@@ -32,6 +32,7 @@
 
       <button class="btn btn-lg btn-primary btn-block" type="submit">{% trans 'Reset my password' %}</button>
 
+		<div style="margin-top:15px;"><a href="{% url 'xadmin:login' %}" class="text-info"><i class="fa fa-arrow-circle-left"></i> {% trans 'Back to login...' %}</a></div>
       </div>
     </div>
   </form>

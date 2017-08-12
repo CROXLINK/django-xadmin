@@ -151,7 +151,11 @@ class InlineModelAdmin(ModelFormAdminView):
             exclude = []
         else:
             exclude = list(self.exclude)
-        exclude.extend(self.get_readonly_fields())
+
+        if not self.org_obj:
+            # exclude readonly fields when adding object
+            exclude.extend(self.get_readonly_fields())
+
         if self.exclude is None and hasattr(self.form, '_meta') and self.form._meta.exclude:
             # Take the custom ModelForm's Meta.exclude into account only if the
             # InlineModelAdmin doesn't define its own.
@@ -226,11 +230,14 @@ class InlineModelAdmin(ModelFormAdminView):
             for form in instance:
                 form.readonly_fields = []
                 inst = form.save(commit=False)
+
+                all_field_names = [f.name for f in inst._meta.get_fields()]
+
                 if inst:
                     for readonly_field in readonly_fields:
                         value = None
                         label = None
-                        if readonly_field in inst._meta.get_all_field_names():
+                        if readonly_field in all_field_names:
                             label = inst._meta.get_field(readonly_field).verbose_name
                             value = smart_text(getattr(inst, readonly_field))
                         elif inspect.ismethod(getattr(inst, readonly_field, None)):
@@ -241,6 +248,11 @@ class InlineModelAdmin(ModelFormAdminView):
                             label = getattr(getattr(self, readonly_field), 'short_description', readonly_field)
                         if value:
                             form.readonly_fields.append({'label': label, 'contents': value})
+
+                            # disable & readonly
+                            form.fields[readonly_field].disabled = True
+                            form.fields[readonly_field].widget.attrs['readonly'] = True
+
         return instance
 
     def has_auto_field(self, form):
