@@ -1,4 +1,4 @@
-// Cyborg 3.3.5
+// Cyborg 3.3.7
 // Variables
 // --------------------------------------------------
 
@@ -111,7 +111,7 @@
 //** Global background color for active items (e.g., navs or dropdowns).
 @component-active-bg:       @brand-primary;
 
-//** Width of the `border` for generating carets that indicator dropdowns.
+//** Width of the `border` for generating carets that indicate dropdowns.
 @caret-width-base:          4px;
 //** Carets increase slightly in size for larger components.
 @caret-width-large:         5px;
@@ -219,7 +219,7 @@
 @legend-border-color:            @gray-dark;
 
 //** Background color for textual input addons
-@input-group-addon-bg:           @gray-lighter;
+@input-group-addon-bg:           @btn-default-bg;
 //** Border color for textual input addons
 @input-group-addon-border-color: @input-border;
 
@@ -522,7 +522,7 @@
 //** Tooltip text color
 @tooltip-color:               #fff;
 //** Tooltip background color
-@tooltip-bg:                  #000;
+@tooltip-bg:                  lighten(@body-bg, 15%);
 @tooltip-opacity:             .9;
 
 //** Tooltip arrow width
@@ -536,13 +536,13 @@
 //##
 
 //** Popover body background color
-@popover-bg:                          lighten(@body-bg, 10%);
+@popover-bg:                          @tooltip-bg;
 //** Popover maximum width
 @popover-max-width:                   276px;
 //** Popover border color
 @popover-border-color:                rgba(0,0,0,.2);
 //** Popover fallback border color
-@popover-fallback-border-color:       #999;
+@popover-fallback-border-color:       @popover-bg;
 
 //** Popover title background color
 @popover-title-bg:                    darken(@popover-bg, 3%);
@@ -555,9 +555,9 @@
 //** Popover outer arrow width
 @popover-arrow-outer-width:           (@popover-arrow-width + 1);
 //** Popover outer arrow color
-@popover-arrow-outer-color:           fadein(@popover-border-color, 5%);
+@popover-arrow-outer-color:           @popover-border-color;
 //** Popover outer arrow fallback color
-@popover-arrow-outer-fallback-color:  darken(@popover-fallback-border-color, 20%);
+@popover-arrow-outer-fallback-color:  @popover-fallback-border-color;
 
 
 //== Labels
@@ -863,5 +863,7 @@
 @page-header-border-color:    @gray-dark;
 //** Width of horizontal description list titles
 @dl-horizontal-offset:        @component-offset-horizontal;
+//** Point at which .dl-horizontal becomes horizontal
+@dl-horizontal-breakpoint:    @grid-float-breakpoint;
 //** Horizontal line color.
 @hr-border:                   @gray-dark;

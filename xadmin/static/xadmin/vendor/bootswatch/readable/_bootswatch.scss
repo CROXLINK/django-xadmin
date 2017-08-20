@@ -1,9 +1,8 @@
-// Readable 3.3.5
+// Readable 3.3.7
 // Bootswatch
 // -----------------------------------------------------
 
-$web-font-path: "http://fonts.useso.com/css?family=Raleway:400,700" !default;
-
+$web-font-path: "https://fonts.proxy.ustclug.org/css?family=Raleway:400,700" !default;
 @import url($web-font-path);
 
 // Navbar =====================================================================
@@ -57,7 +56,7 @@ $web-font-path: "http://fonts.useso.com/css?family=Raleway:400,700" !default;
   }
 }
 
-@media (max-width: $grid-float-breakpoint - 1) {
+@media (max-width: ($grid-float-breakpoint - 1)) {
   .navbar {
     .navbar-nav > li > a {
       margin: 0;

@@ -1,9 +1,8 @@
-// Spacelab 3.3.5
+// Spacelab 3.3.7
 // Bootswatch
 // -----------------------------------------------------
 
-$web-font-path: "http://fonts.useso.com/css?family=Open+Sans:400italic,700italic,400,700" !default;
-
+$web-font-path: "https://fonts.proxy.ustclug.org/css?family=Open+Sans:400italic,700italic,400,700" !default;
 @import url($web-font-path);
 
 @mixin btn-shadow($color){

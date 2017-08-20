@@ -53,7 +53,7 @@ class ResetPasswordSendView(BaseAdminView):
         else:
             return self.get(request, form=form)
 
-site.register_view(r'^xadmin/password_reset/$', ResetPasswordSendView, name='xadmin_password_reset')
+site.register_view(r'^password_reset/$', ResetPasswordSendView, name='xadmin_password_reset')
 
 class ResetLinkPlugin(BaseAdminPlugin):
 
@@ -91,7 +91,7 @@ class ResetPasswordComfirmView(BaseAdminView):
         return super(ResetPasswordComfirmView, self).get_media() + \
             self.vendor('xadmin.page.form.js', 'xadmin.form.css')
 
-site.register_view(r'^xadmin/password_reset/(?P<uidb36>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+site.register_view(r'^password_reset/(?P<uidb36>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
     ResetPasswordComfirmView, name='xadmin_password_reset_confirm')
 
 
@@ -107,5 +107,5 @@ class ResetPasswordCompleteView(BaseAdminView):
 
         return TemplateResponse(request, self.password_reset_complete_template, context)
 
-site.register_view(r'^xadmin/password_reset/complete/$', ResetPasswordCompleteView, name='xadmin_password_reset_complete')
+site.register_view(r'^password_reset/complete/$', ResetPasswordCompleteView, name='xadmin_password_reset_complete')
 

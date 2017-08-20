@@ -1,9 +1,8 @@
-// Flatly 3.3.5
+// Flatly 3.3.7
 // Bootswatch
 // -----------------------------------------------------
 
-$web-font-path: "http://fonts.useso.com/css?family=Lato:400,700,400italic" !default;
-
+$web-font-path: "https://fonts.proxy.ustclug.org/css?family=Lato:400,700,400italic" !default;
 @import url($web-font-path);
 
 // Navbar =====================================================================
@@ -121,7 +120,7 @@ table,
 // Forms ======================================================================
 
 .form-control,
-input, {
+input {
   border-width: 2px;
   @include box-shadow(none);
 

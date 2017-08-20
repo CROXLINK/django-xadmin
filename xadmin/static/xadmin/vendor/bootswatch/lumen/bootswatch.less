@@ -1,8 +1,8 @@
-// Lumen 3.3.5
+// Lumen 3.3.7
 // Bootswatch
 // -----------------------------------------------------
 
-@web-font-path: "http://fonts.useso.com/css?family=Source+Sans+Pro:300,400,700,400italic";
+@web-font-path: "https://fonts.proxy.ustclug.org/css?family=Source+Sans+Pro:300,400,700,400italic";
 
 .web-font(@path) {
   @import url("@{path}");
@@ -26,6 +26,7 @@
   .shadow();
   font-size: 12px;
   font-weight: bold;
+  line-height: 1.5;
   text-transform: uppercase;
 
   &:hover {
@@ -195,13 +196,15 @@ table,
     }
   }
 
-  > thead > tr > th,
-  > tbody > tr > th,
-  > tfoot > tr > th,
-  > thead > tr > td,
-  > tbody > tr > td,
-  > tfoot > tr > td {
-    border-color: transparent;
+  &:not(.table-bordered) {
+    > thead > tr > th,
+    > tbody > tr > th,
+    > tfoot > tr > th,
+    > thead > tr > td,
+    > tbody > tr > td,
+    > tfoot > tr > td {
+      border-color: transparent;
+    }
   }
 }
 

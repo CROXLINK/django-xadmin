@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-12 13:16+0800\n"
+"POT-Creation-Date: 2017-08-13 02:41+0800\n"
 "PO-Revision-Date: 2013-11-20 10:21+0000\n"
 "Last-Translator: gladson <gladson@immensa.com.br>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -676,7 +676,9 @@ msgid "Log in"
 msgstr "Entrar"
 
 #: templates/xadmin/auth/password_reset/confirm.html:12
-msgid "Enter new password"
+#, fuzzy
+#| msgid "Enter new password"
+msgid "Set new password"
 msgstr "Digite a nova senha"
 
 #: templates/xadmin/auth/password_reset/confirm.html:17
@@ -696,12 +698,21 @@ msgid "Password reset unsuccessful"
 msgstr "A senha foi redefinida com sucesso"
 
 #: templates/xadmin/auth/password_reset/confirm.html:27
+#, fuzzy
+#| msgid ""
+#| "The password reset link was invalid, possibly because it has already been "
+#| "used.  Please request a new password reset."
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used.  Please request a new password reset."
+"used or expired."
 msgstr ""
 "O link de redefinição de senha era inválida, possivelmente porque ele já foi "
 "usado. Por favor, solicite uma nova redefinição de senha."
+
+#: templates/xadmin/auth/password_reset/confirm.html:28
+#: templates/xadmin/auth/password_reset/form.html:13
+msgid "Password reset"
+msgstr "Redefinição de senha"
 
 #: templates/xadmin/auth/password_reset/done.html:14
 msgid ""
@@ -737,10 +748,6 @@ msgstr "Obrigado por utilizar o nosso site!"
 msgid "The %(site_name)s team"
 msgstr "A equipe %(site_name)s"
 
-#: templates/xadmin/auth/password_reset/form.html:13
-msgid "Password reset"
-msgstr "Redefinição de senha"
-
 #: templates/xadmin/auth/password_reset/form.html:17
 msgid ""
 "Forgotten your password? Enter your e-mail address below, and we'll e-mail "
@@ -758,7 +765,7 @@ msgid "Reset my password"
 msgstr "Redefinir minha senha"
 
 #: templates/xadmin/auth/password_reset/form.html:35
-msgid "Back to log in..."
+msgid "Back to login..."
 msgstr ""
 
 #: templates/xadmin/auth/user/add_form.html:6

@@ -1,9 +1,8 @@
-// Darkly 3.3.5
+// Darkly 3.3.7
 // Bootswatch
 // -----------------------------------------------------
 
-$web-font-path: "http://fonts.useso.com/css?family=Lato:400,700,400italic" !default;
-
+$web-font-path: "https://fonts.proxy.ustclug.org/css?family=Lato:400,700,400italic" !default;
 @import url($web-font-path);
 
 // Navbar =====================================================================
@@ -144,6 +143,10 @@ textarea {
   &:focus {
     @include box-shadow(none);
   }
+}
+
+.form-control-feedback {
+  color: $input-color;
 }
 
 .has-warning {

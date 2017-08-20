@@ -1,6 +1,8 @@
-#coding:utf-8
+# coding:utf-8
 from __future__ import print_function
 import httplib2
+import urllib
+
 from django.template import loader
 from django.core.cache import cache
 from django.utils import six
@@ -11,11 +13,6 @@ from xadmin.sites import site
 from xadmin.models import UserSettings
 from xadmin.views import BaseAdminPlugin, BaseAdminView
 from xadmin.util import static, json
-import six
-if six.PY2:
-    import urllib
-else:
-    import urllib.parse
 
 THEME_CACHE_KEY = 'xadmin_themes'
 
@@ -42,6 +39,7 @@ class ThemePlugin(BaseAdminPlugin):
             if six.PY2:
                 func = urllib.unquote
             else:
+                import urllib.parse
                 func = urllib.parse.unquote
             return func(self.request.COOKIES['_theme'])
         return self.default_theme
@@ -76,11 +74,9 @@ class ThemePlugin(BaseAdminPlugin):
                 use_local_watch_themes = getattr(settings, 'USE_LOCAL_WATCH_THEMES', False)
 
                 if use_local_watch_themes:
-                    # fetching themes from local web server
-#                   requesting_host = self.request.get_host() or ''
-#                   print requesting_host
                     content = urllib.urlopen(self.request.build_absolute_uri('/static/xadmin/vendor/bootswatch/api.bootswatch.com.3')).read()
-# 
+
+                    # render with context first 
                     from django.template import Context, Template
                     watch_themes_template = Template(content)
                     content = watch_themes_template.render(Context())
@@ -92,13 +88,19 @@ class ThemePlugin(BaseAdminPlugin):
                         import requests
 
                     except:
-                        # use httplib2 otherwise (not work if TLS is required)
-                        h = httplib2.Http()
+                        # use httplib2 otherwise (not work if TLS is required?)
+                        h = httplib2.Http(".cache", disable_ssl_certificate_validation=True)
                         resp, content = h.request("https://bootswatch.com/api/3.json", 'GET', '',
                             headers={"Accept": "application/json", "User-Agent": self.request.META['HTTP_USER_AGENT']})
                     else:
-                        content = requests.get("https://bootswatch.com/api/3.json",
-                                               headers={"Accept": "application/json", "User-Agent": self.request.META['HTTP_USER_AGENT']})
+                        resp = requests.get("https://bootswatch.com/api/3.json",
+                                            headers={"Accept": "application/json", "User-Agent": self.request.META['HTTP_USER_AGENT']})
+                        
+                        if resp.status_code == 200:
+                            content = resp.text
+                        else:
+                            # empty theme
+                            content = "{'themes': []}"
 
                     if six.PY3:
                         content = content.decode()

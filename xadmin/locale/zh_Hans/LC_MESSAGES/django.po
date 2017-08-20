@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-12 13:16+0800\n"
+"POT-Creation-Date: 2017-08-13 02:41+0800\n"
 "PO-Revision-Date: 2013-11-20 10:21+0000\n"
 "Last-Translator: sshwsfc <sshwsfc@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/xadmin/"
@@ -647,7 +647,9 @@ msgid "Log in"
 msgstr "登录"
 
 #: templates/xadmin/auth/password_reset/confirm.html:12
-msgid "Enter new password"
+#, fuzzy
+#| msgid "Enter new password"
+msgid "Set new password"
 msgstr "输入新密码"
 
 #: templates/xadmin/auth/password_reset/confirm.html:17
@@ -665,10 +667,19 @@ msgid "Password reset unsuccessful"
 msgstr "密码重设失败"
 
 #: templates/xadmin/auth/password_reset/confirm.html:27
+#, fuzzy
+#| msgid ""
+#| "The password reset link was invalid, possibly because it has already been "
+#| "used.  Please request a new password reset."
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used.  Please request a new password reset."
+"used or expired."
 msgstr "密码重置链接无效，可能是因为它已使用。可以请求一次新的密码重置。"
+
+#: templates/xadmin/auth/password_reset/confirm.html:28
+#: templates/xadmin/auth/password_reset/form.html:13
+msgid "Password reset"
+msgstr "密码重设"
 
 #: templates/xadmin/auth/password_reset/done.html:14
 msgid ""
@@ -702,10 +713,6 @@ msgstr "感谢使用我们的站点！"
 msgid "The %(site_name)s team"
 msgstr "%(site_name)s 团队"
 
-#: templates/xadmin/auth/password_reset/form.html:13
-msgid "Password reset"
-msgstr "密码重设"
-
 #: templates/xadmin/auth/password_reset/form.html:17
 msgid ""
 "Forgotten your password? Enter your e-mail address below, and we'll e-mail "
@@ -723,7 +730,7 @@ msgid "Reset my password"
 msgstr "重设我的密码"
 
 #: templates/xadmin/auth/password_reset/form.html:35
-msgid "Back to log in..."
+msgid "Back to login..."
 msgstr ""
 
 #: templates/xadmin/auth/user/add_form.html:6

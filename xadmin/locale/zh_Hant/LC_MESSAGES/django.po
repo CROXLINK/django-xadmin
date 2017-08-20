@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-12 13:16+0800\n"
+"POT-Creation-Date: 2017-08-13 02:41+0800\n"
 "PO-Revision-Date: 2014-11-07 07:45+0000\n"
 "Last-Translator: eddiep <eddiep@163.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/xadmin-"
@@ -640,8 +640,8 @@ msgid ""
 "There's been an error. It's been reported to the site administrators via e-"
 "mail and should be fixed shortly. Thanks for your patience."
 msgstr ""
-"啊～發生錯誤，已通過郵件通知網站管理員，很快就會被修復，感謝您的耐心與包涵～"
-"～"
+"啊～發生錯誤了，已通過郵件通知網站管理員，很快就會被修復，感謝您的耐心與包涵"
+"～～"
 
 #: templates/xadmin/auth/password_reset/complete.html:11
 #: templates/xadmin/auth/password_reset/done.html:11
@@ -657,8 +657,8 @@ msgid "Log in"
 msgstr "登入"
 
 #: templates/xadmin/auth/password_reset/confirm.html:12
-msgid "Enter new password"
-msgstr "輸入新密碼"
+msgid "Set new password"
+msgstr "設定新密碼"
 
 #: templates/xadmin/auth/password_reset/confirm.html:17
 msgid ""
@@ -675,10 +675,19 @@ msgid "Password reset unsuccessful"
 msgstr "密碼重設失敗"
 
 #: templates/xadmin/auth/password_reset/confirm.html:27
+#, fuzzy
+#| msgid ""
+#| "The password reset link was invalid, possibly because it has already been "
+#| "used.  Please request a new password reset."
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used.  Please request a new password reset."
-msgstr "無效的密碼重設鏈接，可能因為已經被使用過？請重新申請密碼重設。"
+"used or expired."
+msgstr "無效的密碼重設鏈接，可能因為已經被使用過或已過期？"
+
+#: templates/xadmin/auth/password_reset/confirm.html:28
+#: templates/xadmin/auth/password_reset/form.html:13
+msgid "Password reset"
+msgstr "密碼重設"
 
 #: templates/xadmin/auth/password_reset/done.html:14
 msgid ""
@@ -710,10 +719,6 @@ msgstr "謝謝使用！"
 msgid "The %(site_name)s team"
 msgstr "%(site_name)s團隊"
 
-#: templates/xadmin/auth/password_reset/form.html:13
-msgid "Password reset"
-msgstr "密碼重設"
-
 #: templates/xadmin/auth/password_reset/form.html:17
 msgid ""
 "Forgotten your password? Enter your e-mail address below, and we'll e-mail "
@@ -722,7 +727,7 @@ msgstr "忘記密碼？請輸入您的郵箱，我們會發送重新設定密碼
 
 #: templates/xadmin/auth/password_reset/form.html:25
 msgid "E-mail address:"
-msgstr "郵箱"
+msgstr "電子郵箱"
 
 #: templates/xadmin/auth/password_reset/form.html:33
 msgid "Reset my password"

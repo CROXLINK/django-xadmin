@@ -1,4 +1,4 @@
-// Cerulean 3.3.5
+// Cerulean 3.3.7
 // Bootswatch
 // -----------------------------------------------------
 
@@ -11,11 +11,10 @@
 // Navbar =====================================================================
 
 .navbar {
-  .btn-shadow(@navbar-default-bg);
-  filter: none;
-  .box-shadow(0 1px 10px rgba(0, 0, 0, 0.1));
-
   &-default {
+    .btn-shadow(@navbar-default-bg);
+    filter: none;
+    .box-shadow(0 1px 10px rgba(0, 0, 0, 0.1));
 
     .badge {
       background-color: #fff;
@@ -127,5 +126,9 @@
   .panel-heading,
   .panel-title {
     color: #fff;
+  }
+
+  > .panel-heading .badge {
+    background-color: #fff;
   }
 }

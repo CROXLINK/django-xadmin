@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-12 13:16+0800\n"
+"POT-Creation-Date: 2017-08-13 02:41+0800\n"
 "PO-Revision-Date: 2013-11-20 10:21+0000\n"
 "Last-Translator: sshwsfc <sshwsfc@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/xadmin/language/"
@@ -641,7 +641,7 @@ msgid "Log in"
 msgstr ""
 
 #: templates/xadmin/auth/password_reset/confirm.html:12
-msgid "Enter new password"
+msgid "Set new password"
 msgstr ""
 
 #: templates/xadmin/auth/password_reset/confirm.html:17
@@ -661,7 +661,12 @@ msgstr ""
 #: templates/xadmin/auth/password_reset/confirm.html:27
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used.  Please request a new password reset."
+"used or expired."
+msgstr ""
+
+#: templates/xadmin/auth/password_reset/confirm.html:28
+#: templates/xadmin/auth/password_reset/form.html:13
+msgid "Password reset"
 msgstr ""
 
 #: templates/xadmin/auth/password_reset/done.html:14
@@ -694,10 +699,6 @@ msgstr ""
 msgid "The %(site_name)s team"
 msgstr ""
 
-#: templates/xadmin/auth/password_reset/form.html:13
-msgid "Password reset"
-msgstr ""
-
 #: templates/xadmin/auth/password_reset/form.html:17
 msgid ""
 "Forgotten your password? Enter your e-mail address below, and we'll e-mail "
@@ -713,7 +714,7 @@ msgid "Reset my password"
 msgstr ""
 
 #: templates/xadmin/auth/password_reset/form.html:35
-msgid "Back to log in..."
+msgid "Back to login..."
 msgstr ""
 
 #: templates/xadmin/auth/user/add_form.html:6
