@@ -29,9 +29,12 @@ class ModelFormPlugin(BasePortalPlugin):
         cs = []
         layout = helper.layout
         get_layout_objects(layout, Column, cs)
+
+        total_fields = 0
         for i, c in enumerate(cs):
             if not getattr(c, 'css_id', None):
                 c.css_id = 'column-%d' % i
+            total_fields += len(c.fields)
 
         # make fieldset index
         fs = []
@@ -45,12 +48,25 @@ class ModelFormPlugin(BasePortalPlugin):
         try:
             layout_pos = UserSettings.objects.get(
                 user=self.user, key=self._portal_key()).value
+
             layout_cs = layout_pos.split('|')
-            for i, c in enumerate(cs):
-                c.fields = [fs_map.pop(j) for j in layout_cs[i].split(
-                    ',') if j in fs_map] if len(layout_cs) > i else []
+
+            if total_fields != len(fs_map.values()):
+                # layout or fields changed
+                fs_map = None
+
+                # clear user settings
+                UserSettings.objects.filter(
+                    user=self.user, key=self._portal_key()).delete()
+
+            else:
+                for i, c in enumerate(cs):
+                    c.fields = [fs_map.pop(j) for j in layout_cs[i].split(
+                        ',') if j in fs_map] if len(layout_cs) > i else []
+
             if fs_map and cs:
                 cs[0].fields.extend(fs_map.values())
+
         except Exception:
             pass
 

@@ -87,6 +87,7 @@ class FormAdminView(CommAdminView):
         helper.form_tag = False
         helper.include_media = False
         helper.add_layout(self.get_form_layout())
+        helper.field_template = "xadmin/layout/field.html"
 
         return helper
 

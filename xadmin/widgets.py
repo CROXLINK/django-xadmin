@@ -176,7 +176,7 @@ class AdminCheckboxSelect(forms.CheckboxSelectMultiple):
         if attrs:
             attrs.update(self.attrs)
         else:
-            attrs=self.attrs
+            attrs = self.attrs
 
         attrs['class'] = attrs.get('class', '').replace('form-control', '')
 

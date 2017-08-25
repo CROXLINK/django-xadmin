@@ -229,6 +229,7 @@ class ModelFormAdminView(ModelAdminView):
         helper.form_tag = False
         helper.include_media = False
         helper.add_layout(self.get_form_layout())
+        helper.field_template = "xadmin/layout/field.html"
 
         # deal with readonly fields
         readonly_fields = self.get_readonly_fields()

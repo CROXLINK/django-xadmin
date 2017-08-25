@@ -37,6 +37,7 @@ class ThemePlugin(BaseAdminPlugin):
                 pass
         if '_theme' in self.request.COOKIES:
             if six.PY2:
+                import urllib
                 func = urllib.unquote
             else:
                 import urllib.parse
