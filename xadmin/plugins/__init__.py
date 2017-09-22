@@ -27,8 +27,7 @@ PLUGINS = (
     'sitemenu', 
     'language', 
     'quickfilter',
-    'sortablelist',
-	'importexport'
+    'sortablelist'
 )
 
 
