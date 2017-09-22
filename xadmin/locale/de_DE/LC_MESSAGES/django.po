@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-13 02:41+0800\n"
+"POT-Creation-Date: 2017-09-22 22:52+0800\n"
 "PO-Revision-Date: 2013-12-19 11:06+0000\n"
 "Last-Translator: Sebastian Morkisch <semox78@googlemail.com>\n"
 "Language-Team: German (Germany) (http://www.transifex.com/projects/p/xadmin/"
@@ -29,49 +29,55 @@ msgstr ""
 msgid "Administration"
 msgstr ""
 
-#: filters.py:169 filters.py:207 filters.py:427 filters.py:513 filters.py:551
+#: filters.py:173 filters.py:211 filters.py:433 filters.py:524 filters.py:562
 msgid "All"
 msgstr "Alle"
 
-#: filters.py:170 plugins/export.py:174
+#: filters.py:174 plugins/export.py:174
 msgid "Yes"
 msgstr "Ja"
 
-#: filters.py:171 plugins/export.py:174
+#: filters.py:175 plugins/export.py:174
 msgid "No"
 msgstr "Nein"
 
-#: filters.py:191
+#: filters.py:195
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: filters.py:287
+#: filters.py:291
 msgid "Any date"
 msgstr "Beliebiges Datum"
 
-#: filters.py:288
+#: filters.py:292
 msgid "Has date"
 msgstr "Hat ein Datum"
 
-#: filters.py:291
+#: filters.py:295
 msgid "Has no date"
 msgstr "Hat kein Datum"
 
-#: filters.py:294 widgets.py:35 widgets.py:81
+#: filters.py:298 widgets.py:35 widgets.py:81
 msgid "Today"
 msgstr "Heute"
 
-#: filters.py:298
+#: filters.py:302
 msgid "Past 7 days"
 msgstr "Letzten 7 Tage"
 
-#: filters.py:302
+#: filters.py:306
 msgid "This month"
 msgstr "Diesen Monat"
 
-#: filters.py:306
+#: filters.py:310
 msgid "This year"
 msgstr "Dieses Jahr"
+
+#: filters.py:450
+#, fuzzy
+#| msgid "Has date"
+msgid "Has value"
+msgstr "Hat ein Datum"
 
 #: forms.py:10
 msgid ""
@@ -422,7 +428,7 @@ msgid_plural "%(count)s comments were successfully %(action)s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: plugins/details.py:52 views/list.py:581
+#: plugins/details.py:52 views/list.py:583
 #, python-format
 msgid "Details of %s"
 msgstr "Einzelheiten von %s"
@@ -433,7 +439,7 @@ msgid "Enter %s"
 msgstr "Eingabe %s"
 
 #: plugins/editable.py:73 views/dashboard.py:652 views/delete.py:28
-#: views/detail.py:145 views/edit.py:460
+#: views/detail.py:145 views/edit.py:461
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr ""
@@ -443,7 +449,7 @@ msgstr ""
 msgid "Sheet"
 msgstr "Seite"
 
-#: plugins/filters.py:141 plugins/quickfilter.py:143
+#: plugins/filters.py:144 plugins/quickfilter.py:146
 #, python-format
 msgid "<b>Filtering error:</b> %s"
 msgstr "<b>Fehlerhaftes Filtern:</b> %s"
@@ -500,32 +506,24 @@ msgstr "Suche %s"
 msgid "Select %s"
 msgstr "Datum wählen"
 
-#: plugins/themes.py:61 plugins/themes_BACKUP_13112.py:61
-#: plugins/themes_BASE_13112.py:47 plugins/themes_LOCAL_13112.py:49
-#: plugins/themes_REMOTE_13112.py:59
+#: plugins/themes.py:60
 msgid "Default"
 msgstr "Standard"
 
-#: plugins/themes.py:61 plugins/themes_BACKUP_13112.py:61
-#: plugins/themes_BASE_13112.py:48 plugins/themes_LOCAL_13112.py:50
-#: plugins/themes_REMOTE_13112.py:59
+#: plugins/themes.py:60
 msgid "Default bootstrap theme"
 msgstr "Standard Bootstrap Thema"
 
-#: plugins/themes.py:62 plugins/themes_BACKUP_13112.py:62
-#: plugins/themes_BASE_13112.py:49 plugins/themes_LOCAL_13112.py:51
-#: plugins/themes_REMOTE_13112.py:60
+#: plugins/themes.py:61
 msgid "Bootstrap2"
 msgstr "Bootstrap2"
 
-#: plugins/themes.py:62 plugins/themes_BACKUP_13112.py:62
-#: plugins/themes_BASE_13112.py:49 plugins/themes_LOCAL_13112.py:51
-#: plugins/themes_REMOTE_13112.py:60
+#: plugins/themes.py:61
 msgid "Bootstrap 2.x theme"
 msgstr "Bootstrap 2.x Thema"
 
-#: plugins/topnav.py:62 views/dashboard.py:468 views/edit.py:393
-#: views/edit.py:402
+#: plugins/topnav.py:62 views/dashboard.py:468 views/edit.py:394
+#: views/edit.py:403
 #, python-format
 msgid "Add %s"
 msgstr "Hinzufügen %s"
@@ -1396,49 +1394,49 @@ msgstr "Andere Felder"
 msgid "%s Detail"
 msgstr "%s Einzelheiten"
 
-#: views/edit.py:258
+#: views/edit.py:259
 msgid "Added."
 msgstr ""
 
-#: views/edit.py:260
+#: views/edit.py:261
 #, fuzzy, python-format
 #| msgid "Change %s"
 msgid "Changed %s."
 msgstr "Ändern %s"
 
-#: views/edit.py:260
+#: views/edit.py:261
 msgid "and"
 msgstr ""
 
-#: views/edit.py:263
+#: views/edit.py:264
 msgid "No fields changed."
 msgstr ""
 
-#: views/edit.py:426
+#: views/edit.py:427
 #, python-format
 msgid "The %(name)s \"%(obj)s\" was added successfully."
 msgstr "%(name)s \"%(obj)s\" wurde erfolgreich hinzugefügt."
 
-#: views/edit.py:431 views/edit.py:526
+#: views/edit.py:432 views/edit.py:527
 msgid "You may edit it again below."
 msgstr "Sie können es trotzdem nochmals bearbeiten."
 
-#: views/edit.py:435 views/edit.py:529
+#: views/edit.py:436 views/edit.py:530
 #, python-format
 msgid "You may add another %s below."
 msgstr "Sie können unten ein weiteres %s hinzufügen."
 
-#: views/edit.py:477
+#: views/edit.py:478
 #, python-format
 msgid "Change %s"
 msgstr "Ändern %s"
 
-#: views/edit.py:522
+#: views/edit.py:523
 #, python-format
 msgid "The %(name)s \"%(obj)s\" was changed successfully."
 msgstr ""
 
-#: views/form.py:168
+#: views/form.py:169
 #, fuzzy, python-format
 msgid "The %s was changed successfully."
 msgstr "Passwort erfolgreich geändert."
@@ -1447,20 +1445,20 @@ msgstr "Passwort erfolgreich geändert."
 msgid "Database error"
 msgstr "Datenbankfehler"
 
-#: views/list.py:369
+#: views/list.py:371
 #, python-format
 msgid "%s List"
 msgstr "%s Liste"
 
-#: views/list.py:498
+#: views/list.py:500
 msgid "Sort ASC"
 msgstr "Aufsteigend sortieren"
 
-#: views/list.py:499
+#: views/list.py:501
 msgid "Sort DESC"
 msgstr "Absteigend sortieren"
 
-#: views/list.py:503
+#: views/list.py:505
 msgid "Cancel Sort"
 msgstr "Sortierung abbrechen"
 

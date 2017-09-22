@@ -1,4 +1,7 @@
 from __future__ import absolute_import
+import copy
+import datetime
+
 from django.db import models
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.encoding import smart_text
@@ -14,7 +17,6 @@ from django.core.cache import cache, caches
 
 from xadmin.views.list import EMPTY_CHANGELIST_VALUE
 from xadmin.util import is_related_field,is_related_field2
-import datetime
 
 FILTER_PREFIX = '_p_'
 SEARCH_VAR = '_q_'
@@ -395,8 +397,10 @@ class RelatedFieldListFilter(ListFieldFilter):
         else:
             rel_name = other_model._meta.pk.name
 
-        self.lookup_formats = {'in': '%%s__%s__in' % rel_name,'exact': '%%s__%s__exact' %
-                               rel_name, 'isnull': '%s__isnull'}
+        self.lookup_formats = {'in': '%%s__%s__in' % rel_name,
+                               'exact': '%%s__%s__exact' % rel_name,
+                               'isnull': '%%s__%s__isnull' % rel_name}
+
         self.lookup_choices = field.get_choices(include_blank=False)
         super(RelatedFieldListFilter, self).__init__(
             field, request, params, model, model_admin, field_path)
@@ -421,10 +425,10 @@ class RelatedFieldListFilter(ListFieldFilter):
 
     def choices(self):
         yield {
-            'selected': self.lookup_exact_val == '' and not self.lookup_isnull_val,
+            'selected': self.lookup_exact_val == '' and self.lookup_isnull_val is None,
             'query_string': self.query_string({},
                                               [self.lookup_exact_name, self.lookup_isnull_name]),
-            'display': _('All'),
+            'display': '(%s)' % _('All'),
         }
         for pk_val, val in self.lookup_choices:
             yield {
@@ -438,10 +442,15 @@ class RelatedFieldListFilter(ListFieldFilter):
                 and self.field.field.null or hasattr(self.field, 'rel')
                 and self.field.null):
             yield {
-                'selected': bool(self.lookup_isnull_val),
-                'query_string': self.query_string({
-                    self.lookup_isnull_name: 'True',
-                }, [self.lookup_exact_name]),
+                'selected': self.lookup_isnull_val is False and self.lookup_exact_val == '',
+                'query_string': self.query_string({self.lookup_isnull_name: 'False'},
+                                                  [self.lookup_exact_name]),
+                'display': '(%s)' % _('Has value'),
+            }
+            yield {
+                'selected': self.lookup_isnull_val is True,
+                'query_string': self.query_string({self.lookup_isnull_name: 'True'},
+                                                  [self.lookup_exact_name]),
                 'display': EMPTY_CHANGELIST_VALUE,
             }
 

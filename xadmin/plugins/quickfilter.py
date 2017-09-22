@@ -85,6 +85,9 @@ class QuickFilterPlugin(BaseAdminPlugin):
         for p_key, p_val in iteritems(lookup_params):
             if p_val == "False":
                 lookup_params[p_key] = False
+            elif p_val == "True":
+                lookup_params[p_key] = True
+
         use_distinct = False
         
         if not hasattr(self.admin_view,'quickfilter'):
@@ -131,7 +134,7 @@ class QuickFilterPlugin(BaseAdminPlugin):
                 spec = QuickFilterMultiSelectFieldListFilter(field, self.request, lookup_params,self.model, self.admin_view, field_path=field_path,field_order_by=field_order_by,field_limit=field_limit,sort_key=sort_key,cache_config=cache_config)
                  
                 if len(field_parts)>1:
-                    spec.title = "%s %s"%(field_parts[-2].name,spec.title) 
+                    spec.title = "%s-%s"%(field_parts[-2].verbose_name, spec.title) 
                  
                 # Check if we need to use distinct()
                 use_distinct = True#(use_distinct orlookup_needs_distinct(self.opts, field_path))

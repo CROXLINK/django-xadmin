@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-13 02:41+0800\n"
+"POT-Creation-Date: 2017-09-22 22:52+0800\n"
 "PO-Revision-Date: 2013-11-20 10:21+0000\n"
 "Last-Translator: sshwsfc <sshwsfc@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/xadmin/"
@@ -28,49 +28,53 @@ msgstr "管理对象"
 msgid "Administration"
 msgstr "管理"
 
-#: filters.py:169 filters.py:207 filters.py:427 filters.py:513 filters.py:551
+#: filters.py:173 filters.py:211 filters.py:433 filters.py:524 filters.py:562
 msgid "All"
-msgstr "全部"
+msgstr "不限"
 
-#: filters.py:170 plugins/export.py:174
+#: filters.py:174 plugins/export.py:174
 msgid "Yes"
 msgstr "是"
 
-#: filters.py:171 plugins/export.py:174
+#: filters.py:175 plugins/export.py:174
 msgid "No"
 msgstr "否"
 
-#: filters.py:191
+#: filters.py:195
 msgid "Unknown"
 msgstr "未知"
 
-#: filters.py:287
+#: filters.py:291
 msgid "Any date"
 msgstr "任意日期"
 
-#: filters.py:288
+#: filters.py:292
 msgid "Has date"
 msgstr "有日期"
 
-#: filters.py:291
+#: filters.py:295
 msgid "Has no date"
 msgstr "无日期"
 
-#: filters.py:294 widgets.py:35 widgets.py:81
+#: filters.py:298 widgets.py:35 widgets.py:81
 msgid "Today"
 msgstr "今天"
 
-#: filters.py:298
+#: filters.py:302
 msgid "Past 7 days"
 msgstr "过去7天"
 
-#: filters.py:302
+#: filters.py:306
 msgid "This month"
 msgstr "本月"
 
-#: filters.py:306
+#: filters.py:310
 msgid "This year"
 msgstr "今年"
+
+#: filters.py:450
+msgid "Has value"
+msgstr "任意值"
 
 #: forms.py:10
 msgid ""
@@ -402,7 +406,7 @@ msgid "1 comment was successfully %(action)s."
 msgid_plural "%(count)s comments were successfully %(action)s."
 msgstr[0] ""
 
-#: plugins/details.py:52 views/list.py:581
+#: plugins/details.py:52 views/list.py:583
 #, python-format
 msgid "Details of %s"
 msgstr "%s详情"
@@ -413,7 +417,7 @@ msgid "Enter %s"
 msgstr "输入%s"
 
 #: plugins/editable.py:73 views/dashboard.py:652 views/delete.py:28
-#: views/detail.py:145 views/edit.py:460
+#: views/detail.py:145 views/edit.py:461
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr "具有主键 %(key)r 的对象 %(name)s 不存在。"
@@ -422,7 +426,7 @@ msgstr "具有主键 %(key)r 的对象 %(name)s 不存在。"
 msgid "Sheet"
 msgstr "表"
 
-#: plugins/filters.py:141 plugins/quickfilter.py:143
+#: plugins/filters.py:144 plugins/quickfilter.py:146
 #, python-format
 msgid "<b>Filtering error:</b> %s"
 msgstr "<b>过滤器错误:</b> %s"
@@ -478,32 +482,24 @@ msgstr "搜索%s"
 msgid "Select %s"
 msgstr "选择%s"
 
-#: plugins/themes.py:61 plugins/themes_BACKUP_13112.py:61
-#: plugins/themes_BASE_13112.py:47 plugins/themes_LOCAL_13112.py:49
-#: plugins/themes_REMOTE_13112.py:59
+#: plugins/themes.py:60
 msgid "Default"
 msgstr "默认"
 
-#: plugins/themes.py:61 plugins/themes_BACKUP_13112.py:61
-#: plugins/themes_BASE_13112.py:48 plugins/themes_LOCAL_13112.py:50
-#: plugins/themes_REMOTE_13112.py:59
+#: plugins/themes.py:60
 msgid "Default bootstrap theme"
 msgstr "默认Bootstrap主题"
 
-#: plugins/themes.py:62 plugins/themes_BACKUP_13112.py:62
-#: plugins/themes_BASE_13112.py:49 plugins/themes_LOCAL_13112.py:51
-#: plugins/themes_REMOTE_13112.py:60
+#: plugins/themes.py:61
 msgid "Bootstrap2"
 msgstr "Bootstrap2"
 
-#: plugins/themes.py:62 plugins/themes_BACKUP_13112.py:62
-#: plugins/themes_BASE_13112.py:49 plugins/themes_LOCAL_13112.py:51
-#: plugins/themes_REMOTE_13112.py:60
+#: plugins/themes.py:61
 msgid "Bootstrap 2.x theme"
 msgstr "Bootstrap2主题"
 
-#: plugins/topnav.py:62 views/dashboard.py:468 views/edit.py:393
-#: views/edit.py:402
+#: plugins/topnav.py:62 views/dashboard.py:468 views/edit.py:394
+#: views/edit.py:403
 #, python-format
 msgid "Add %s"
 msgstr "增加 %s"
@@ -647,8 +643,6 @@ msgid "Log in"
 msgstr "登录"
 
 #: templates/xadmin/auth/password_reset/confirm.html:12
-#, fuzzy
-#| msgid "Enter new password"
 msgid "Set new password"
 msgstr "输入新密码"
 
@@ -667,14 +661,10 @@ msgid "Password reset unsuccessful"
 msgstr "密码重设失败"
 
 #: templates/xadmin/auth/password_reset/confirm.html:27
-#, fuzzy
-#| msgid ""
-#| "The password reset link was invalid, possibly because it has already been "
-#| "used.  Please request a new password reset."
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used or expired."
-msgstr "密码重置链接无效，可能是因为它已使用。可以请求一次新的密码重置。"
+msgstr "密码重置链接无效，可能因为已使用或逾期，请再重新申请密码重置。"
 
 #: templates/xadmin/auth/password_reset/confirm.html:28
 #: templates/xadmin/auth/password_reset/form.html:13
@@ -1368,48 +1358,48 @@ msgstr "其它字段"
 msgid "%s Detail"
 msgstr "%s详情"
 
-#: views/edit.py:258
+#: views/edit.py:259
 msgid "Added."
 msgstr "已添加"
 
-#: views/edit.py:260
+#: views/edit.py:261
 #, python-format
 msgid "Changed %s."
 msgstr "修改 %s"
 
-#: views/edit.py:260
+#: views/edit.py:261
 msgid "and"
 msgstr "和"
 
-#: views/edit.py:263
+#: views/edit.py:264
 msgid "No fields changed."
 msgstr "没有数据变化"
 
-#: views/edit.py:426
+#: views/edit.py:427
 #, python-format
 msgid "The %(name)s \"%(obj)s\" was added successfully."
 msgstr "%(name)s \"%(obj)s\" 添加成功。"
 
-#: views/edit.py:431 views/edit.py:526
+#: views/edit.py:432 views/edit.py:527
 msgid "You may edit it again below."
 msgstr "你可以在下面再次编辑它。"
 
-#: views/edit.py:435 views/edit.py:529
+#: views/edit.py:436 views/edit.py:530
 #, python-format
 msgid "You may add another %s below."
 msgstr "你可以在下面增加另一个 %s 。"
 
-#: views/edit.py:477
+#: views/edit.py:478
 #, python-format
 msgid "Change %s"
 msgstr "修改 %s"
 
-#: views/edit.py:522
+#: views/edit.py:523
 #, python-format
 msgid "The %(name)s \"%(obj)s\" was changed successfully."
 msgstr "%(name)s \"%(obj)s\" 修改成功。"
 
-#: views/form.py:168
+#: views/form.py:169
 #, python-format
 msgid "The %s was changed successfully."
 msgstr "%s 修改成功。"
@@ -1418,20 +1408,20 @@ msgstr "%s 修改成功。"
 msgid "Database error"
 msgstr "数据库错误"
 
-#: views/list.py:369
+#: views/list.py:371
 #, python-format
 msgid "%s List"
 msgstr "%s列表"
 
-#: views/list.py:498
+#: views/list.py:500
 msgid "Sort ASC"
 msgstr "正序"
 
-#: views/list.py:499
+#: views/list.py:501
 msgid "Sort DESC"
 msgstr "倒序"
 
-#: views/list.py:503
+#: views/list.py:505
 msgid "Cancel Sort"
 msgstr "取消排序"
 

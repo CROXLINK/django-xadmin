@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-13 02:41+0800\n"
+"POT-Creation-Date: 2017-09-22 22:52+0800\n"
 "PO-Revision-Date: 2014-11-07 07:45+0000\n"
 "Last-Translator: eddiep <eddiep@163.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/xadmin-"
@@ -27,49 +27,53 @@ msgstr ""
 msgid "Administration"
 msgstr ""
 
-#: filters.py:169 filters.py:207 filters.py:427 filters.py:513 filters.py:551
+#: filters.py:173 filters.py:211 filters.py:433 filters.py:524 filters.py:562
 msgid "All"
-msgstr "全部"
+msgstr "不限"
 
-#: filters.py:170 plugins/export.py:174
+#: filters.py:174 plugins/export.py:174
 msgid "Yes"
 msgstr "是"
 
-#: filters.py:171 plugins/export.py:174
+#: filters.py:175 plugins/export.py:174
 msgid "No"
 msgstr "否"
 
-#: filters.py:191
+#: filters.py:195
 msgid "Unknown"
 msgstr "未知"
 
-#: filters.py:287
+#: filters.py:291
 msgid "Any date"
 msgstr "任意日期"
 
-#: filters.py:288
+#: filters.py:292
 msgid "Has date"
 msgstr "有日期"
 
-#: filters.py:291
+#: filters.py:295
 msgid "Has no date"
 msgstr "無日期"
 
-#: filters.py:294 widgets.py:35 widgets.py:81
+#: filters.py:298 widgets.py:35 widgets.py:81
 msgid "Today"
 msgstr "今日"
 
-#: filters.py:298
+#: filters.py:302
 msgid "Past 7 days"
 msgstr "過去7天"
 
-#: filters.py:302
+#: filters.py:306
 msgid "This month"
 msgstr "本月"
 
-#: filters.py:306
+#: filters.py:310
 msgid "This year"
 msgstr "今年"
+
+#: filters.py:450
+msgid "Has value"
+msgstr "任意值"
 
 #: forms.py:10
 msgid ""
@@ -103,8 +107,6 @@ msgid "Query String"
 msgstr "查詢字串"
 
 #: models.py:51
-#, fuzzy
-#| msgid "Is Share"
 msgid "Is Shared"
 msgstr "已分享"
 
@@ -153,10 +155,8 @@ msgid "User Widgets"
 msgstr "用戶小工具"
 
 #: models.py:144
-#, fuzzy
-#| msgid "Date/time"
 msgid "action time"
-msgstr "日期/時間"
+msgstr "操作時間"
 
 #: models.py:153
 msgid "action ip"
@@ -179,16 +179,12 @@ msgid "action flag"
 msgstr ""
 
 #: models.py:163
-#, fuzzy
-#| msgid "Change %s"
 msgid "change message"
-msgstr "修改 %s"
+msgstr "修改訊息"
 
 #: models.py:166
-#, fuzzy
-#| msgid "log in"
 msgid "log entry"
-msgstr "登入"
+msgstr "登入紀錄"
 
 #: models.py:167
 msgid "log entries"
@@ -200,17 +196,14 @@ msgid "Added \"%(object)s\"."
 msgstr ""
 
 #: models.py:177
-#, fuzzy, python-format
-#| msgid "Change one %(objects_name)s"
-#| msgid_plural "Batch change %(counter)s %(objects_name)s"
+#, python-format
 msgid "Changed \"%(object)s\" - %(changes)s"
-msgstr "批次變更 %(counter)s %(objects_name)s"
+msgstr "已變更 \"%(object)s\" - %(changes)s"
 
 #: models.py:182
-#, fuzzy, python-format
-#| msgid "Related Objects"
+#, python-format
 msgid "Deleted \"%(object)s.\""
-msgstr "相關物件"
+msgstr "已刪除 \"%(object)s.\""
 
 #: plugins/actions.py:58
 #, python-format
@@ -218,8 +211,7 @@ msgid "Delete selected %(verbose_name_plural)s"
 msgstr "刪除選擇的 %(verbose_name_plural)s"
 
 #: plugins/actions.py:73
-#, fuzzy, python-format
-#| msgid "Successfully deleted %(count)d %(items)s."
+#, python-format
 msgid "Batch delete %(count)d %(items)s."
 msgstr "%(count)d %(items)s 刪除成功"
 
@@ -411,7 +403,7 @@ msgid "1 comment was successfully %(action)s."
 msgid_plural "%(count)s comments were successfully %(action)s."
 msgstr[0] "%(count)s 評論已成功 %(action)s."
 
-#: plugins/details.py:52 views/list.py:581
+#: plugins/details.py:52 views/list.py:583
 #, python-format
 msgid "Details of %s"
 msgstr "%s 詳細"
@@ -422,7 +414,7 @@ msgid "Enter %s"
 msgstr "輸入 %s"
 
 #: plugins/editable.py:73 views/dashboard.py:652 views/delete.py:28
-#: views/detail.py:145 views/edit.py:460
+#: views/detail.py:145 views/edit.py:461
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr "主鍵為%(key)r的物件%(name)s不存在"
@@ -431,7 +423,7 @@ msgstr "主鍵為%(key)r的物件%(name)s不存在"
 msgid "Sheet"
 msgstr "工作表"
 
-#: plugins/filters.py:141 plugins/quickfilter.py:143
+#: plugins/filters.py:144 plugins/quickfilter.py:146
 #, python-format
 msgid "<b>Filtering error:</b> %s"
 msgstr "<b>過濾結果錯誤：</b> %s"
@@ -483,37 +475,28 @@ msgid "Search %s"
 msgstr "搜尋 %s"
 
 #: plugins/relfield.py:77
-#, fuzzy, python-format
-#| msgid "Select Date"
+#, python-format
 msgid "Select %s"
-msgstr "選擇日期"
+msgstr "選擇 %s"
 
-#: plugins/themes.py:61 plugins/themes_BACKUP_13112.py:61
-#: plugins/themes_BASE_13112.py:47 plugins/themes_LOCAL_13112.py:49
-#: plugins/themes_REMOTE_13112.py:59
+#: plugins/themes.py:60
 msgid "Default"
 msgstr "預設值"
 
-#: plugins/themes.py:61 plugins/themes_BACKUP_13112.py:61
-#: plugins/themes_BASE_13112.py:48 plugins/themes_LOCAL_13112.py:50
-#: plugins/themes_REMOTE_13112.py:59
+#: plugins/themes.py:60
 msgid "Default bootstrap theme"
 msgstr "預設的bootstrap主題"
 
-#: plugins/themes.py:62 plugins/themes_BACKUP_13112.py:62
-#: plugins/themes_BASE_13112.py:49 plugins/themes_LOCAL_13112.py:51
-#: plugins/themes_REMOTE_13112.py:60
+#: plugins/themes.py:61
 msgid "Bootstrap2"
 msgstr "Bootstrap2"
 
-#: plugins/themes.py:62 plugins/themes_BACKUP_13112.py:62
-#: plugins/themes_BASE_13112.py:49 plugins/themes_LOCAL_13112.py:51
-#: plugins/themes_REMOTE_13112.py:60
+#: plugins/themes.py:61
 msgid "Bootstrap 2.x theme"
 msgstr "Bootstrap 2.x 主題"
 
-#: plugins/topnav.py:62 views/dashboard.py:468 views/edit.py:393
-#: views/edit.py:402
+#: plugins/topnav.py:62 views/dashboard.py:468 views/edit.py:394
+#: views/edit.py:403
 #, python-format
 msgid "Add %s"
 msgstr "新增 %s"
@@ -675,10 +658,6 @@ msgid "Password reset unsuccessful"
 msgstr "密碼重設失敗"
 
 #: templates/xadmin/auth/password_reset/confirm.html:27
-#, fuzzy
-#| msgid ""
-#| "The password reset link was invalid, possibly because it has already been "
-#| "used.  Please request a new password reset."
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used or expired."
@@ -852,8 +831,6 @@ msgid "Click here to select the objects across all pages"
 msgstr "點擊這裡選擇所有頁面裏的全部物件"
 
 #: templates/xadmin/blocks/model_list.results_bottom.actions.html:19
-#, fuzzy, python-format
-#| msgid "Select all %(total_count)s %(module_name)s"
 msgid "Select all %(total_count)s %(model_name)s"
 msgstr "選擇全部 %(total_count)s %(module_name)s"
 
@@ -884,8 +861,6 @@ msgid "Export with format."
 msgstr "匯出帶格式"
 
 #: templates/xadmin/blocks/model_list.top_toolbar.exports.html:42
-#, fuzzy
-#| msgid "Export all datas."
 msgid "Export all data."
 msgstr "匯出全部資料"
 
@@ -972,10 +947,8 @@ msgid "To"
 msgstr "到："
 
 #: templates/xadmin/filters/fk_search.html:14
-#, fuzzy
-#| msgid "Select Date"
 msgid "Select"
-msgstr "選擇日期"
+msgstr "選擇"
 
 #: templates/xadmin/filters/fk_search.html:26
 #: templates/xadmin/filters/number.html:39
@@ -1373,49 +1346,48 @@ msgstr "其他欄位"
 msgid "%s Detail"
 msgstr "%s 詳細內容"
 
-#: views/edit.py:258
+#: views/edit.py:259
 msgid "Added."
 msgstr ""
 
-#: views/edit.py:260
-#, fuzzy, python-format
-#| msgid "Change %s"
+#: views/edit.py:261
+#, python-format
 msgid "Changed %s."
-msgstr "修改 %s"
+msgstr "已修改 %s"
 
-#: views/edit.py:260
+#: views/edit.py:261
 msgid "and"
 msgstr ""
 
-#: views/edit.py:263
+#: views/edit.py:264
 msgid "No fields changed."
 msgstr ""
 
-#: views/edit.py:426
+#: views/edit.py:427
 #, python-format
 msgid "The %(name)s \"%(obj)s\" was added successfully."
 msgstr "%(name)s \"%(obj)s\" 已成功新增."
 
-#: views/edit.py:431 views/edit.py:526
+#: views/edit.py:432 views/edit.py:527
 msgid "You may edit it again below."
 msgstr "您可以再次編輯下列內容"
 
-#: views/edit.py:435 views/edit.py:529
+#: views/edit.py:436 views/edit.py:530
 #, python-format
 msgid "You may add another %s below."
 msgstr "您可以使用下面內容，新增一個 %s"
 
-#: views/edit.py:477
+#: views/edit.py:478
 #, python-format
 msgid "Change %s"
 msgstr "修改 %s"
 
-#: views/edit.py:522
+#: views/edit.py:523
 #, python-format
 msgid "The %(name)s \"%(obj)s\" was changed successfully."
 msgstr "%(name)s \"%(obj)s\" 已成功修改."
 
-#: views/form.py:168
+#: views/form.py:169
 #, python-format
 msgid "The %s was changed successfully."
 msgstr "%s 已成功變更"
@@ -1424,20 +1396,20 @@ msgstr "%s 已成功變更"
 msgid "Database error"
 msgstr "資料庫錯誤"
 
-#: views/list.py:369
+#: views/list.py:371
 #, python-format
 msgid "%s List"
 msgstr "%s 列表"
 
-#: views/list.py:498
+#: views/list.py:500
 msgid "Sort ASC"
 msgstr "遞增排序"
 
-#: views/list.py:499
+#: views/list.py:501
 msgid "Sort DESC"
 msgstr "遞減排序"
 
-#: views/list.py:503
+#: views/list.py:505
 msgid "Cancel Sort"
 msgstr "取消排序"
 

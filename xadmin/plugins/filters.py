@@ -83,6 +83,9 @@ class FilterPlugin(BaseAdminPlugin):
         for p_key, p_val in iteritems(lookup_params):
             if p_val == "False":
                 lookup_params[p_key] = False
+            elif p_val == "True":
+                lookup_params[p_key] = True
+
         use_distinct = False
 
         # for clean filters
@@ -128,7 +131,7 @@ class FilterPlugin(BaseAdminPlugin):
 
                     if len(field_parts) > 1:
                         # Add related model name to title
-                        spec.title = "%s %s" % (field_parts[-2].name, spec.title)
+                        spec.title = "%s-%s" % (field_parts[-2].verbose_name, spec.title)
 
                     # Check if we need to use distinct()
                     use_distinct = (use_distinct or
@@ -166,13 +169,10 @@ class FilterPlugin(BaseAdminPlugin):
                     if not v:
                         continue
 
-                    if k.endswith('__isnull') or '__gt' in k or '__lt' in k:
-                        # change v to int type under certain conditions -- by Eddie
-                        new_lookup_parames.update({k: int(v)})
-                    
-                    else:
-                        list_v = v.split(',')
-                        new_lookup_parames.update({k: list_v})
+                    if k.endswith('__in'):
+                        v = v.split(',')
+
+                    new_lookup_parames.update({k: v})
 
                 queryset = queryset.filter(**new_lookup_parames)
         except (SuspiciousOperation, ImproperlyConfigured):

@@ -160,8 +160,8 @@ class ListAdminView(ModelAdminView):
         on the changelist. The list_display parameter is the list of fields
         returned by get_list_display().
         """
-        if self.list_display_links or not self.list_display:
-            return self.list_display_links
+        if self.list_display_links != () or not self.list_display:
+            return self.list_display_links or ()
         else:
             # Use only the first item in list_display as link
             return list(self.list_display)[:1]
@@ -226,7 +226,9 @@ class ListAdminView(ModelAdminView):
                         pass
                     else:
                         if isinstance(field.rel, models.ManyToOneRel):
-                            related_fields.append(field_name)
+                            if '%s__%s__isnull' % (field.name, field.related_model._meta.pk.name) not in self.request.META['QUERY_STRING']:
+                                # WORK AROUND for isnull empty result problem -- TBD
+                                related_fields.append(field_name)
                 if related_fields:
                     queryset = queryset.select_related(*related_fields)
             else:
