@@ -2649,7 +2649,8 @@
 		 * and CSS classes.
 		 */
 		refreshState: function() {
-			var invalid, self = this;
+			var self = this;
+			var invalid = !Boolean(this.$input.val());
 			if (self.isRequired) {
 				if (self.items.length) self.isInvalid = false;
 				self.$control_input.prop('required', invalid);
