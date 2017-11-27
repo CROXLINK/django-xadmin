@@ -243,7 +243,8 @@ class FilterPlugin(BaseAdminPlugin):
             context.update({
                 'search_var': SEARCH_VAR,
                 'remove_search_url': self.admin_view.get_query_string(remove=[SEARCH_VAR]),
-                'search_form_params': self.admin_view.get_form_params(remove=[SEARCH_VAR])
+                'search_form_params': self.admin_view.get_form_params(remove=[SEARCH_VAR]),
+                'auto_focus': True if hasattr(self.admin_view, 'search_fields_auto_focus') and self.admin_view.search_fields_auto_focus else False
             })
             nodes.append(
                 loader.render_to_string(

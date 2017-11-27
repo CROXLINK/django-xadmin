@@ -27,7 +27,7 @@ class Row(layout.Div):
     def convert_field(self, f, counts):
         col_class = "col-sm-%d" % int(math.ceil(12 / counts))
         if not (isinstance(f, Field) or issubclass(f.__class__, Field)):
-            f = layout.Field(f)
+            f = layout.Field(f, template="xadmin/layout/field.html")
         if f.wrapper_class:
             f.wrapper_class += " %s" % col_class
         else:
