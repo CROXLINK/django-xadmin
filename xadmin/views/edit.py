@@ -246,7 +246,9 @@ class ModelFormAdminView(ModelAdminView):
         """
         Hook for specifying custom readonly fields.
         """
-        return self.readonly_fields
+#         return self.readonly_fields
+        # return readonly_fields that are not excluded
+        return list(set(self.readonly_fields or []) - set(self.exclude or []))
 
     @filter_hook
     def save_forms(self):

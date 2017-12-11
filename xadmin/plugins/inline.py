@@ -246,12 +246,14 @@ class InlineModelAdmin(ModelFormAdminView):
                         elif inspect.ismethod(getattr(self, readonly_field, None)):
                             value = getattr(self, readonly_field)(inst)
                             label = getattr(getattr(self, readonly_field), 'short_description', readonly_field)
+
                         if value:
                             form.readonly_fields.append({'label': label, 'contents': value})
 
-                            # disable & readonly
-                            form.fields[readonly_field].disabled = True
-                            form.fields[readonly_field].widget.attrs['readonly'] = True
+                            if readonly_field in form.fields:
+                                # disable & readonly
+                                form.fields[readonly_field].disabled = True
+                                form.fields[readonly_field].widget.attrs['readonly'] = True
 
         return instance
 
