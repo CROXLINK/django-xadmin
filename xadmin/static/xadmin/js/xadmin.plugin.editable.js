@@ -126,27 +126,30 @@
       
       $.when(this.save())
       .done($.proxy(function(data) {
-        this.$mask.hide()
+        this.$mask.hide();
 
         if(data['result'] != 'success' && data['errors']){
-          var err_html = []
+          var err_html = [];
           for (var i = data['errors'].length - 1; i >= 0; i--) {
-            var e = data['errors'][i]
+            var e = data['errors'][i];
             for (var j = e['errors'].length - 1; j >= 0; j--) {
-              err_html.push('<span class="help-block error">'+e['errors'][j]+'</span>')
+              err_html.push('<span class="help-block error">'+e['errors'][j]+'</span>');
             }
           }
-          this.$form.find(".controls").addClass('has-error')
-          this.$form.find('.controls').append(err_html.join('\n'))
+          this.$form.find(".controls").addClass('has-error');
+          this.$form.find('.controls').append(err_html.join('\n'));
         } else {
-          this.$mask.parents('.popover').hide()
-          this.$text.html(data['new_html'][this.field])
-          this.leave(this)
+          this.$mask.parents('.popover').hide();
+          this.$text.html(data['new_html'][this.field]);
+          if (data['reload'] === '1') {
+            window.location.reload();
+          }
+          this.leave(this);
         }
       }, this))
       .fail($.proxy(function(xhr) {
-        this.$mask.hide()
-        this.$mask.parents('.popover').hide()
+        this.$mask.hide();
+        this.$mask.parents('.popover').hide();
         alert(typeof xhr === 'string' ? xhr : xhr.responseText || xhr.statusText || 'Unknown error!');
       }, this))
   }

@@ -29,6 +29,11 @@ class EditablePlugin(BaseAdminPlugin):
         active = bool(self.request.method == 'GET' and self.admin_view.has_change_permission() and self.list_editable)
         if active:
             self.model_form = self.get_model_view(ModelFormAdminUtil, self.model).form_obj
+            if self.admin_view.reload_after_ajax_success:
+                self.reload_after_ajax_success = 1
+            else:
+                self.reload_after_ajax_success = 0
+
         return active
 
     def result_item(self, item, obj, field_name, row):
@@ -43,7 +48,7 @@ class EditablePlugin(BaseAdminPlugin):
             item.btns.append((
                 '<a class="editable-handler" title="%s" data-editable-field="%s" data-editable-loadurl="%s">' +
                 '<i class="fa fa-edit"></i></a>') %
-                (_(u"Enter %s") % field_label, field_name, self.admin_view.model_admin_url('patch', pk) + '?fields=' + field_name))
+                (_(u"Enter %s") % field_label, field_name, self.admin_view.model_admin_url('patch', pk) + '?fields=%s&reload=%s' % (field_name, self.reload_after_ajax_success)))
 
             if field_name not in self.editable_need_fields:
                 self.editable_need_fields[field_name] = item.field
@@ -124,7 +129,8 @@ class EditPatchView(ModelFormAdminView, ListAdminView):
         s = '{% load i18n crispy_forms_tags %}<form method="post" action="{{action_url}}">{% crispy form %}' + \
             '<button type="submit" class="btn btn-success btn-block btn-sm">{% trans "Apply" %}</button></form>'
         t = template.Template(s)
-        c = template.Context({'form': form, 'action_url': self.model_admin_url('patch', self.org_obj.pk)})
+#         c = template.Context({'form': form, 'action_url': self.model_admin_url('patch', self.org_obj.pk)})
+        c = template.Context({'form': form, 'action_url': self.request.get_full_path()})
 
         return HttpResponse(t.render(c))
 
@@ -150,6 +156,7 @@ class EditPatchView(ModelFormAdminView, ListAdminView):
             result['new_data'] = form.cleaned_data
             result['new_html'] = dict(
                 [(f, self.get_new_field_html(f)) for f in fields])
+            result['reload'] = self.request.GET.get('reload', 0)
         else:
             result['result'] = 'error'
             result['errors'] = JsonErrorDict(form.errors, form).as_json()
