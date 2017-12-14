@@ -25,6 +25,11 @@ class AjaxListPlugin(BaseAjaxPlugin):
         return list_display
 
     def get_result_list(self, response):
+        if self.request.GET.get('_format') == 'html':
+            self.admin_view.object_list_template = 'xadmin/views/quick_list.html'
+            self.admin_view.list_display_links = ()
+            return response
+
         av = self.admin_view
         base_fields = self.get_list_display(av.base_list_display)
         headers = dict([(c.field_name, force_text(c.text)) for c in av.result_headers(

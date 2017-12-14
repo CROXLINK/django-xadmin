@@ -24,15 +24,14 @@ class EditablePlugin(BaseAdminPlugin):
     def __init__(self, admin_view):
         super(EditablePlugin, self).__init__(admin_view)
         self.editable_need_fields = {}
+        self.reload_after_ajax_success = 0
 
     def init_request(self, *args, **kwargs):
         active = bool(self.request.method == 'GET' and self.admin_view.has_change_permission() and self.list_editable)
         if active:
             self.model_form = self.get_model_view(ModelFormAdminUtil, self.model).form_obj
-            if self.admin_view.reload_after_ajax_success:
+            if getattr(self.admin_view, 'reload_after_ajax_success', False):
                 self.reload_after_ajax_success = 1
-            else:
-                self.reload_after_ajax_success = 0
 
         return active
 

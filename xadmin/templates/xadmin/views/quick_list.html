@@ -1,0 +1,41 @@
+{% load i18n %}
+{% load xadmin_tags %}
+{% block content %}
+    <form id="changelist-form" action="" method="post"{% view_block 'result_list_form' %}>{% csrf_token %}
+        {% view_block 'results_top' %}
+        <div class="results table-responsive">
+            {% if results %}
+                {% block results_grid %}
+                    <table class="table table-bordered table-striped table-hover">
+                        {% block results_grid_head %}
+                            <thead>
+                            <tr>{% for o in result_headers.cells %}
+                                <th {{ o.tagattrs }}>
+                                    {{ o.label }}
+                                </th>{% endfor %}
+                            </tr>
+                            {% view_block 'result_head' %}
+                            </thead>
+                        {% endblock results_grid_head %}
+                        {% block results_grid_body %}
+                            <tbody>
+                            {% for row in results %}
+                                <tr class="grid-item{% if row.css_class %} {{ row.css_class }}{% endif %}" {{ row.tagattrs }}>
+                                    {% for o in row.cells %}
+                                        <td {{ o.tagattrs }}>
+                                            {{ o.label }}
+                                        </td>
+                                    {% endfor %}</tr>
+                                {% view_block 'result_row' row %}
+                            {% endfor %}
+                            </tbody>
+                        {% endblock results_grid_body %}
+                    </table>
+                {% endblock results_grid %}
+            {% else %}
+                <p class="well">{% trans "Empty list" %}</p>
+            {% endif %}
+        </div>
+    </form>
+
+{% endblock %}
