@@ -42,6 +42,9 @@ class AdminAuthenticationForm(AuthenticationForm):
                             message = _("Your e-mail address is not your username."
                                         " Try '%s' instead.") % user.username
                 raise forms.ValidationError(message)
+
             elif not self.user_cache.is_active or not self.user_cache.is_staff:
+                message = _("This account '%s' is not authorized to login!") % self.user_cache.username
                 raise forms.ValidationError(message)
+
         return self.cleaned_data

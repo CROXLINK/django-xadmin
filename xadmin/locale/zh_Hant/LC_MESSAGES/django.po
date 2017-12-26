@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-22 22:52+0800\n"
+"POT-Creation-Date: 2017-12-26 11:32+0800\n"
 "PO-Revision-Date: 2014-11-07 07:45+0000\n"
 "Last-Translator: eddiep <eddiep@163.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/xadmin-"
@@ -27,51 +27,51 @@ msgstr ""
 msgid "Administration"
 msgstr ""
 
-#: filters.py:173 filters.py:211 filters.py:433 filters.py:524 filters.py:562
+#: filters.py:171 filters.py:209 filters.py:431 filters.py:522 filters.py:560
 msgid "All"
 msgstr "不限"
 
-#: filters.py:174 plugins/export.py:174
+#: filters.py:172 plugins/export.py:174
 msgid "Yes"
 msgstr "是"
 
-#: filters.py:175 plugins/export.py:174
+#: filters.py:173 plugins/export.py:174
 msgid "No"
 msgstr "否"
 
-#: filters.py:195
+#: filters.py:193
 msgid "Unknown"
 msgstr "未知"
 
-#: filters.py:291
+#: filters.py:289
 msgid "Any date"
 msgstr "任意日期"
 
-#: filters.py:292
+#: filters.py:290
 msgid "Has date"
 msgstr "有日期"
 
-#: filters.py:295
+#: filters.py:293
 msgid "Has no date"
 msgstr "無日期"
 
-#: filters.py:298 widgets.py:35 widgets.py:81
+#: filters.py:296 widgets.py:35 widgets.py:81
 msgid "Today"
 msgstr "今日"
 
-#: filters.py:302
+#: filters.py:300
 msgid "Past 7 days"
 msgstr "過去7天"
 
-#: filters.py:306
+#: filters.py:304
 msgid "This month"
 msgstr "本月"
 
-#: filters.py:310
+#: filters.py:308
 msgid "This year"
 msgstr "今年"
 
-#: filters.py:450
+#: filters.py:448
 msgid "Has value"
 msgstr "任意值"
 
@@ -88,7 +88,12 @@ msgstr "連線已逾時，請重新登入"
 #: forms.py:42
 #, python-format
 msgid "Your e-mail address is not your username. Try '%s' instead."
-msgstr "您的郵箱與用戶名不同，請嘗試 '%s'"
+msgstr "您用戶名不是電子郵件地址，請嘗試 '%s'"
+
+#: forms.py:47
+#, python-format
+msgid "This account '%s' is not authorized to login!"
+msgstr "這個帳號 '%s' 不允許登入！"
 
 #: models.py:46
 msgid "Title"
@@ -408,13 +413,13 @@ msgstr[0] "%(count)s 評論已成功 %(action)s."
 msgid "Details of %s"
 msgstr "%s 詳細"
 
-#: plugins/editable.py:46
+#: plugins/editable.py:50
 #, python-format
 msgid "Enter %s"
 msgstr "輸入 %s"
 
-#: plugins/editable.py:73 views/dashboard.py:652 views/delete.py:28
-#: views/detail.py:145 views/edit.py:461
+#: plugins/editable.py:77 views/dashboard.py:652 views/delete.py:28
+#: views/detail.py:145 views/edit.py:463
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr "主鍵為%(key)r的物件%(name)s不存在"
@@ -456,7 +461,11 @@ msgstr "表"
 msgid "Thumbnails"
 msgstr "縮略圖"
 
-#: plugins/passwords.py:62
+#: plugins/passwords.py:18
+msgid "this email is not registered!"
+msgstr ""
+
+#: plugins/passwords.py:72
 msgid "Forgotten your password or username?"
 msgstr "忘記密碼或用戶名？"
 
@@ -495,8 +504,8 @@ msgstr "Bootstrap2"
 msgid "Bootstrap 2.x theme"
 msgstr "Bootstrap 2.x 主題"
 
-#: plugins/topnav.py:62 views/dashboard.py:468 views/edit.py:394
-#: views/edit.py:403
+#: plugins/topnav.py:62 views/dashboard.py:468 views/edit.py:396
+#: views/edit.py:405
 #, python-format
 msgid "Add %s"
 msgstr "新增 %s"
@@ -831,6 +840,7 @@ msgid "Click here to select the objects across all pages"
 msgstr "點擊這裡選擇所有頁面裏的全部物件"
 
 #: templates/xadmin/blocks/model_list.results_bottom.actions.html:19
+#| msgid "Select all %(total_count)s %(model_name)s"
 msgid "Select all %(total_count)s %(model_name)s"
 msgstr "選擇全部 %(total_count)s %(module_name)s"
 
@@ -1202,6 +1212,7 @@ msgid "Restore Selected"
 msgstr "還原已選擇"
 
 #: templates/xadmin/views/model_list.html:147
+#: templates/xadmin/views/quick_list.html:36
 #: templates/xadmin/widgets/list.html:33
 msgid "Empty list"
 msgstr "列表為空"
@@ -1346,43 +1357,43 @@ msgstr "其他欄位"
 msgid "%s Detail"
 msgstr "%s 詳細內容"
 
-#: views/edit.py:259
+#: views/edit.py:261
 msgid "Added."
 msgstr ""
 
-#: views/edit.py:261
+#: views/edit.py:263
 #, python-format
 msgid "Changed %s."
 msgstr "已修改 %s"
 
-#: views/edit.py:261
+#: views/edit.py:263
 msgid "and"
 msgstr ""
 
-#: views/edit.py:264
+#: views/edit.py:266
 msgid "No fields changed."
 msgstr ""
 
-#: views/edit.py:427
+#: views/edit.py:429
 #, python-format
 msgid "The %(name)s \"%(obj)s\" was added successfully."
 msgstr "%(name)s \"%(obj)s\" 已成功新增."
 
-#: views/edit.py:432 views/edit.py:527
+#: views/edit.py:434 views/edit.py:529
 msgid "You may edit it again below."
 msgstr "您可以再次編輯下列內容"
 
-#: views/edit.py:436 views/edit.py:530
+#: views/edit.py:438 views/edit.py:532
 #, python-format
 msgid "You may add another %s below."
 msgstr "您可以使用下面內容，新增一個 %s"
 
-#: views/edit.py:478
+#: views/edit.py:480
 #, python-format
 msgid "Change %s"
 msgstr "修改 %s"
 
-#: views/edit.py:523
+#: views/edit.py:525
 #, python-format
 msgid "The %(name)s \"%(obj)s\" was changed successfully."
 msgstr "%(name)s \"%(obj)s\" 已成功修改."

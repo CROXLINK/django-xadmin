@@ -10,11 +10,21 @@ from xadmin.views.base import BaseAdminPlugin, BaseAdminView, csrf_protect_m
 from xadmin.views.website import LoginView
 
 
+class MyPasswordResetForm(PasswordResetForm):
+    def clean(self):
+        email = self.cleaned_data.get('email')
+
+        if email and not User.objects.filter(Q(username=email)|Q(email=email)).exists():
+            self.errors["email"] = self.error_class([_('this email is not registered!')])
+
+        return self.cleaned_data
+
+
 class ResetPasswordSendView(BaseAdminView):
 
     need_site_permission = False
 
-    password_reset_form = PasswordResetForm
+    password_reset_form = MyPasswordResetForm
     password_reset_template = 'xadmin/auth/password_reset/form.html'
     password_reset_done_template = 'xadmin/auth/password_reset/done.html'
     password_reset_token_generator = default_token_generator

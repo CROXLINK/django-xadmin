@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-22 22:52+0800\n"
+"POT-Creation-Date: 2017-12-26 11:32+0800\n"
 "PO-Revision-Date: 2013-11-20 10:21+0000\n"
 "Last-Translator: sshwsfc <sshwsfc@gmail.com>\n"
 "Language-Team: Basque (http://www.transifex.com/projects/p/xadmin/language/"
@@ -27,51 +27,51 @@ msgstr ""
 msgid "Administration"
 msgstr ""
 
-#: filters.py:173 filters.py:211 filters.py:433 filters.py:524 filters.py:562
+#: filters.py:171 filters.py:209 filters.py:431 filters.py:522 filters.py:560
 msgid "All"
 msgstr "Guztia"
 
-#: filters.py:174 plugins/export.py:174
+#: filters.py:172 plugins/export.py:174
 msgid "Yes"
 msgstr "Bai"
 
-#: filters.py:175 plugins/export.py:174
+#: filters.py:173 plugins/export.py:174
 msgid "No"
 msgstr "Ez"
 
-#: filters.py:195
+#: filters.py:193
 msgid "Unknown"
 msgstr "Ezezaguna"
 
-#: filters.py:291
+#: filters.py:289
 msgid "Any date"
 msgstr "Edozein data"
 
-#: filters.py:292
+#: filters.py:290
 msgid "Has date"
 msgstr ""
 
-#: filters.py:295
+#: filters.py:293
 msgid "Has no date"
 msgstr ""
 
-#: filters.py:298 widgets.py:35 widgets.py:81
+#: filters.py:296 widgets.py:35 widgets.py:81
 msgid "Today"
 msgstr "Gaur"
 
-#: filters.py:302
+#: filters.py:300
 msgid "Past 7 days"
 msgstr "Duela 7 egun"
 
-#: filters.py:306
+#: filters.py:304
 msgid "This month"
 msgstr "Hilabete hau"
 
-#: filters.py:310
+#: filters.py:308
 msgid "This year"
 msgstr "Urte hau"
 
-#: filters.py:450
+#: filters.py:448
 msgid "Has value"
 msgstr ""
 
@@ -93,6 +93,11 @@ msgid "Your e-mail address is not your username. Try '%s' instead."
 msgstr ""
 "Zure e-posta helbidea ez da zure erabiltzaile izena. Horren ordez saiatu "
 "'%s'."
+
+#: forms.py:47
+#, python-format
+msgid "This account '%s' is not authorized to login!"
+msgstr ""
 
 #: models.py:46
 msgid "Title"
@@ -432,13 +437,13 @@ msgstr[1] ""
 msgid "Details of %s"
 msgstr "%sren xehetasunak"
 
-#: plugins/editable.py:46
+#: plugins/editable.py:50
 #, python-format
 msgid "Enter %s"
 msgstr "Sartu %s"
 
-#: plugins/editable.py:73 views/dashboard.py:652 views/delete.py:28
-#: views/detail.py:145 views/edit.py:461
+#: plugins/editable.py:77 views/dashboard.py:652 views/delete.py:28
+#: views/detail.py:145 views/edit.py:463
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr "Ez da %(key)r eremua nagusitzat duen %(name)srik."
@@ -480,7 +485,11 @@ msgstr ""
 msgid "Thumbnails"
 msgstr ""
 
-#: plugins/passwords.py:62
+#: plugins/passwords.py:18
+msgid "this email is not registered!"
+msgstr ""
+
+#: plugins/passwords.py:72
 msgid "Forgotten your password or username?"
 msgstr "Zure pasahitza edo erabiltzailea ahaztu duzu?"
 
@@ -520,8 +529,8 @@ msgstr ""
 msgid "Bootstrap 2.x theme"
 msgstr ""
 
-#: plugins/topnav.py:62 views/dashboard.py:468 views/edit.py:394
-#: views/edit.py:403
+#: plugins/topnav.py:62 views/dashboard.py:468 views/edit.py:396
+#: views/edit.py:405
 #, python-format
 msgid "Add %s"
 msgstr "%s gehitu"
@@ -1265,6 +1274,7 @@ msgid "Restore Selected"
 msgstr "Aukeratutakoa berrezarri"
 
 #: templates/xadmin/views/model_list.html:147
+#: templates/xadmin/views/quick_list.html:36
 #: templates/xadmin/widgets/list.html:33
 msgid "Empty list"
 msgstr "Zerrenda hustu"
@@ -1413,44 +1423,44 @@ msgstr "Beste Eremuak"
 msgid "%s Detail"
 msgstr "%s Xehetasunak"
 
-#: views/edit.py:259
+#: views/edit.py:261
 msgid "Added."
 msgstr ""
 
-#: views/edit.py:261
+#: views/edit.py:263
 #, fuzzy, python-format
 #| msgid "Change %s"
 msgid "Changed %s."
 msgstr "Aldaketa %s"
 
-#: views/edit.py:261
+#: views/edit.py:263
 msgid "and"
 msgstr ""
 
-#: views/edit.py:264
+#: views/edit.py:266
 msgid "No fields changed."
 msgstr ""
 
-#: views/edit.py:427
+#: views/edit.py:429
 #, python-format
 msgid "The %(name)s \"%(obj)s\" was added successfully."
 msgstr "\"%(obj)s\" %(name)sa arrakastaz gehitua izan da."
 
-#: views/edit.py:432 views/edit.py:527
+#: views/edit.py:434 views/edit.py:529
 msgid "You may edit it again below."
 msgstr "Behean editatu dezakezu berriro."
 
-#: views/edit.py:436 views/edit.py:530
+#: views/edit.py:438 views/edit.py:532
 #, python-format
 msgid "You may add another %s below."
 msgstr "Behean beste %s bat gehitu dezakezu."
 
-#: views/edit.py:478
+#: views/edit.py:480
 #, python-format
 msgid "Change %s"
 msgstr "Aldaketa %s"
 
-#: views/edit.py:523
+#: views/edit.py:525
 #, python-format
 msgid "The %(name)s \"%(obj)s\" was changed successfully."
 msgstr "\"%(obj)s\" %(name)sa arrakastaz gehitua izan da."
