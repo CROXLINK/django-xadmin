@@ -29,22 +29,37 @@ class AdminAuthenticationForm(AuthenticationForm):
             self.user_cache = authenticate(
                 username=username, password=password)
             if self.user_cache is None:
+                User = get_user_model()
+                # check if not staff or not active
+                try:
+                    user = User.objects.get(username=username)
+
+                except (User.DoesNotExist, User.MultipleObjectsReturned):
+                    # Nothing to do here, moving along.
+                    pass
+
+                else:
+                    if user.check_password(password):
+                        message = _("This account '%s' is not authorized to login!") % user.username
+                        raise forms.ValidationError(message)
+
                 if u'@' in username:
-                    User = get_user_model()
                     # Mistakenly entered e-mail address instead of username? Look it up.
                     try:
-                        user = User.objects.get(email=username)
+                        user = User.objects.get(email=username,
+                                                is_staff=True,
+                                                is_active=True)
+
                     except (User.DoesNotExist, User.MultipleObjectsReturned):
                         # Nothing to do here, moving along.
                         pass
+
                     else:
                         if user.check_password(password):
                             message = _("Your e-mail address is not your username."
                                         " Try '%s' instead.") % user.username
-                raise forms.ValidationError(message)
+                            raise forms.ValidationError(message)
 
-            elif not self.user_cache.is_active or not self.user_cache.is_staff:
-                message = _("This account '%s' is not authorized to login!") % self.user_cache.username
                 raise forms.ValidationError(message)
 
         return self.cleaned_data
