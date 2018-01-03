@@ -225,6 +225,9 @@ class InlineModelAdmin(ModelFormAdminView):
         instance.helper = helper
         instance.style = style
 
+        if self.request_method == 'post':
+            return instance
+
         readonly_fields = self.get_readonly_fields()
         if readonly_fields:
             for form in instance:
