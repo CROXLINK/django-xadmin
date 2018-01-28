@@ -249,6 +249,9 @@ class BaseAdminView(BaseAdminObject, View):
     base_template = 'xadmin/base.html'
     need_site_permission = True
 
+    site_title = getattr(settings, "XADMIN_TITLE", _(u"Django Xadmin"))
+    site_footer = getattr(settings, "XADMIN_FOOTER_TITLE", _(u"my-company.inc"))
+
     def __init__(self, request, *args, **kwargs):
         self.request = request
         self.request_method = request.method.lower()
@@ -316,9 +319,6 @@ class CommAdminView(BaseAdminView):
 
     base_template = 'xadmin/base_site.html'
     menu_template = 'xadmin/includes/sitemenu_default.html'
-
-    site_title = getattr(settings,"XADMIN_TITLE",_(u"Django Xadmin"))
-    site_footer = getattr(settings,"XADMIN_FOOTER_TITLE",_(u"my-company.inc"))
 
     global_models_icon = {}
     default_model_icon = None

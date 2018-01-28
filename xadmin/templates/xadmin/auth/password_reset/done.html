@@ -4,16 +4,19 @@
 {% load crispy_forms_tags %}
 
 {% block body %}
-<div class="container">
+    <div class="container">
 
-  <div class="panel panel-default panel-single" style="max-width: 500px;">
-    <div class="panel-heading">
-      <h3 class="form-signin-heading">{% trans 'Password reset successful' %}</h3>
-    </div>
-    <div class="panel-body">
-      <p class="text-success">{% trans "We've e-mailed you instructions for setting your password to the e-mail address you submitted. You should be receiving it shortly." %}</p>
-    </div>
-  </div>
+        <div class="panel panel-default panel-single" style="max-width: 450px;">
+            <div class="panel-heading">
+                <h3 class="form-signin-heading">{% trans 'Password reset successful' %}</h3>
+            </div>
+            <div class="panel-body">
+                <p class="text-success">{% trans "We've e-mailed you instructions for setting your password to the e-mail address you submitted. You should be receiving it shortly." %}</p>
 
-</div> <!-- /container -->
+                <div style="margin-top:30px;"><a href="{% url 'xadmin:login' %}" class="btn btn-lg btn-default btn-block"><i
+                        class="fa fa-arrow-circle-left"></i> {% trans 'Back to login...' %}</a></div>
+            </div>
+        </div>
+
+    </div> <!-- /container -->
 {% endblock %}

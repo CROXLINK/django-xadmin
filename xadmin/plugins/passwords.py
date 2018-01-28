@@ -15,11 +15,31 @@ from xadmin.views.website import LoginView
 class MyPasswordResetForm(PasswordResetForm):
     def clean(self):
         email = self.cleaned_data.get('email')
-
-        if email and not User.objects.filter(Q(username=email)|Q(email=email)).exists():
-            self.errors["email"] = self.error_class([_('this email is not registered!')])
+        
+        matching_users = get_user_model()._default_manager.filter(Q(username__iexact=email)|Q(email__iexact=email))
+        
+        if email:
+            if not matching_users.exists():
+                # check if this email is registered?
+                self.errors["email"] = self.error_class([_('this email is not registered!')])
+            
+            if not matching_users.filter(is_active=True).exists():
+                # check if this user is active?
+                self.errors["email"] = self.error_class([_('this account has been revoked!')])                
 
         return self.cleaned_data
+
+    def get_users(self, email):
+        """Given an email, return matching user(s) who should receive a reset.
+
+        This allows subclasses to more easily customize the default policies
+        that prevent inactive users and users with unusable passwords from
+        resetting their password.
+
+        """
+        active_users = get_user_model()._default_manager.filter(
+            Q(username__iexact=email)|Q(email__iexact=email), is_active=True)
+        return (u for u in active_users if u.has_usable_password())
 
 
 class ResetPasswordSendView(BaseAdminView):
@@ -51,7 +71,9 @@ class ResetPasswordSendView(BaseAdminView):
                 'token_generator': self.password_reset_token_generator,
                 'email_template_name': self.password_reset_email_template,
                 'request': request,
-                'domain_override': request.get_host()
+                'domain_override': request.get_host(),
+                # 強制修改site_name
+                'extra_email_context': {'site_name': self.site_title}
             }
 
             if self.password_reset_from_email:
