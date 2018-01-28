@@ -27,6 +27,7 @@ class EditablePlugin(BaseAdminPlugin):
         self.reload_after_ajax_success = 0
 
     def init_request(self, *args, **kwargs):
+        self.list_editable = getattr(self.admin_view, 'list_editable', ())
         active = bool(self.request.method == 'GET' and self.admin_view.has_change_permission() and self.list_editable)
         if active:
             self.model_form = self.get_model_view(ModelFormAdminUtil, self.model).form_obj

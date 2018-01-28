@@ -1,7 +1,7 @@
 # coding=utf-8
 from django import forms
 from django.contrib.auth.forms import (UserCreationForm, UserChangeForm,
-                                       AdminPasswordChangeForm, PasswordChangeForm)
+                                       AdminPasswordChangeForm, PasswordChangeForm, ReadOnlyPasswordHashWidget)
 from django.contrib.auth.models import Group, Permission
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
@@ -28,6 +28,15 @@ ACTION_NAME = {
     'delete': _('Can delete %s'),
     'view': _('Can view %s'),
 }
+
+
+# disable the too technical descriptions(algorithms/strength) of password field
+class ReadOnlyPasswordHashWidget2(ReadOnlyPasswordHashWidget):
+    def get_context(self, name, value, attrs):
+        context = super(ReadOnlyPasswordHashWidget2, self).get_context(name, value, attrs)
+
+        context['summary'] = [{'label': _(u'<<已加密>>'), 'value': None}]
+        return context
 
 
 def get_permission_name(p):
@@ -78,6 +87,7 @@ class UserAdmin(object):
             self.form = UserCreationForm
         else:
             self.form = UserChangeForm
+            
         return super(UserAdmin, self).get_model_form(**kwargs)
 
     def get_form_layout(self):
@@ -106,6 +116,12 @@ class UserAdmin(object):
                 )
             )
         return super(UserAdmin, self).get_form_layout()
+
+    def instance_forms(self):
+        super(UserAdmin, self).instance_forms()
+        
+        if 'password' in self.form_obj.fields:
+            self.form_obj.fields['password'].widget = ReadOnlyPasswordHashWidget2()
 
 
 class PermissionAdmin(object):
