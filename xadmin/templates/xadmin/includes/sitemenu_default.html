@@ -16,7 +16,7 @@
       <li{% if sitem.selected %} class="active"{% endif %}>
         {% if sitem.url %}<a href="{{ sitem.url }}">{% endif %}
         {% if sitem.icon %}<i class="fa-fw {{sitem.icon}}"></i>{%else%}<i class="fa-fw fa fa-circle-o"></i>{% endif %}
-        {{ sitem.title }}</span>{% if sitem.url %}</a>{% endif %}
+        {{ sitem.title }}{% if sitem.url %}</a>{% endif %}
       </li>
       {% endfor %}
     {% endfor %}
@@ -41,7 +41,7 @@
           <li{% if sitem.selected %} class="active"{% endif %}>
             {% if sitem.url %}<a href="{{ sitem.url }}">{% endif %}
             {% if sitem.icon %}<i class="fa-fw {{sitem.icon}}"></i>{%else%}<i class="fa-fw fa fa-circle-o"></i>{% endif %}
-            {{ sitem.title }}</span>{% if sitem.url %}</a>{% endif %}
+            {{ sitem.title }}{% if sitem.url %}</a>{% endif %}
           </li>
           {% endfor %}
         </ul>
