@@ -8,11 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-26 11:32+0800\n"
+"POT-Creation-Date: 2018-02-01 21:19+0800\n"
 "PO-Revision-Date: 2014-11-07 07:45+0000\n"
 "Last-Translator: eddiep <eddiep@163.com>\n"
-"Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/xadmin-"
-"core/language/zh_TW/)\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,11 +29,11 @@ msgstr ""
 msgid "All"
 msgstr "不限"
 
-#: filters.py:172 plugins/export.py:174
+#: filters.py:172 plugins/export.py:167
 msgid "Yes"
 msgstr "是"
 
-#: filters.py:173 plugins/export.py:174
+#: filters.py:173 plugins/export.py:167
 msgid "No"
 msgstr "否"
 
@@ -85,15 +83,15 @@ msgstr "請輸入正確的用戶名及密碼、確認您已具備登入的權限
 msgid "Please log in again, because your session has expired."
 msgstr "連線已逾時，請重新登入"
 
-#: forms.py:42
-#, python-format
-msgid "Your e-mail address is not your username. Try '%s' instead."
-msgstr "您用戶名不是電子郵件地址，請嘗試 '%s'"
-
-#: forms.py:47
+#: forms.py:43
 #, python-format
 msgid "This account '%s' is not authorized to login!"
 msgstr "這個帳號 '%s' 不允許登入！"
+
+#: forms.py:59
+#, python-format
+msgid "Your e-mail address is not your username. Try '%s' instead."
+msgstr "您用戶名不是電子郵件地址，請嘗試 '%s'"
 
 #: models.py:46
 msgid "Title"
@@ -296,40 +294,44 @@ msgstr "可以刪除 %s"
 msgid "Can view %s"
 msgstr "可以查看 %s"
 
-#: plugins/auth.py:91
+#: plugins/auth.py:38
+msgid "<<已加密>>"
+msgstr ""
+
+#: plugins/auth.py:101
 msgid "Personal info"
 msgstr "個人訊息"
 
-#: plugins/auth.py:95
+#: plugins/auth.py:105
 msgid "Permissions"
 msgstr "權限"
 
-#: plugins/auth.py:98
+#: plugins/auth.py:108
 msgid "Important dates"
 msgstr "重要日期"
 
-#: plugins/auth.py:103
+#: plugins/auth.py:113
 msgid "Status"
 msgstr "狀態"
 
-#: plugins/auth.py:115
+#: plugins/auth.py:131
 msgid "Permission Name"
 msgstr "權限名稱"
 
-#: plugins/auth.py:171
+#: plugins/auth.py:187
 msgid "Change Password"
 msgstr "變更密碼"
 
-#: plugins/auth.py:202
+#: plugins/auth.py:218
 #, python-format
 msgid "Change password: %s"
 msgstr "修改密碼: %s"
 
-#: plugins/auth.py:227 plugins/auth.py:259
+#: plugins/auth.py:243 plugins/auth.py:275
 msgid "Password changed successfully."
 msgstr "密碼修改成功."
 
-#: plugins/auth.py:246 templates/xadmin/auth/user/change_password.html:11
+#: plugins/auth.py:262 templates/xadmin/auth/user/change_password.html:11
 #: templates/xadmin/auth/user/change_password.html:22
 #: templates/xadmin/auth/user/change_password.html:55
 msgid "Change password"
@@ -413,18 +415,18 @@ msgstr[0] "%(count)s 評論已成功 %(action)s."
 msgid "Details of %s"
 msgstr "%s 詳細"
 
-#: plugins/editable.py:50
+#: plugins/editable.py:51
 #, python-format
 msgid "Enter %s"
 msgstr "輸入 %s"
 
-#: plugins/editable.py:77 views/dashboard.py:652 views/delete.py:28
+#: plugins/editable.py:78 views/dashboard.py:652 views/delete.py:28
 #: views/detail.py:145 views/edit.py:463
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr "主鍵為%(key)r的物件%(name)s不存在"
 
-#: plugins/export.py:107 plugins/export.py:144
+#: plugins/export.py:100 plugins/export.py:137
 msgid "Sheet"
 msgstr "工作表"
 
@@ -461,11 +463,15 @@ msgstr "表"
 msgid "Thumbnails"
 msgstr "縮略圖"
 
-#: plugins/passwords.py:18
+#: plugins/passwords.py:24
 msgid "this email is not registered!"
 msgstr ""
 
-#: plugins/passwords.py:72
+#: plugins/passwords.py:28
+msgid "this account has been revoked!"
+msgstr ""
+
+#: plugins/passwords.py:96
 msgid "Forgotten your password or username?"
 msgstr "忘記密碼或用戶名？"
 
@@ -652,27 +658,27 @@ msgstr "登入"
 msgid "Set new password"
 msgstr "設定新密碼"
 
-#: templates/xadmin/auth/password_reset/confirm.html:17
+#: templates/xadmin/auth/password_reset/confirm.html:18
 msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
 msgstr "請再輸入一次新密碼"
 
-#: templates/xadmin/auth/password_reset/confirm.html:19
+#: templates/xadmin/auth/password_reset/confirm.html:22
 msgid "Change my password"
 msgstr "變更我的密碼"
 
-#: templates/xadmin/auth/password_reset/confirm.html:24
+#: templates/xadmin/auth/password_reset/confirm.html:27
 msgid "Password reset unsuccessful"
 msgstr "密碼重設失敗"
 
-#: templates/xadmin/auth/password_reset/confirm.html:27
+#: templates/xadmin/auth/password_reset/confirm.html:30
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used or expired."
 msgstr "無效的密碼重設鏈接，可能因為已經被使用過或已過期？"
 
-#: templates/xadmin/auth/password_reset/confirm.html:28
+#: templates/xadmin/auth/password_reset/confirm.html:32
 #: templates/xadmin/auth/password_reset/form.html:13
 msgid "Password reset"
 msgstr "密碼重設"
@@ -682,6 +688,11 @@ msgid ""
 "We've e-mailed you instructions for setting your password to the e-mail "
 "address you submitted. You should be receiving it shortly."
 msgstr "設定密碼的郵件已發送到您的郵箱，您稍後可以登入郵箱查看。"
+
+#: templates/xadmin/auth/password_reset/done.html:17
+#: templates/xadmin/auth/password_reset/form.html:39
+msgid "Back to login..."
+msgstr "返回登入..."
 
 #: templates/xadmin/auth/password_reset/email.html:2
 #, python-format
@@ -713,17 +724,13 @@ msgid ""
 "instructions for setting a new one."
 msgstr "忘記密碼？請輸入您的郵箱，我們會發送重新設定密碼的郵件給您。"
 
-#: templates/xadmin/auth/password_reset/form.html:25
+#: templates/xadmin/auth/password_reset/form.html:26
 msgid "E-mail address:"
 msgstr "電子郵箱"
 
-#: templates/xadmin/auth/password_reset/form.html:33
+#: templates/xadmin/auth/password_reset/form.html:36
 msgid "Reset my password"
 msgstr "重設我的密碼"
-
-#: templates/xadmin/auth/password_reset/form.html:35
-msgid "Back to login..."
-msgstr "返回登入..."
 
 #: templates/xadmin/auth/user/add_form.html:6
 msgid ""
@@ -840,9 +847,9 @@ msgid "Click here to select the objects across all pages"
 msgstr "點擊這裡選擇所有頁面裏的全部物件"
 
 #: templates/xadmin/blocks/model_list.results_bottom.actions.html:19
-#| msgid "Select all %(total_count)s %(model_name)s"
+#, python-format
 msgid "Select all %(total_count)s %(model_name)s"
-msgstr "選擇全部 %(total_count)s %(module_name)s"
+msgstr "選擇全部 %(total_count)s %(model_name)s"
 
 #: templates/xadmin/blocks/model_list.results_bottom.actions.html:20
 msgid "Clear selection"
@@ -1290,11 +1297,11 @@ msgstr "小工具選項"
 msgid "Save changes"
 msgstr "儲存修改"
 
-#: views/base.py:320
+#: views/base.py:252
 msgid "Django Xadmin"
 msgstr "Django Xadmin"
 
-#: views/base.py:321
+#: views/base.py:253
 msgid "my-company.inc"
 msgstr ""
 

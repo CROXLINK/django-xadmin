@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-xadmin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-26 11:32+0800\n"
+"POT-Creation-Date: 2018-02-01 21:19+0800\n"
 "PO-Revision-Date: 2014-08-12 21:08+0100\n"
 "Last-Translator: Michał Szpadzik <mszpadzik@gmail.com>\n"
 "Language-Team: Polish translators <mszpadzik@gmail.com>\n"
@@ -31,11 +31,11 @@ msgstr ""
 msgid "All"
 msgstr "Wszystko"
 
-#: filters.py:172 plugins/export.py:174
+#: filters.py:172 plugins/export.py:167
 msgid "Yes"
 msgstr "Tak"
 
-#: filters.py:173 plugins/export.py:174
+#: filters.py:173 plugins/export.py:167
 msgid "No"
 msgstr "Nie"
 
@@ -89,17 +89,17 @@ msgstr ""
 msgid "Please log in again, because your session has expired."
 msgstr "Proszę, zaloguj się ponownie, ponieważ Twoja sesja wygasła."
 
-#: forms.py:42
+#: forms.py:43
+#, python-format
+msgid "This account '%s' is not authorized to login!"
+msgstr ""
+
+#: forms.py:59
 #, python-format
 msgid "Your e-mail address is not your username. Try '%s' instead."
 msgstr ""
 "Twój adres e-mail nie jest Twoją nazwą użytkownika. Zamiast tego spróbuj "
 "'%s'."
-
-#: forms.py:47
-#, python-format
-msgid "This account '%s' is not authorized to login!"
-msgstr ""
 
 #: models.py:46
 msgid "Title"
@@ -316,40 +316,44 @@ msgstr "Może usuwać %s"
 msgid "Can view %s"
 msgstr "Może oglądać %s"
 
-#: plugins/auth.py:91
+#: plugins/auth.py:38
+msgid "<<已加密>>"
+msgstr ""
+
+#: plugins/auth.py:101
 msgid "Personal info"
 msgstr "Informacje osobiste"
 
-#: plugins/auth.py:95
+#: plugins/auth.py:105
 msgid "Permissions"
 msgstr "Uprawnienia"
 
-#: plugins/auth.py:98
+#: plugins/auth.py:108
 msgid "Important dates"
 msgstr "Ważne daty"
 
-#: plugins/auth.py:103
+#: plugins/auth.py:113
 msgid "Status"
 msgstr "Status"
 
-#: plugins/auth.py:115
+#: plugins/auth.py:131
 msgid "Permission Name"
 msgstr "Nazwa uprawnienia"
 
-#: plugins/auth.py:171
+#: plugins/auth.py:187
 msgid "Change Password"
 msgstr "Zmień hasło"
 
-#: plugins/auth.py:202
+#: plugins/auth.py:218
 #, python-format
 msgid "Change password: %s"
 msgstr "Zmień hasło: %s"
 
-#: plugins/auth.py:227 plugins/auth.py:259
+#: plugins/auth.py:243 plugins/auth.py:275
 msgid "Password changed successfully."
 msgstr "Zmiana hasła zakończona powodzieniem"
 
-#: plugins/auth.py:246 templates/xadmin/auth/user/change_password.html:11
+#: plugins/auth.py:262 templates/xadmin/auth/user/change_password.html:11
 #: templates/xadmin/auth/user/change_password.html:22
 #: templates/xadmin/auth/user/change_password.html:55
 msgid "Change password"
@@ -441,18 +445,18 @@ msgstr[2] "%(count)s komentarzy zostało z powodzeniem %(action)s."
 msgid "Details of %s"
 msgstr "Szczegóły %s"
 
-#: plugins/editable.py:50
+#: plugins/editable.py:51
 #, python-format
 msgid "Enter %s"
 msgstr "Wejdz w %s"
 
-#: plugins/editable.py:77 views/dashboard.py:652 views/delete.py:28
+#: plugins/editable.py:78 views/dashboard.py:652 views/delete.py:28
 #: views/detail.py:145 views/edit.py:463
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr "Obiekt %(name)s z kluczem głównym %(key)r nie istnieje."
 
-#: plugins/export.py:107 plugins/export.py:144
+#: plugins/export.py:100 plugins/export.py:137
 msgid "Sheet"
 msgstr "Arkusz"
 
@@ -489,11 +493,15 @@ msgstr "Tabela"
 msgid "Thumbnails"
 msgstr "Miniaturki"
 
-#: plugins/passwords.py:18
+#: plugins/passwords.py:24
 msgid "this email is not registered!"
 msgstr ""
 
-#: plugins/passwords.py:72
+#: plugins/passwords.py:28
+msgid "this account has been revoked!"
+msgstr ""
+
+#: plugins/passwords.py:96
 msgid "Forgotten your password or username?"
 msgstr "Zapomniałeś swojego hasła lub loginu ?"
 
@@ -689,7 +697,7 @@ msgstr "Zaloguj się"
 msgid "Set new password"
 msgstr "Wpisz nowe hasło"
 
-#: templates/xadmin/auth/password_reset/confirm.html:17
+#: templates/xadmin/auth/password_reset/confirm.html:18
 msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
@@ -697,15 +705,15 @@ msgstr ""
 "Proszę wpisać Twoje nowe hasło dwukrotnie, aby zweryfikować, czy wpisałeś je "
 "poprawnie."
 
-#: templates/xadmin/auth/password_reset/confirm.html:19
+#: templates/xadmin/auth/password_reset/confirm.html:22
 msgid "Change my password"
 msgstr "Zmień moje hasło"
 
-#: templates/xadmin/auth/password_reset/confirm.html:24
+#: templates/xadmin/auth/password_reset/confirm.html:27
 msgid "Password reset unsuccessful"
 msgstr "Resetowanie hasło zakończone niepowodzeniem"
 
-#: templates/xadmin/auth/password_reset/confirm.html:27
+#: templates/xadmin/auth/password_reset/confirm.html:30
 #, fuzzy
 #| msgid ""
 #| "The password reset link was invalid, possibly because it has already been "
@@ -717,7 +725,7 @@ msgstr ""
 "Twój link do resetowania hasła jest niepoprawny, prawdopodobnie został już "
 "użyty. Proszę, zażądaj nowego linku (wykonaj raz jeszcze reset hasła)."
 
-#: templates/xadmin/auth/password_reset/confirm.html:28
+#: templates/xadmin/auth/password_reset/confirm.html:32
 #: templates/xadmin/auth/password_reset/form.html:13
 msgid "Password reset"
 msgstr "Reset hasła"
@@ -729,6 +737,11 @@ msgid ""
 msgstr ""
 "Wysłaliśmy Ci e-mailem instrukcję ustawienia Twojego hasła na adres, który "
 "podałeś. Powinieneś go wkrótce otrzymać."
+
+#: templates/xadmin/auth/password_reset/done.html:17
+#: templates/xadmin/auth/password_reset/form.html:39
+msgid "Back to login..."
+msgstr ""
 
 #: templates/xadmin/auth/password_reset/email.html:2
 #, python-format
@@ -764,17 +777,13 @@ msgstr ""
 "Zapomiałeś swoje hasło ? Wpisz Twój adres e-mail poniżej, a my prześlemy Ci "
 "maila z instrukcjami, jak ustawić nowe."
 
-#: templates/xadmin/auth/password_reset/form.html:25
+#: templates/xadmin/auth/password_reset/form.html:26
 msgid "E-mail address:"
 msgstr "Adres e-mail:"
 
-#: templates/xadmin/auth/password_reset/form.html:33
+#: templates/xadmin/auth/password_reset/form.html:36
 msgid "Reset my password"
 msgstr "Zresetuj moje hasło"
-
-#: templates/xadmin/auth/password_reset/form.html:35
-msgid "Back to login..."
-msgstr ""
 
 #: templates/xadmin/auth/user/add_form.html:6
 msgid ""
@@ -1362,11 +1371,11 @@ msgstr "Opcje widgetów"
 msgid "Save changes"
 msgstr "Zapisz zmiany"
 
-#: views/base.py:320
+#: views/base.py:252
 msgid "Django Xadmin"
 msgstr "Django Xadmin"
 
-#: views/base.py:321
+#: views/base.py:253
 #, fuzzy
 #| msgid "my-company.inc 2013"
 msgid "my-company.inc"

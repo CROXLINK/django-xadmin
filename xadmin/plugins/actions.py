@@ -8,7 +8,7 @@ from django.template.response import TemplateResponse
 from django.utils import six
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext as _, ungettext
+from django.utils.translation import ugettext as _, ungettext, ugettext_lazy
 from django.utils.text import capfirst
 
 from django.contrib.admin.utils import get_deleted_objects
@@ -55,7 +55,7 @@ class BaseActionView(ModelAdminView):
 class DeleteSelectedAction(BaseActionView):
 
     action_name = "delete_selected"
-    description = _(u'Delete selected %(verbose_name_plural)s')
+    description = ugettext_lazy(u'Delete selected %(verbose_name_plural)s')
 
     delete_confirmation_template = None
     delete_selected_confirmation_template = None
@@ -280,7 +280,7 @@ class ActionPlugin(BaseAdminPlugin):
         return item
 
     def result_item(self, item, obj, field_name, row):
-        if item.field is None and field_name == u'action_checkbox':
+        if item.field is None and field_name == 'action_checkbox':
             item.classes.append("action-checkbox")
         return item
 

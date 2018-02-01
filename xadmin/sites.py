@@ -7,6 +7,8 @@ from django.db.models.base import ModelBase
 from django.utils import six
 from django.views.decorators.cache import never_cache
 from django.template.engine import Engine
+from django.views.i18n import JavaScriptCatalog
+
 import inspect
 
 if six.PY2 and sys.getdefaultencoding() == 'ascii':
@@ -338,18 +340,27 @@ class AdminSite(object):
     def urls(self):
         return self.get_urls(), self.name, self.app_name
 
-    def i18n_javascript(self, request):
+    def i18n_javascript(self, request, extra_context=None):
         """
         Displays the i18n JavaScript that the Django admin requires.
 
-        This takes into account the USE_I18N setting. If it's set to False, the
-        generated JavaScript will be leaner and faster.
+        `extra_context` is unused but present for consistency with the other
+        admin views.
         """
-        if settings.USE_I18N:
-            from django.views.i18n import javascript_catalog
-        else:
-            from django.views.i18n import null_javascript_catalog as javascript_catalog
-        return javascript_catalog(request, packages=['django.conf', 'xadmin'])
+        return JavaScriptCatalog.as_view(packages=['django.contrib.admin'])(request)
+
+#     def i18n_javascript(self, request):
+#         """
+#         Displays the i18n JavaScript that the Django admin requires.
+# 
+#         This takes into account the USE_I18N setting. If it's set to False, the
+#         generated JavaScript will be leaner and faster.
+#         """
+#         if settings.USE_I18N:
+#             from django.views.i18n import javascript_catalog
+#         else:
+#             from django.views.i18n import null_javascript_catalog as javascript_catalog
+#         return javascript_catalog(request, packages=['django.conf', 'xadmin'])
 
 # This global object represents the default admin site, for the common case.
 # You can instantiate AdminSite in your own code to create a custom admin site.

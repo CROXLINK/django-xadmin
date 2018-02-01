@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-26 11:32+0800\n"
+"POT-Creation-Date: 2018-02-01 21:19+0800\n"
 "PO-Revision-Date: 2013-12-28 19:36+0000\n"
 "Last-Translator: crazyzubr <hjcnbckfd@gmail.com>\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/projects/p/xadmin/"
@@ -32,11 +32,11 @@ msgstr ""
 msgid "All"
 msgstr "Все"
 
-#: filters.py:172 plugins/export.py:174
+#: filters.py:172 plugins/export.py:167
 msgid "Yes"
 msgstr "Да"
 
-#: filters.py:173 plugins/export.py:174
+#: filters.py:173 plugins/export.py:167
 msgid "No"
 msgstr "Нет"
 
@@ -88,14 +88,14 @@ msgstr ""
 msgid "Please log in again, because your session has expired."
 msgstr "Пожалуйста, войдите снова, поскольку ваша сессия устарела."
 
-#: forms.py:42
-#, python-format
-msgid "Your e-mail address is not your username. Try '%s' instead."
-msgstr ""
-
-#: forms.py:47
+#: forms.py:43
 #, python-format
 msgid "This account '%s' is not authorized to login!"
+msgstr ""
+
+#: forms.py:59
+#, python-format
+msgid "Your e-mail address is not your username. Try '%s' instead."
 msgstr ""
 
 #: models.py:46
@@ -307,41 +307,45 @@ msgstr "Не удается удалить %(name)s"
 msgid "Can view %s"
 msgstr ""
 
-#: plugins/auth.py:91
+#: plugins/auth.py:38
+msgid "<<已加密>>"
+msgstr ""
+
+#: plugins/auth.py:101
 msgid "Personal info"
 msgstr "Персональная информация"
 
-#: plugins/auth.py:95
+#: plugins/auth.py:105
 msgid "Permissions"
 msgstr "Права"
 
-#: plugins/auth.py:98
+#: plugins/auth.py:108
 msgid "Important dates"
 msgstr "Важные даты"
 
-#: plugins/auth.py:103
+#: plugins/auth.py:113
 msgid "Status"
 msgstr "Статус"
 
-#: plugins/auth.py:115
+#: plugins/auth.py:131
 #, fuzzy
 msgid "Permission Name"
 msgstr "Права"
 
-#: plugins/auth.py:171
+#: plugins/auth.py:187
 msgid "Change Password"
 msgstr "Изменить пароль"
 
-#: plugins/auth.py:202
+#: plugins/auth.py:218
 #, python-format
 msgid "Change password: %s"
 msgstr "Изменить пароль: %s"
 
-#: plugins/auth.py:227 plugins/auth.py:259
+#: plugins/auth.py:243 plugins/auth.py:275
 msgid "Password changed successfully."
 msgstr "Пароль успешно изменен"
 
-#: plugins/auth.py:246 templates/xadmin/auth/user/change_password.html:11
+#: plugins/auth.py:262 templates/xadmin/auth/user/change_password.html:11
 #: templates/xadmin/auth/user/change_password.html:22
 #: templates/xadmin/auth/user/change_password.html:55
 msgid "Change password"
@@ -433,18 +437,18 @@ msgstr[2] ""
 msgid "Details of %s"
 msgstr "Детали %s"
 
-#: plugins/editable.py:50
+#: plugins/editable.py:51
 #, python-format
 msgid "Enter %s"
 msgstr ""
 
-#: plugins/editable.py:77 views/dashboard.py:652 views/delete.py:28
+#: plugins/editable.py:78 views/dashboard.py:652 views/delete.py:28
 #: views/detail.py:145 views/edit.py:463
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr ""
 
-#: plugins/export.py:107 plugins/export.py:144
+#: plugins/export.py:100 plugins/export.py:137
 msgid "Sheet"
 msgstr "Лист"
 
@@ -481,11 +485,15 @@ msgstr ""
 msgid "Thumbnails"
 msgstr ""
 
-#: plugins/passwords.py:18
+#: plugins/passwords.py:24
 msgid "this email is not registered!"
 msgstr ""
 
-#: plugins/passwords.py:72
+#: plugins/passwords.py:28
+msgid "this account has been revoked!"
+msgstr ""
+
+#: plugins/passwords.py:96
 msgid "Forgotten your password or username?"
 msgstr ""
 
@@ -672,7 +680,7 @@ msgstr "Войти"
 msgid "Set new password"
 msgstr "Введите новый пароль:"
 
-#: templates/xadmin/auth/password_reset/confirm.html:17
+#: templates/xadmin/auth/password_reset/confirm.html:18
 msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
@@ -680,15 +688,15 @@ msgstr ""
 "Пожалуйста, введите новый пароль дважды, чтобы мы могли убедиться в "
 "правильности написания."
 
-#: templates/xadmin/auth/password_reset/confirm.html:19
+#: templates/xadmin/auth/password_reset/confirm.html:22
 msgid "Change my password"
 msgstr ""
 
-#: templates/xadmin/auth/password_reset/confirm.html:24
+#: templates/xadmin/auth/password_reset/confirm.html:27
 msgid "Password reset unsuccessful"
 msgstr "Ошибка восстановления пароля"
 
-#: templates/xadmin/auth/password_reset/confirm.html:27
+#: templates/xadmin/auth/password_reset/confirm.html:30
 #, fuzzy
 #| msgid ""
 #| "The password reset link was invalid, possibly because it has already been "
@@ -700,7 +708,7 @@ msgstr ""
 "Неверная ссылка для восстановления пароля. Возможно, ей уже воспользовались. "
 "Пожалуйста, попробуйте восстановить пароль еще раз."
 
-#: templates/xadmin/auth/password_reset/confirm.html:28
+#: templates/xadmin/auth/password_reset/confirm.html:32
 #: templates/xadmin/auth/password_reset/form.html:13
 msgid "Password reset"
 msgstr "Восстановление пароля"
@@ -712,6 +720,11 @@ msgid ""
 msgstr ""
 "Мы отправили инструкцию по восстановлению пароля на указанный вами адрес "
 "электронной почты. Вы должны её вскоре получить."
+
+#: templates/xadmin/auth/password_reset/done.html:17
+#: templates/xadmin/auth/password_reset/form.html:39
+msgid "Back to login..."
+msgstr ""
 
 #: templates/xadmin/auth/password_reset/email.html:2
 #, python-format
@@ -746,16 +759,12 @@ msgid ""
 "instructions for setting a new one."
 msgstr ""
 
-#: templates/xadmin/auth/password_reset/form.html:25
+#: templates/xadmin/auth/password_reset/form.html:26
 msgid "E-mail address:"
 msgstr ""
 
-#: templates/xadmin/auth/password_reset/form.html:33
+#: templates/xadmin/auth/password_reset/form.html:36
 msgid "Reset my password"
-msgstr ""
-
-#: templates/xadmin/auth/password_reset/form.html:35
-msgid "Back to login..."
 msgstr ""
 
 #: templates/xadmin/auth/user/add_form.html:6
@@ -1319,11 +1328,11 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
-#: views/base.py:320
+#: views/base.py:252
 msgid "Django Xadmin"
 msgstr ""
 
-#: views/base.py:321
+#: views/base.py:253
 msgid "my-company.inc"
 msgstr ""
 
