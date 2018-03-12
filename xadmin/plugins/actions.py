@@ -149,7 +149,7 @@ class ActionPlugin(BaseAdminPlugin):
 
     def get_list_display_links(self, list_display_links):
         if self.actions:
-            if len(list_display_links) == 1 and list_display_links[0] == 'action_checkbox':
+            if list_display_links and len(list_display_links) == 1 and list_display_links[0] == 'action_checkbox':
                 return list(self.admin_view.list_display[1:2])
         return list_display_links
 

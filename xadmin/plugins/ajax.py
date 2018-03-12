@@ -27,7 +27,7 @@ class AjaxListPlugin(BaseAjaxPlugin):
     def get_result_list(self, response):
         if self.request.GET.get('_format') == 'html':
             self.admin_view.object_list_template = 'xadmin/views/quick_list.html'
-            self.admin_view.list_display_links = ()
+            self.admin_view.list_display_links = None
             return response
 
         av = self.admin_view

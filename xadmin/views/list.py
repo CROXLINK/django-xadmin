@@ -160,9 +160,9 @@ class ListAdminView(ModelAdminView):
         on the changelist. The list_display parameter is the list of fields
         returned by get_list_display().
         """
-        if self.list_display_links != () or not self.list_display:
-            return self.list_display_links or ()
-        else:
+        if self.list_display_links != ():
+            return self.list_display_links
+        elif self.list_display:
             # Use only the first item in list_display as link
             return list(self.list_display)[:1]
 
@@ -568,8 +568,8 @@ class ListAdminView(ModelAdminView):
             item.value = value
 
         # If list_display_links not defined, add the link tag to the first field
-        if (item.row['is_display_first'] and not self.list_display_links) \
-                or field_name in self.list_display_links:
+        if self.list_display_links is not None and\
+                ((item.row['is_display_first'] and self.list_display_links == ()) or field_name in self.list_display_links):
             item.row['is_display_first'] = False
             item.is_display_link = True
             if self.list_display_links_details:
