@@ -347,7 +347,18 @@ def display_for_field(value, field):
     elif isinstance(field, (models.DateField, models.TimeField)):
         return formats.localize(value)
     elif isinstance(field, models.DecimalField):
-        return formats.number_format(value, field.decimal_places)
+        decimal_places = field.decimal_places
+        if decimal_places:
+            point_pos = str(value).rfind('.')
+            if point_pos != -1:
+                # not integer
+                removing_trailing_zeros = str(value).rstrip('0')
+                decimal_places = len(removing_trailing_zeros) - point_pos - 1
+            else:
+                # integer
+                decimal_places = 0
+
+        return formats.number_format(value, decimal_places)
     elif isinstance(field, models.FloatField):
         return formats.number_format(value)
     elif isinstance(field.rel, models.ManyToManyRel):

@@ -540,9 +540,26 @@ class ListAdminView(ModelAdminView):
             if f is None:
                 item.allow_tags = getattr(attr, 'allow_tags', False)
                 boolean = getattr(attr, 'boolean', False)
+                decimal = getattr(attr, 'decimal', None)
+
                 if boolean:
                     item.allow_tags = True
                     item.text = boolean_icon(value)
+
+                elif decimal:
+                    # removing trailing zeros after .
+                    from django.utils import formats
+
+                    value = str(value)
+                    if value.rfind('.') != -1:
+                        value = value.rstrip('0')
+                        decimal_places = len(value) - value.index('.') - 1
+                    else:
+                        decimal_places = 0
+
+                    # show value by format settings
+                    item.text = formats.number_format(value, decimal_places)
+
                 else:
                     item.text = smart_text(value)
             else:

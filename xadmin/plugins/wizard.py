@@ -84,7 +84,7 @@ class WizardFormPlugin(BaseAdminPlugin):
             self.storage.reset()
             self.storage.current_step = self.steps.first
 
-            self.admin_view.model_form = self.get_step_form()
+#             self.admin_view.model_form = self.get_step_form()
         else:
             # Look for a wizard_goto_step element in the posted data which
             # contains a valid step name. If one was found, render the requested
@@ -113,8 +113,14 @@ class WizardFormPlugin(BaseAdminPlugin):
                 # form refreshed, change current step
                 self.storage.current_step = form_current_step
 
-            # get the form for the current step
-            self.admin_view.model_form = self.get_step_form()
+        # get the form for the current step
+        self.admin_view.model_form = self.get_step_form()
+
+    def get_readonly_fields(self, __):
+        # disable readonly_fields when use wizards
+        self.admin_view.readonly_fields = ()
+
+        return __()
 
     def get_form_layout(self, __):
         attrs = self.get_form_list()[self.steps.current]
