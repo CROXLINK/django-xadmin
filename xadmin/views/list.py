@@ -183,13 +183,18 @@ class ListAdminView(ModelAdminView):
         if (self.show_all and self.can_show_all) or not self.multi_page:
             self.result_list = self.list_queryset._clone()
         else:
+            if self.page_num >= self.paginator.num_pages:
+                # make sure page_num less than total pages
+                self.page_num = self.paginator.num_pages - 1
+
             try:
-                self.result_list = self.paginator.page(
-                    self.page_num + 1).object_list
+                self.result_list = self.paginator.page(self.page_num + 1).object_list
+
             except InvalidPage:
                 if ERROR_FLAG in self.request.GET.keys():
                     return SimpleTemplateResponse('xadmin/views/invalid_setup.html', {
                         'title': _('Database error'),
+                        'base_template': self.base_template
                     })
                 return HttpResponseRedirect(self.request.path + '?' + ERROR_FLAG + '=1')
         self.has_more = self.result_count > (
