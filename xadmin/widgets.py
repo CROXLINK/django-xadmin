@@ -246,6 +246,13 @@ class AdminTextInputWidget(forms.TextInput):
             final_attrs.update(attrs)
         super(AdminTextInputWidget, self).__init__(attrs=final_attrs)
 
+    def render(self, name, value, attrs=None):
+        if self.attrs.get('readonly') and self.attrs.get('class'):
+            # use form-control-static style instead
+            self.attrs['class'] = self.attrs['class'].replace('form-control', 'form-control-static')
+            self.attrs['style'] = "padding-top: 0px; border-width: 0px;"
+        return super(AdminTextInputWidget, self).render(name, value, attrs=attrs)
+
 
 class AdminURLFieldWidget(forms.TextInput):
 
