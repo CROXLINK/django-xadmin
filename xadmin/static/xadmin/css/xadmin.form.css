@@ -65,6 +65,10 @@ select.selectmultiple {
   margin-bottom: 0px;
 }
 
+.help-inline {
+  color: #b94a48;
+}
+
 .form-row .row {
   margin: 0px !important;
 }

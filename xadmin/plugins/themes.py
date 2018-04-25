@@ -94,12 +94,14 @@ class ThemePlugin(BaseAdminPlugin):
                         resp, content = h.request("https://bootswatch.com/api/3.json", 'GET', '',
                             headers={"Accept": "application/json", "User-Agent": self.request.META['HTTP_USER_AGENT']})
                     else:
-                        resp = requests.get("https://bootswatch.com/api/3.json",
-                                            headers={"Accept": "application/json", "User-Agent": self.request.META['HTTP_USER_AGENT']})
+                        try:
+                            resp = requests.get("https://bootswatch.com/api/3.json",
+                                                headers={"Accept": "application/json", "User-Agent": self.request.META['HTTP_USER_AGENT']})
                         
-                        if resp.status_code == 200:
+                            resp.raise_for_status()
                             content = resp.text
-                        else:
+
+                        except:
                             # empty theme
                             content = "{'themes': []}"
 

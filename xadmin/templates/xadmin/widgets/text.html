@@ -1,0 +1,5 @@
+{% if widget.attrs.allow_tags and widget.attrs.readonly %}
+    {{ widget.value|safe }}
+{% else %}
+    <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s'|safe }}"{% endif %}{% include "django/forms/widgets/attrs.html" %} />
+{% endif %}

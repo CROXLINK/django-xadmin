@@ -248,7 +248,7 @@ class ModelFormAdminView(ModelAdminView):
         """
 #         return self.readonly_fields
         # return readonly_fields that are not excluded
-        return list(set(self.readonly_fields or []) - set(self.exclude or []))
+        return [r for r in (self.readonly_fields or []) if r not in (self.exclude or [])]
 
     @filter_hook
     def save_forms(self):

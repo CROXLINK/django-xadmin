@@ -4,10 +4,10 @@ Form Widget classes specific to the Django admin site.
 from __future__ import absolute_import
 from itertools import chain
 from django import forms
-# try:
-#     from django.forms.widgets import ChoiceWidget as RadioChoiceInput
-# except:
-#     from django.forms.widgets import RadioChoiceInput
+try:
+    from django.forms.widgets import ChoiceWidget as RadioChoiceInput
+except:
+    from django.forms.widgets import RadioChoiceInput
 from django.utils.encoding import force_text
 
 from django.utils.safestring import mark_safe
@@ -124,7 +124,7 @@ class AdminRadioInput(forms.CheckboxInput):
 #         return mark_safe(u'\n'.join([force_text(w) for w in self]))
 
 
-class AdminRadioSelect(forms.RadioSelect):
+class AdminRadioSelect(RadioChoiceInput):
 #     renderer = AdminRadioFieldRenderer
     def render(self, name, value, attrs=None, choices=()):
         if value is None:
@@ -239,6 +239,7 @@ class AdminTextareaWidget(forms.Textarea):
 
 
 class AdminTextInputWidget(forms.TextInput):
+    template_name = 'xadmin/widgets/text.html'
 
     def __init__(self, attrs=None):
         final_attrs = {'class': 'text-field'}
