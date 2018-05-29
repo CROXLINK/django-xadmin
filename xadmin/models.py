@@ -143,6 +143,7 @@ class Log(models.Model):
     action_time = models.DateTimeField(
         _('action time'),
         default=timezone.now,
+        db_index=True,
         editable=False,
     )
     user = models.ForeignKey(
@@ -157,7 +158,7 @@ class Log(models.Model):
         verbose_name=_('content type'),
         blank=True, null=True,
     )
-    object_id = models.TextField(_('object id'), blank=True, null=True)
+    object_id = models.CharField(_('object id'), max_length=191, blank=True, null=True, db_index=True)
     object_repr = models.CharField(_('object repr'), max_length=200)
     action_flag = models.CharField(_('action flag'), max_length=32)
     message = models.TextField(_('change message'), blank=True)

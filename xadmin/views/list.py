@@ -551,7 +551,7 @@ class ListAdminView(ModelAdminView):
                     item.allow_tags = True
                     item.text = boolean_icon(value)
 
-                elif decimal:
+                elif decimal and value is not None:
                     # removing trailing zeros after .
                     from django.utils import formats
 

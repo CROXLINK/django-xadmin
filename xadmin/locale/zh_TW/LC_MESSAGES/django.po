@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-01 21:19+0800\n"
+"POT-Creation-Date: 2018-05-29 14:33+0800\n"
 "PO-Revision-Date: 2014-11-07 07:45+0000\n"
 "Last-Translator: eddiep <eddiep@163.com>\n"
 "Language: zh_TW\n"
@@ -53,7 +53,7 @@ msgstr "有日期"
 msgid "Has no date"
 msgstr "無日期"
 
-#: filters.py:296 widgets.py:35 widgets.py:81
+#: filters.py:296 widgets.py:35 widgets.py:84
 msgid "Today"
 msgstr "今日"
 
@@ -97,7 +97,7 @@ msgstr "您用戶名不是電子郵件地址，請嘗試 '%s'"
 msgid "Title"
 msgstr "標題"
 
-#: models.py:47 models.py:87 models.py:107 models.py:151
+#: models.py:47 models.py:87 models.py:107 models.py:152
 msgid "user"
 msgstr "用戶"
 
@@ -161,49 +161,49 @@ msgstr "用戶小工具"
 msgid "action time"
 msgstr "操作時間"
 
-#: models.py:153
+#: models.py:154
 msgid "action ip"
 msgstr ""
 
-#: models.py:157
+#: models.py:158
 msgid "content type"
 msgstr ""
 
-#: models.py:160
+#: models.py:161
 msgid "object id"
 msgstr ""
 
-#: models.py:161
+#: models.py:162
 msgid "object repr"
 msgstr ""
 
-#: models.py:162
+#: models.py:163
 msgid "action flag"
 msgstr ""
 
-#: models.py:163
+#: models.py:164
 msgid "change message"
 msgstr "修改訊息"
 
-#: models.py:166
-msgid "log entry"
-msgstr "登入紀錄"
-
 #: models.py:167
+msgid "log entry"
+msgstr "日誌紀錄"
+
+#: models.py:168
 msgid "log entries"
 msgstr "日誌紀錄"
 
-#: models.py:175
+#: models.py:176
 #, python-format
 msgid "Added \"%(object)s\"."
 msgstr ""
 
-#: models.py:177
+#: models.py:178
 #, python-format
 msgid "Changed \"%(object)s\" - %(changes)s"
 msgstr "已變更 \"%(object)s\" - %(changes)s"
 
-#: models.py:182
+#: models.py:183
 #, python-format
 msgid "Deleted \"%(object)s.\""
 msgstr "已刪除 \"%(object)s.\""
@@ -410,7 +410,7 @@ msgid "1 comment was successfully %(action)s."
 msgid_plural "%(count)s comments were successfully %(action)s."
 msgstr[0] "%(count)s 評論已成功 %(action)s."
 
-#: plugins/details.py:52 views/list.py:583
+#: plugins/details.py:52 views/list.py:605
 #, python-format
 msgid "Details of %s"
 msgstr "%s 詳細"
@@ -421,7 +421,7 @@ msgid "Enter %s"
 msgstr "輸入 %s"
 
 #: plugins/editable.py:78 views/dashboard.py:652 views/delete.py:28
-#: views/detail.py:145 views/edit.py:463
+#: views/detail.py:162 views/edit.py:463
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr "主鍵為%(key)r的物件%(name)s不存在"
@@ -463,15 +463,15 @@ msgstr "表"
 msgid "Thumbnails"
 msgstr "縮略圖"
 
-#: plugins/passwords.py:24
+#: plugins/passwords.py:25
 msgid "this email is not registered!"
 msgstr ""
 
-#: plugins/passwords.py:28
+#: plugins/passwords.py:29
 msgid "this account has been revoked!"
 msgstr ""
 
-#: plugins/passwords.py:96
+#: plugins/passwords.py:97
 msgid "Forgotten your password or username?"
 msgstr "忘記密碼或用戶名？"
 
@@ -1355,11 +1355,11 @@ msgstr "%s 儀表板"
 msgid "The %(name)s \"%(obj)s\" was deleted successfully."
 msgstr "%(name)s \"%(obj)s\" 已被成功刪除."
 
-#: views/detail.py:173 views/edit.py:216 views/form.py:74
+#: views/detail.py:190 views/edit.py:216 views/form.py:74
 msgid "Other Fields"
 msgstr "其他欄位"
 
-#: views/detail.py:235
+#: views/detail.py:252
 #, python-format
 msgid "%s Detail"
 msgstr "%s 詳細內容"
@@ -1410,24 +1410,24 @@ msgstr "%(name)s \"%(obj)s\" 已成功修改."
 msgid "The %s was changed successfully."
 msgstr "%s 已成功變更"
 
-#: views/list.py:192
+#: views/list.py:196
 msgid "Database error"
 msgstr "資料庫錯誤"
 
-#: views/list.py:371
+#: views/list.py:376
 #, python-format
 msgid "%s List"
 msgstr "%s 列表"
 
-#: views/list.py:500
+#: views/list.py:505
 msgid "Sort ASC"
 msgstr "遞增排序"
 
-#: views/list.py:501
+#: views/list.py:506
 msgid "Sort DESC"
 msgstr "遞減排序"
 
-#: views/list.py:505
+#: views/list.py:510
 msgid "Cancel Sort"
 msgstr "取消排序"
 
@@ -1435,6 +1435,6 @@ msgstr "取消排序"
 msgid "Main Dashboard"
 msgstr "主儀表板"
 
-#: widgets.py:53 widgets.py:81
+#: widgets.py:53 widgets.py:84
 msgid "Now"
 msgstr "現在"

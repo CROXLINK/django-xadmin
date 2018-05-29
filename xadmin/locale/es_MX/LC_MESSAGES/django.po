@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-01 21:19+0800\n"
+"POT-Creation-Date: 2018-05-29 14:33+0800\n"
 "PO-Revision-Date: 2013-05-12 18:45+0000\n"
 "Last-Translator: sacrac <crocha09.09@gmail.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/projects/p/xadmin/"
@@ -63,7 +63,7 @@ msgstr "Cualquier fecha"
 msgid "Has no date"
 msgstr "Cualquier fecha"
 
-#: filters.py:296 widgets.py:35 widgets.py:81
+#: filters.py:296 widgets.py:35 widgets.py:84
 msgid "Today"
 msgstr "Hoy"
 
@@ -111,7 +111,7 @@ msgstr ""
 msgid "Title"
 msgstr "Titulo"
 
-#: models.py:47 models.py:87 models.py:107 models.py:151
+#: models.py:47 models.py:87 models.py:107 models.py:152
 msgid "user"
 msgstr ""
 
@@ -177,53 +177,53 @@ msgstr "Widgets del Usuario"
 msgid "action time"
 msgstr "Fecha/hora"
 
-#: models.py:153
+#: models.py:154
 msgid "action ip"
 msgstr ""
 
-#: models.py:157
+#: models.py:158
 msgid "content type"
 msgstr ""
 
-#: models.py:160
+#: models.py:161
 msgid "object id"
 msgstr ""
 
-#: models.py:161
+#: models.py:162
 msgid "object repr"
 msgstr ""
 
-#: models.py:162
+#: models.py:163
 msgid "action flag"
 msgstr ""
 
-#: models.py:163
+#: models.py:164
 #, fuzzy
 #| msgid "Change %s"
 msgid "change message"
 msgstr "Cambiar %s"
 
-#: models.py:166
+#: models.py:167
 #, fuzzy
 #| msgid "log in"
 msgid "log entry"
 msgstr "Iniciar sesión"
 
-#: models.py:167
+#: models.py:168
 msgid "log entries"
 msgstr ""
 
-#: models.py:175
+#: models.py:176
 #, python-format
 msgid "Added \"%(object)s\"."
 msgstr ""
 
-#: models.py:177
+#: models.py:178
 #, fuzzy, python-format
 msgid "Changed \"%(object)s\" - %(changes)s"
 msgstr "Cambiar multiples objetos"
 
-#: models.py:182
+#: models.py:183
 #, fuzzy, python-format
 #| msgid "Related Objects"
 msgid "Deleted \"%(object)s.\""
@@ -447,7 +447,7 @@ msgid_plural "%(count)s comments were successfully %(action)s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: plugins/details.py:52 views/list.py:583
+#: plugins/details.py:52 views/list.py:605
 #, python-format
 msgid "Details of %s"
 msgstr "Detalles de %s"
@@ -458,7 +458,7 @@ msgid "Enter %s"
 msgstr "Entre %s"
 
 #: plugins/editable.py:78 views/dashboard.py:652 views/delete.py:28
-#: views/detail.py:145 views/edit.py:463
+#: views/detail.py:162 views/edit.py:463
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr "%(name)s el objeto con la llave primaria %(key)r no existe."
@@ -500,15 +500,15 @@ msgstr ""
 msgid "Thumbnails"
 msgstr ""
 
-#: plugins/passwords.py:24
+#: plugins/passwords.py:25
 msgid "this email is not registered!"
 msgstr ""
 
-#: plugins/passwords.py:28
+#: plugins/passwords.py:29
 msgid "this account has been revoked!"
 msgstr ""
 
-#: plugins/passwords.py:96
+#: plugins/passwords.py:97
 msgid "Forgotten your password or username?"
 msgstr "¿Olvidó su contraseña o nombre de usuario?"
 
@@ -1449,11 +1449,11 @@ msgstr "Panel de control"
 msgid "The %(name)s \"%(obj)s\" was deleted successfully."
 msgstr "El   %(name)s \"%(obj)s\" fue eliminado exitosa mente."
 
-#: views/detail.py:173 views/edit.py:216 views/form.py:74
+#: views/detail.py:190 views/edit.py:216 views/form.py:74
 msgid "Other Fields"
 msgstr "Otros campos"
 
-#: views/detail.py:235
+#: views/detail.py:252
 #, python-format
 msgid "%s Detail"
 msgstr "%s Detalles"
@@ -1505,24 +1505,24 @@ msgstr "El %(name)s \"%(obj)s\" fue editado exitosa mente."
 msgid "The %s was changed successfully."
 msgstr "El %(name)s \"%(obj)s\" fue editado exitosa mente."
 
-#: views/list.py:192
+#: views/list.py:196
 msgid "Database error"
 msgstr "Error de base de datos"
 
-#: views/list.py:371
+#: views/list.py:376
 #, python-format
 msgid "%s List"
 msgstr "%s Lista"
 
-#: views/list.py:500
+#: views/list.py:505
 msgid "Sort ASC"
 msgstr "Ordenar ascendente mente."
 
-#: views/list.py:501
+#: views/list.py:506
 msgid "Sort DESC"
 msgstr "Ordenar descendente mente"
 
-#: views/list.py:505
+#: views/list.py:510
 msgid "Cancel Sort"
 msgstr "Cancelar ordenación"
 
@@ -1530,7 +1530,7 @@ msgstr "Cancelar ordenación"
 msgid "Main Dashboard"
 msgstr "Dashboard principal."
 
-#: widgets.py:53 widgets.py:81
+#: widgets.py:53 widgets.py:84
 msgid "Now"
 msgstr "Ahora"
 

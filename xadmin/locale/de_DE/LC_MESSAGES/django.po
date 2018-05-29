@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-01 21:19+0800\n"
+"POT-Creation-Date: 2018-05-29 14:33+0800\n"
 "PO-Revision-Date: 2013-12-19 11:06+0000\n"
 "Last-Translator: Sebastian Morkisch <semox78@googlemail.com>\n"
 "Language-Team: German (Germany) (http://www.transifex.com/projects/p/xadmin/"
@@ -57,7 +57,7 @@ msgstr "Hat ein Datum"
 msgid "Has no date"
 msgstr "Hat kein Datum"
 
-#: filters.py:296 widgets.py:35 widgets.py:81
+#: filters.py:296 widgets.py:35 widgets.py:84
 msgid "Today"
 msgstr "Heute"
 
@@ -106,7 +106,7 @@ msgstr "Ihre Email ist nicht ihr Benutzername. Probieren sie anstelle %s."
 msgid "Title"
 msgstr "Titel"
 
-#: models.py:47 models.py:87 models.py:107 models.py:151
+#: models.py:47 models.py:87 models.py:107 models.py:152
 msgid "user"
 msgstr "Benutzer"
 
@@ -172,55 +172,55 @@ msgstr "Benutzer Widgets"
 msgid "action time"
 msgstr "Datum/Uhrzeit"
 
-#: models.py:153
+#: models.py:154
 msgid "action ip"
 msgstr ""
 
-#: models.py:157
+#: models.py:158
 msgid "content type"
 msgstr ""
 
-#: models.py:160
+#: models.py:161
 msgid "object id"
 msgstr ""
 
-#: models.py:161
+#: models.py:162
 msgid "object repr"
 msgstr ""
 
-#: models.py:162
+#: models.py:163
 msgid "action flag"
 msgstr ""
 
-#: models.py:163
+#: models.py:164
 #, fuzzy
 #| msgid "Change %s"
 msgid "change message"
 msgstr "Ändern %s"
 
-#: models.py:166
+#: models.py:167
 #, fuzzy
 #| msgid "log in"
 msgid "log entry"
 msgstr "einloggen"
 
-#: models.py:167
+#: models.py:168
 msgid "log entries"
 msgstr ""
 
-#: models.py:175
+#: models.py:176
 #, python-format
 msgid "Added \"%(object)s\"."
 msgstr ""
 
-#: models.py:177
+#: models.py:178
 #, fuzzy, python-format
 #| msgid "Change one %(objects_name)s"
 #| msgid_plural "Batch change %(counter)s %(objects_name)s"
 msgid "Changed \"%(object)s\" - %(changes)s"
 msgstr "Anpassung von %(objects_name)s"
 
-#: models.py:182
+#: models.py:183
 #, fuzzy, python-format
 #| msgid "Related Objects"
 msgid "Deleted \"%(object)s.\""
@@ -437,7 +437,7 @@ msgid_plural "%(count)s comments were successfully %(action)s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: plugins/details.py:52 views/list.py:583
+#: plugins/details.py:52 views/list.py:605
 #, python-format
 msgid "Details of %s"
 msgstr "Einzelheiten von %s"
@@ -448,7 +448,7 @@ msgid "Enter %s"
 msgstr "Eingabe %s"
 
 #: plugins/editable.py:78 views/dashboard.py:652 views/delete.py:28
-#: views/detail.py:145 views/edit.py:463
+#: views/detail.py:162 views/edit.py:463
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr ""
@@ -491,15 +491,15 @@ msgstr "Tabelle"
 msgid "Thumbnails"
 msgstr "Thumbnails"
 
-#: plugins/passwords.py:24
+#: plugins/passwords.py:25
 msgid "this email is not registered!"
 msgstr ""
 
-#: plugins/passwords.py:28
+#: plugins/passwords.py:29
 msgid "this account has been revoked!"
 msgstr ""
 
-#: plugins/passwords.py:96
+#: plugins/passwords.py:97
 msgid "Forgotten your password or username?"
 msgstr "Haben Sie Ihr Passwort oder den Benutzernamen vergessen?"
 
@@ -1404,11 +1404,11 @@ msgstr "%s Armaturentafel"
 msgid "The %(name)s \"%(obj)s\" was deleted successfully."
 msgstr ""
 
-#: views/detail.py:173 views/edit.py:216 views/form.py:74
+#: views/detail.py:190 views/edit.py:216 views/form.py:74
 msgid "Other Fields"
 msgstr "Andere Felder"
 
-#: views/detail.py:235
+#: views/detail.py:252
 #, python-format
 msgid "%s Detail"
 msgstr "%s Einzelheiten"
@@ -1460,24 +1460,24 @@ msgstr ""
 msgid "The %s was changed successfully."
 msgstr "Passwort erfolgreich geändert."
 
-#: views/list.py:192
+#: views/list.py:196
 msgid "Database error"
 msgstr "Datenbankfehler"
 
-#: views/list.py:371
+#: views/list.py:376
 #, python-format
 msgid "%s List"
 msgstr "%s Liste"
 
-#: views/list.py:500
+#: views/list.py:505
 msgid "Sort ASC"
 msgstr "Aufsteigend sortieren"
 
-#: views/list.py:501
+#: views/list.py:506
 msgid "Sort DESC"
 msgstr "Absteigend sortieren"
 
-#: views/list.py:505
+#: views/list.py:510
 msgid "Cancel Sort"
 msgstr "Sortierung abbrechen"
 
@@ -1485,6 +1485,6 @@ msgstr "Sortierung abbrechen"
 msgid "Main Dashboard"
 msgstr "Hauptübersicht"
 
-#: widgets.py:53 widgets.py:81
+#: widgets.py:53 widgets.py:84
 msgid "Now"
 msgstr "Jetzt"

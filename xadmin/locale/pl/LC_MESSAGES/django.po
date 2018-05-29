@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-xadmin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-01 21:19+0800\n"
+"POT-Creation-Date: 2018-05-29 14:33+0800\n"
 "PO-Revision-Date: 2014-08-12 21:08+0100\n"
 "Last-Translator: Michał Szpadzik <mszpadzik@gmail.com>\n"
 "Language-Team: Polish translators <mszpadzik@gmail.com>\n"
@@ -55,7 +55,7 @@ msgstr "Ma datę"
 msgid "Has no date"
 msgstr "Nie ma daty"
 
-#: filters.py:296 widgets.py:35 widgets.py:81
+#: filters.py:296 widgets.py:35 widgets.py:84
 msgid "Today"
 msgstr "Dzisiaj"
 
@@ -105,7 +105,7 @@ msgstr ""
 msgid "Title"
 msgstr "Tytuł"
 
-#: models.py:47 models.py:87 models.py:107 models.py:151
+#: models.py:47 models.py:87 models.py:107 models.py:152
 msgid "user"
 msgstr "użytkownik"
 
@@ -171,55 +171,55 @@ msgstr "Widgety użytkownika"
 msgid "action time"
 msgstr "Data/czas"
 
-#: models.py:153
+#: models.py:154
 msgid "action ip"
 msgstr ""
 
-#: models.py:157
+#: models.py:158
 msgid "content type"
 msgstr ""
 
-#: models.py:160
+#: models.py:161
 msgid "object id"
 msgstr ""
 
-#: models.py:161
+#: models.py:162
 msgid "object repr"
 msgstr ""
 
-#: models.py:162
+#: models.py:163
 msgid "action flag"
 msgstr ""
 
-#: models.py:163
+#: models.py:164
 #, fuzzy
 #| msgid "Change %s"
 msgid "change message"
 msgstr "Zmień %s"
 
-#: models.py:166
+#: models.py:167
 #, fuzzy
 #| msgid "log in"
 msgid "log entry"
 msgstr "zaloguj się"
 
-#: models.py:167
+#: models.py:168
 msgid "log entries"
 msgstr ""
 
-#: models.py:175
+#: models.py:176
 #, python-format
 msgid "Added \"%(object)s\"."
 msgstr ""
 
-#: models.py:177
+#: models.py:178
 #, fuzzy, python-format
 #| msgid "Change one %(objects_name)s"
 #| msgid_plural "Batch change %(counter)s %(objects_name)s"
 msgid "Changed \"%(object)s\" - %(changes)s"
 msgstr "Zmień %(objects_name)s"
 
-#: models.py:182
+#: models.py:183
 #, fuzzy, python-format
 #| msgid "Related Objects"
 msgid "Deleted \"%(object)s.\""
@@ -440,7 +440,7 @@ msgstr[0] "1 komentarz został z powodzeniem %(action)s."
 msgstr[1] "%(count)s komentarze zostało z powodzeniem %(action)s."
 msgstr[2] "%(count)s komentarzy zostało z powodzeniem %(action)s."
 
-#: plugins/details.py:52 views/list.py:583
+#: plugins/details.py:52 views/list.py:605
 #, python-format
 msgid "Details of %s"
 msgstr "Szczegóły %s"
@@ -451,7 +451,7 @@ msgid "Enter %s"
 msgstr "Wejdz w %s"
 
 #: plugins/editable.py:78 views/dashboard.py:652 views/delete.py:28
-#: views/detail.py:145 views/edit.py:463
+#: views/detail.py:162 views/edit.py:463
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr "Obiekt %(name)s z kluczem głównym %(key)r nie istnieje."
@@ -493,15 +493,15 @@ msgstr "Tabela"
 msgid "Thumbnails"
 msgstr "Miniaturki"
 
-#: plugins/passwords.py:24
+#: plugins/passwords.py:25
 msgid "this email is not registered!"
 msgstr ""
 
-#: plugins/passwords.py:28
+#: plugins/passwords.py:29
 msgid "this account has been revoked!"
 msgstr ""
 
-#: plugins/passwords.py:96
+#: plugins/passwords.py:97
 msgid "Forgotten your password or username?"
 msgstr "Zapomniałeś swojego hasła lub loginu ?"
 
@@ -1431,11 +1431,11 @@ msgstr "%s Dashboard"
 msgid "The %(name)s \"%(obj)s\" was deleted successfully."
 msgstr "%(name)s \"%(obj)s\" został usunięty z powodzeniem."
 
-#: views/detail.py:173 views/edit.py:216 views/form.py:74
+#: views/detail.py:190 views/edit.py:216 views/form.py:74
 msgid "Other Fields"
 msgstr "Inne pola"
 
-#: views/detail.py:235
+#: views/detail.py:252
 #, python-format
 msgid "%s Detail"
 msgstr "Szczegóły %s"
@@ -1487,24 +1487,24 @@ msgstr "%(name)s \"%(obj)s\" został zmieniony z powodzeniem."
 msgid "The %s was changed successfully."
 msgstr "%s został z sukcesem zmieniony."
 
-#: views/list.py:192
+#: views/list.py:196
 msgid "Database error"
 msgstr "Błąd bazy danych"
 
-#: views/list.py:371
+#: views/list.py:376
 #, python-format
 msgid "%s List"
 msgstr "Lista %s"
 
-#: views/list.py:500
+#: views/list.py:505
 msgid "Sort ASC"
 msgstr "Sortuj ASC"
 
-#: views/list.py:501
+#: views/list.py:506
 msgid "Sort DESC"
 msgstr "Sortuj DESC"
 
-#: views/list.py:505
+#: views/list.py:510
 msgid "Cancel Sort"
 msgstr "Anuluj sortowanie"
 
@@ -1512,6 +1512,6 @@ msgstr "Anuluj sortowanie"
 msgid "Main Dashboard"
 msgstr "Główny Dashboard"
 
-#: widgets.py:53 widgets.py:81
+#: widgets.py:53 widgets.py:84
 msgid "Now"
 msgstr "Teraz"

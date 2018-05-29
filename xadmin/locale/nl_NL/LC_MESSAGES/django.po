@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-01 21:19+0800\n"
+"POT-Creation-Date: 2018-05-29 14:33+0800\n"
 "PO-Revision-Date: 2013-11-20 10:21+0000\n"
 "Last-Translator: sshwsfc <sshwsfc@gmail.com>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/projects/p/"
@@ -54,7 +54,7 @@ msgstr ""
 msgid "Has no date"
 msgstr ""
 
-#: filters.py:296 widgets.py:35 widgets.py:81
+#: filters.py:296 widgets.py:35 widgets.py:84
 msgid "Today"
 msgstr ""
 
@@ -98,7 +98,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: models.py:47 models.py:87 models.py:107 models.py:151
+#: models.py:47 models.py:87 models.py:107 models.py:152
 msgid "user"
 msgstr ""
 
@@ -162,49 +162,49 @@ msgstr ""
 msgid "action time"
 msgstr ""
 
-#: models.py:153
+#: models.py:154
 msgid "action ip"
 msgstr ""
 
-#: models.py:157
+#: models.py:158
 msgid "content type"
 msgstr ""
 
-#: models.py:160
+#: models.py:161
 msgid "object id"
 msgstr ""
 
-#: models.py:161
+#: models.py:162
 msgid "object repr"
 msgstr ""
 
-#: models.py:162
+#: models.py:163
 msgid "action flag"
 msgstr ""
 
-#: models.py:163
+#: models.py:164
 msgid "change message"
 msgstr ""
 
-#: models.py:166
+#: models.py:167
 msgid "log entry"
 msgstr ""
 
-#: models.py:167
+#: models.py:168
 msgid "log entries"
 msgstr ""
 
-#: models.py:175
+#: models.py:176
 #, python-format
 msgid "Added \"%(object)s\"."
 msgstr ""
 
-#: models.py:177
+#: models.py:178
 #, python-format
 msgid "Changed \"%(object)s\" - %(changes)s"
 msgstr ""
 
-#: models.py:182
+#: models.py:183
 #, python-format
 msgid "Deleted \"%(object)s.\""
 msgstr ""
@@ -416,7 +416,7 @@ msgid_plural "%(count)s comments were successfully %(action)s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: plugins/details.py:52 views/list.py:583
+#: plugins/details.py:52 views/list.py:605
 #, python-format
 msgid "Details of %s"
 msgstr ""
@@ -427,7 +427,7 @@ msgid "Enter %s"
 msgstr ""
 
 #: plugins/editable.py:78 views/dashboard.py:652 views/delete.py:28
-#: views/detail.py:145 views/edit.py:463
+#: views/detail.py:162 views/edit.py:463
 #, python-format
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr ""
@@ -469,15 +469,15 @@ msgstr ""
 msgid "Thumbnails"
 msgstr ""
 
-#: plugins/passwords.py:24
+#: plugins/passwords.py:25
 msgid "this email is not registered!"
 msgstr ""
 
-#: plugins/passwords.py:28
+#: plugins/passwords.py:29
 msgid "this account has been revoked!"
 msgstr ""
 
-#: plugins/passwords.py:96
+#: plugins/passwords.py:97
 msgid "Forgotten your password or username?"
 msgstr ""
 
@@ -1353,11 +1353,11 @@ msgstr ""
 msgid "The %(name)s \"%(obj)s\" was deleted successfully."
 msgstr ""
 
-#: views/detail.py:173 views/edit.py:216 views/form.py:74
+#: views/detail.py:190 views/edit.py:216 views/form.py:74
 msgid "Other Fields"
 msgstr ""
 
-#: views/detail.py:235
+#: views/detail.py:252
 #, python-format
 msgid "%s Detail"
 msgstr ""
@@ -1408,24 +1408,24 @@ msgstr ""
 msgid "The %s was changed successfully."
 msgstr ""
 
-#: views/list.py:192
+#: views/list.py:196
 msgid "Database error"
 msgstr ""
 
-#: views/list.py:371
+#: views/list.py:376
 #, python-format
 msgid "%s List"
 msgstr ""
 
-#: views/list.py:500
+#: views/list.py:505
 msgid "Sort ASC"
 msgstr ""
 
-#: views/list.py:501
+#: views/list.py:506
 msgid "Sort DESC"
 msgstr ""
 
-#: views/list.py:505
+#: views/list.py:510
 msgid "Cancel Sort"
 msgstr ""
 
@@ -1433,6 +1433,6 @@ msgstr ""
 msgid "Main Dashboard"
 msgstr ""
 
-#: widgets.py:53 widgets.py:81
+#: widgets.py:53 widgets.py:84
 msgid "Now"
 msgstr ""
