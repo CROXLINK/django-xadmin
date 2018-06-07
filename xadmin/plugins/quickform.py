@@ -98,7 +98,8 @@ class RelatedFieldWidgetWrapper(forms.Widget):
 class QuickAddBtnPlugin(BaseAdminPlugin):
 
     def formfield_for_dbfield(self, formfield, db_field, **kwargs):
-        if formfield and self.model in self.admin_site._registry and isinstance(db_field, (models.ForeignKey, models.ManyToManyField)):
+        if formfield and self.model in self.admin_site._registry and isinstance(db_field, (models.ForeignKey, models.ManyToManyField)) and not getattr(self.admin_view, 'wizard_form_list', None):
+            # disable quick add button in wizard form which will caused problems by Eddie -- TBD
             rel_model = get_model_from_relation(db_field)
             if rel_model in self.admin_site._registry and self.has_model_perm(rel_model, 'add'):
                 add_url = self.get_model_url(rel_model, 'add')

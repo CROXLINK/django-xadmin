@@ -55,6 +55,12 @@ class AdminTimeWidget(forms.TimeInput):
 
 class AdminSelectWidget(forms.Select):
 
+    def render(self, name, value, attrs=None, renderer=None):
+
+        attrs['class'] = attrs.get('class', '') + 'select form-control'
+
+        return super(AdminSelectWidget, self).render(name, value, attrs=attrs, renderer=renderer)
+
     @property
     def media(self):
         return vendor('select.js', 'select.css', 'xadmin.widget.select.js')
