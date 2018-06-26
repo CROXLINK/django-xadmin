@@ -420,7 +420,8 @@ class InlineFormsetPlugin(BaseAdminPlugin):
 
     def instance_forms(self, ret):
         # force update inlines from admin_view before use
-        self.inlines = self.admin_view.inlines
+        if self.inlines:
+            self.inlines = self.admin_view.inlines
 
         self.formsets = []
         for inline in self.inline_instances:
