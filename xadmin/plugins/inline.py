@@ -419,6 +419,9 @@ class InlineFormsetPlugin(BaseAdminPlugin):
         return self._inline_instances
 
     def instance_forms(self, ret):
+        # force update inlines from admin_view before use
+        self.inlines = self.admin_view.inlines
+
         self.formsets = []
         for inline in self.inline_instances:
             if inline.has_change_permission():
@@ -449,6 +452,7 @@ class InlineFormsetPlugin(BaseAdminPlugin):
     def get_form_layout(self, layout):
         allow_blank = isinstance(self.admin_view, DetailAdminView)
         # fixed #176 bug, change dict to list
+
         fs = [(f.model, InlineFormset(f, allow_blank)) for f in self.formsets]
         replace_inline_objects(layout, fs)
 
