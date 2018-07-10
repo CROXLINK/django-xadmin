@@ -177,6 +177,10 @@ class AdminRadioSelect(RadioChoiceInput):
 
 
 class AdminCheckboxSelect(forms.CheckboxSelectMultiple):
+    def __init__(self, attrs=None, can_add_related=True):
+        self.can_add_related = can_add_related
+
+        super(AdminCheckboxSelect, self).__init__(attrs=attrs)
 
     def render(self, name, value, attrs=None, choices=()):
         if value is None:
