@@ -266,6 +266,7 @@ class ListAdminView(ModelAdminView):
         try:
             field = self.opts.get_field(field_name)
             return field.name
+
         except models.FieldDoesNotExist:
             # See whether field_name is a name of a non-field
             # that allows sorting.
@@ -274,8 +275,10 @@ class ListAdminView(ModelAdminView):
             elif hasattr(self, field_name):
                 attr = getattr(self, field_name)
             else:
-                attr = getattr(self.model, field_name)
-            return getattr(attr, 'admin_order_field', None)
+                attr = getattr(self.model, field_name, None)
+            
+            if attr:
+                return getattr(attr, 'admin_order_field', None)
 
     @filter_hook
     def get_ordering(self):
@@ -292,12 +295,12 @@ class ListAdminView(ModelAdminView):
         if ORDER_VAR in self.params and self.params[ORDER_VAR]:
             # Clear ordering and used params
             ordering = [
-                    pfx + self.get_ordering_field(field_name)
+                    pfx + (self.get_ordering_field(field_name) or field_name)
                     for n, pfx, field_name in map(
                             lambda p: p.rpartition('-'),
                             self.params[ORDER_VAR].split('.')
                             )
-                        if self.get_ordering_field(field_name)
+                        if self.get_ordering_field(field_name) or '__' in field_name  # allow order by related model
                     ]
 
         # Ensure that the primary key is systematically present in the list of
@@ -584,6 +587,9 @@ class ListAdminView(ModelAdminView):
                     or isinstance(f, models.TimeField)\
                         or isinstance(f, models.ForeignKey):
                     item.classes.append('nowrap')
+
+            if item.text and field_name in getattr(self, 'align_right_fields', []):
+                item.text = mark_safe("<div class='pull-right'>%s</div>" % item.text)
 
             item.field = f
             item.attr = attr
