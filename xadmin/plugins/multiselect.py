@@ -42,6 +42,12 @@ class SelectMultipleTransfer(forms.SelectMultiple):
         else:
             final_attrs = self.build_attrs(attrs, name=name)
 
+        # pop required from final_attrs to prevent manual select in chosen panel
+        try:
+            final_attrs.pop('required')
+        except:
+            pass
+
         selected_choices = set(force_text(v) for v in value)
         available_output = []
         chosen_output = []

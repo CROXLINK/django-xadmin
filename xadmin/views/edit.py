@@ -181,7 +181,7 @@ class ModelFormAdminView(ModelAdminView):
         if defaults['fields'] is None and not modelform_defines_fields(defaults['form']):
             defaults['fields'] = forms.ALL_FIELDS
 
-        return modelform_factory(self.model, **defaults)
+#         return modelform_factory(self.model, **defaults)
 
         try:
             return modelform_factory(self.model, **defaults)

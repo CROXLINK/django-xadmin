@@ -17,14 +17,13 @@ class MyPasswordResetForm(PasswordResetForm):
     def clean(self):
         email = self.cleaned_data.get('email')
         
-        matching_users = get_user_model()._default_manager.filter(Q(username__iexact=email)|Q(email__iexact=email))
-        
         if email:
+            matching_users = get_user_model()._default_manager.filter(Q(username__iexact=email)|Q(email__iexact=email))
             if not matching_users.exists():
                 # check if this email is registered?
                 self.errors["email"] = self.error_class([_('this email is not registered!')])
             
-            if not matching_users.filter(is_active=True).exists():
+            elif not matching_users.filter(is_active=True).exists():
                 # check if this user is active?
                 self.errors["email"] = self.error_class([_('this account has been revoked!')])                
 

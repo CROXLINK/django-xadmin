@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-29 14:33+0800\n"
+"POT-Creation-Date: 2018-07-30 11:31+0800\n"
 "PO-Revision-Date: 2013-11-20 10:21+0000\n"
 "Last-Translator: sshwsfc <sshwsfc@gmail.com>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/projects/p/"
@@ -54,7 +54,7 @@ msgstr ""
 msgid "Has no date"
 msgstr ""
 
-#: filters.py:296 widgets.py:35 widgets.py:84
+#: filters.py:296 widgets.py:35 widgets.py:90
 msgid "Today"
 msgstr ""
 
@@ -416,7 +416,7 @@ msgid_plural "%(count)s comments were successfully %(action)s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: plugins/details.py:52 views/list.py:605
+#: plugins/details.py:52 views/list.py:611
 #, python-format
 msgid "Details of %s"
 msgstr ""
@@ -469,15 +469,15 @@ msgstr ""
 msgid "Thumbnails"
 msgstr ""
 
-#: plugins/passwords.py:25
+#: plugins/passwords.py:24
 msgid "this email is not registered!"
 msgstr ""
 
-#: plugins/passwords.py:29
+#: plugins/passwords.py:28
 msgid "this account has been revoked!"
 msgstr ""
 
-#: plugins/passwords.py:97
+#: plugins/passwords.py:96
 msgid "Forgotten your password or username?"
 msgstr ""
 
@@ -1412,20 +1412,20 @@ msgstr ""
 msgid "Database error"
 msgstr ""
 
-#: views/list.py:376
+#: views/list.py:379
 #, python-format
 msgid "%s List"
 msgstr ""
 
-#: views/list.py:505
+#: views/list.py:508
 msgid "Sort ASC"
 msgstr ""
 
-#: views/list.py:506
+#: views/list.py:509
 msgid "Sort DESC"
 msgstr ""
 
-#: views/list.py:510
+#: views/list.py:513
 msgid "Cancel Sort"
 msgstr ""
 
@@ -1433,6 +1433,6 @@ msgstr ""
 msgid "Main Dashboard"
 msgstr ""
 
-#: widgets.py:53 widgets.py:84
+#: widgets.py:53 widgets.py:90
 msgid "Now"
 msgstr ""

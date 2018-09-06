@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-29 14:33+0800\n"
+"POT-Creation-Date: 2018-07-30 11:31+0800\n"
 "PO-Revision-Date: 2013-11-20 10:21+0000\n"
 "Last-Translator: gladson <gladson@immensa.com.br>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -58,7 +58,7 @@ msgstr "Tem data"
 msgid "Has no date"
 msgstr "Não tem data"
 
-#: filters.py:296 widgets.py:35 widgets.py:84
+#: filters.py:296 widgets.py:35 widgets.py:90
 msgid "Today"
 msgstr "Hoje"
 
@@ -441,7 +441,7 @@ msgid_plural "%(count)s comments were successfully %(action)s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: plugins/details.py:52 views/list.py:605
+#: plugins/details.py:52 views/list.py:611
 #, python-format
 msgid "Details of %s"
 msgstr "Detalhes de %s"
@@ -494,15 +494,15 @@ msgstr "Tabela"
 msgid "Thumbnails"
 msgstr "Miniaturas"
 
-#: plugins/passwords.py:25
+#: plugins/passwords.py:24
 msgid "this email is not registered!"
 msgstr ""
 
-#: plugins/passwords.py:29
+#: plugins/passwords.py:28
 msgid "this account has been revoked!"
 msgstr ""
 
-#: plugins/passwords.py:97
+#: plugins/passwords.py:96
 msgid "Forgotten your password or username?"
 msgstr "Esqueceu seu nome de usuário ou senha?"
 
@@ -1489,20 +1489,20 @@ msgstr "%(name)s \"%(obj)s\" alterado(a) com sucesso."
 msgid "Database error"
 msgstr "Erro da base de dados"
 
-#: views/list.py:376
+#: views/list.py:379
 #, python-format
 msgid "%s List"
 msgstr "Lista %s"
 
-#: views/list.py:505
+#: views/list.py:508
 msgid "Sort ASC"
 msgstr "Classificação Ascendente"
 
-#: views/list.py:506
+#: views/list.py:509
 msgid "Sort DESC"
 msgstr "Classificação Descendente"
 
-#: views/list.py:510
+#: views/list.py:513
 msgid "Cancel Sort"
 msgstr "Cancelar Classificação"
 
@@ -1510,6 +1510,6 @@ msgstr "Cancelar Classificação"
 msgid "Main Dashboard"
 msgstr "Painel Principal"
 
-#: widgets.py:53 widgets.py:84
+#: widgets.py:53 widgets.py:90
 msgid "Now"
 msgstr "Agora"
