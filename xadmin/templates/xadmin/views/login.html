@@ -36,7 +36,7 @@
     {% block login_form %}
       <div class="panel-heading">
         {% block login_heading %}
-        <h2 class="form-signin-heading">{% if title %}{{title}}{% else %}{% trans "Please Login" %}{% endif %}</h2>
+        <h2 class="form-signin-heading">{% if title %}{% trans title %}{% else %}{% trans "Please Login" %}{% endif %}</h2>
         {% endblock %}
       </div>
       <div class="panel-body">

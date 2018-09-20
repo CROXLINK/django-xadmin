@@ -211,6 +211,8 @@ a { cursor: pointer;}
 /* nav sitemenu */
 ul.nav-sitemenu {
   padding: 10px;
+  max-height: 1000px;
+  overflow-y: auto;
 }
 ul.nav-sitemenu li a {
   padding: 6px 10px;

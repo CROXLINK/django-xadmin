@@ -60,6 +60,8 @@ class LoginView(BaseAdminView):
             'title': self.title,
             'helper': helper,
             'app_path': request.get_full_path(),
+            'site_title': self.site_title,
+            'site_footer': self.site_footer,
             REDIRECT_FIELD_NAME: next_url,
         })
         defaults = {
