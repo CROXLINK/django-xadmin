@@ -13,6 +13,7 @@ from django.template import loader
 from django.utils import six
 from django.utils.encoding import smart_str
 from django.utils.translation import ugettext as _
+from django.utils.html import escape
 
 from xadmin.filters import manager as filter_manager, FILTER_PREFIX, SEARCH_VAR, DateFieldListFilter, \
     RelatedFieldSearchFilter
@@ -141,7 +142,7 @@ class FilterPlugin(BaseAdminPlugin):
                         new_qs = spec.do_filte(queryset)
                     except ValidationError as e:
                         new_qs = None
-                        self.admin_view.message_user(_("<b>Filtering error:</b> %s") % e.messages[0], 'error')
+                        self.admin_view.message_user(_("<b>Filtering error:</b> %s") % escape(e.messages[0]), 'error')
                     if new_qs is not None:
                         queryset = new_qs
 

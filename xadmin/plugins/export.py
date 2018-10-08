@@ -65,9 +65,11 @@ class ExportPlugin(BaseAdminPlugin):
     def _format_value(self, o):
         if (o.field is None and getattr(o.attr, 'boolean', False)) or \
            (o.field and isinstance(o.field, (BooleanField, NullBooleanField))):
-                value = o.value
+            value = o.value
         elif str(o.text).startswith("<span class='text-muted'>"):
             value = escape(str(o.text)[25:-7])
+        elif str(o.text).startswith("<div class='pull-right'>"):
+            value = escape(str(o.text)[24:-6])
         else:
             value = escape(str(o.text))
         return value

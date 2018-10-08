@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-30 11:31+0800\n"
+"POT-Creation-Date: 2018-10-08 23:25+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,11 +29,11 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: filters.py:172 plugins/export.py:167
+#: filters.py:172 plugins/export.py:169
 msgid "Yes"
 msgstr ""
 
-#: filters.py:173 plugins/export.py:167
+#: filters.py:173 plugins/export.py:169
 msgid "No"
 msgstr ""
 
@@ -431,11 +431,11 @@ msgstr ""
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr ""
 
-#: plugins/export.py:100 plugins/export.py:137
+#: plugins/export.py:102 plugins/export.py:139
 msgid "Sheet"
 msgstr ""
 
-#: plugins/filters.py:144 plugins/quickfilter.py:146
+#: plugins/filters.py:145 plugins/quickfilter.py:146
 #, python-format
 msgid "<b>Filtering error:</b> %s"
 msgstr ""
@@ -622,7 +622,7 @@ msgstr ""
 #: templates/xadmin/views/recover_form.html:8
 #: templates/xadmin/views/recover_list.html:8
 #: templates/xadmin/views/revision_diff.html:8
-#: templates/xadmin/views/revision_form.html:8 views/base.py:478
+#: templates/xadmin/views/revision_form.html:8 views/base.py:479
 msgid "Home"
 msgstr ""
 
@@ -1096,7 +1096,7 @@ msgstr ""
 msgid "Log in again"
 msgstr ""
 
-#: templates/xadmin/views/login.html:39 views/website.py:39
+#: templates/xadmin/views/login.html:39 views/website.py:115
 msgid "Please Login"
 msgstr ""
 
@@ -1294,11 +1294,11 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
-#: views/base.py:252
+#: views/base.py:253
 msgid "Django Xadmin"
 msgstr ""
 
-#: views/base.py:253
+#: views/base.py:254
 msgid "my-company.inc"
 msgstr ""
 
@@ -1428,8 +1428,12 @@ msgstr ""
 msgid "Cancel Sort"
 msgstr ""
 
-#: views/website.py:17
+#: views/website.py:93
 msgid "Main Dashboard"
+msgstr ""
+
+#: views/website.py:156
+msgid "Please check the above verify box!"
 msgstr ""
 
 #: widgets.py:53 widgets.py:90

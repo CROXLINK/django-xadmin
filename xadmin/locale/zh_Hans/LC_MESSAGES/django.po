@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-30 11:31+0800\n"
+"POT-Creation-Date: 2018-10-08 23:25+0800\n"
 "PO-Revision-Date: 2013-11-20 10:21+0000\n"
 "Last-Translator: sshwsfc <sshwsfc@gmail.com>\n"
 "Language: zh_Hans\n"
@@ -29,11 +29,11 @@ msgstr "管理"
 msgid "All"
 msgstr "不限"
 
-#: filters.py:172 plugins/export.py:167
+#: filters.py:172 plugins/export.py:169
 msgid "Yes"
 msgstr "是"
 
-#: filters.py:173 plugins/export.py:167
+#: filters.py:173 plugins/export.py:169
 msgid "No"
 msgstr "否"
 
@@ -428,11 +428,11 @@ msgstr "输入%s"
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr "具有主键 %(key)r 的对象 %(name)s 不存在。"
 
-#: plugins/export.py:100 plugins/export.py:137
+#: plugins/export.py:102 plugins/export.py:139
 msgid "Sheet"
 msgstr "表"
 
-#: plugins/filters.py:144 plugins/quickfilter.py:146
+#: plugins/filters.py:145 plugins/quickfilter.py:146
 #, python-format
 msgid "<b>Filtering error:</b> %s"
 msgstr "<b>过滤器错误:</b> %s"
@@ -619,7 +619,7 @@ msgstr "很报歉，请求页面无法找到。"
 #: templates/xadmin/views/recover_form.html:8
 #: templates/xadmin/views/recover_list.html:8
 #: templates/xadmin/views/revision_diff.html:8
-#: templates/xadmin/views/revision_form.html:8 views/base.py:478
+#: templates/xadmin/views/revision_form.html:8 views/base.py:479
 msgid "Home"
 msgstr "首页"
 
@@ -1099,7 +1099,7 @@ msgstr "关闭窗口"
 msgid "Log in again"
 msgstr "重新登录"
 
-#: templates/xadmin/views/login.html:39 views/website.py:39
+#: templates/xadmin/views/login.html:39 views/website.py:115
 msgid "Please Login"
 msgstr "请登录"
 
@@ -1307,11 +1307,11 @@ msgstr "小组件设置项"
 msgid "Save changes"
 msgstr "保存变更"
 
-#: views/base.py:252
+#: views/base.py:253
 msgid "Django Xadmin"
 msgstr "Django Xadmin"
 
-#: views/base.py:253
+#: views/base.py:254
 msgid "my-company.inc"
 msgstr "我的公司"
 
@@ -1441,9 +1441,13 @@ msgstr "倒序"
 msgid "Cancel Sort"
 msgstr "取消排序"
 
-#: views/website.py:17
+#: views/website.py:93
 msgid "Main Dashboard"
 msgstr "主页面"
+
+#: views/website.py:156
+msgid "Please check the above verify box!"
+msgstr "请勾选上面这个验证框"
 
 #: widgets.py:53 widgets.py:90
 msgid "Now"

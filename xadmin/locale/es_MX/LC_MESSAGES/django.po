@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-30 11:31+0800\n"
+"POT-Creation-Date: 2018-10-08 23:25+0800\n"
 "PO-Revision-Date: 2013-05-12 18:45+0000\n"
 "Last-Translator: sacrac <crocha09.09@gmail.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/projects/p/xadmin/"
@@ -37,11 +37,11 @@ msgstr ""
 msgid "All"
 msgstr "Todo"
 
-#: filters.py:172 plugins/export.py:167
+#: filters.py:172 plugins/export.py:169
 msgid "Yes"
 msgstr "Sí"
 
-#: filters.py:173 plugins/export.py:167
+#: filters.py:173 plugins/export.py:169
 msgid "No"
 msgstr "No"
 
@@ -463,11 +463,11 @@ msgstr "Entre %s"
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr "%(name)s el objeto con la llave primaria %(key)r no existe."
 
-#: plugins/export.py:100 plugins/export.py:137
+#: plugins/export.py:102 plugins/export.py:139
 msgid "Sheet"
 msgstr "Hoja"
 
-#: plugins/filters.py:144 plugins/quickfilter.py:146
+#: plugins/filters.py:145 plugins/quickfilter.py:146
 #, python-format
 msgid "<b>Filtering error:</b> %s"
 msgstr ""
@@ -662,7 +662,7 @@ msgstr "Lo sentimos pero la pagina que usted solicita no se encuentra."
 #: templates/xadmin/views/recover_form.html:8
 #: templates/xadmin/views/recover_list.html:8
 #: templates/xadmin/views/revision_diff.html:8
-#: templates/xadmin/views/revision_form.html:8 views/base.py:478
+#: templates/xadmin/views/revision_form.html:8 views/base.py:479
 msgid "Home"
 msgstr "Inicio"
 
@@ -1166,7 +1166,7 @@ msgstr "Cerrar ventana"
 msgid "Log in again"
 msgstr "Entrar nuevamente"
 
-#: templates/xadmin/views/login.html:39 views/website.py:39
+#: templates/xadmin/views/login.html:39 views/website.py:115
 msgid "Please Login"
 msgstr "Por favor, inicia sesión"
 
@@ -1390,11 +1390,11 @@ msgstr "Opciones del Widget"
 msgid "Save changes"
 msgstr "Guardar cambios"
 
-#: views/base.py:252
+#: views/base.py:253
 msgid "Django Xadmin"
 msgstr "Django Xadmin"
 
-#: views/base.py:253
+#: views/base.py:254
 msgid "my-company.inc"
 msgstr ""
 
@@ -1526,9 +1526,16 @@ msgstr "Ordenar descendente mente"
 msgid "Cancel Sort"
 msgstr "Cancelar ordenación"
 
-#: views/website.py:17
+#: views/website.py:93
 msgid "Main Dashboard"
 msgstr "Dashboard principal."
+
+#: views/website.py:156
+#, fuzzy
+#| msgid "Please correct the error below."
+#| msgid_plural "Please correct the errors below."
+msgid "Please check the above verify box!"
+msgstr "Por favor corrija el error abajo."
 
 #: widgets.py:53 widgets.py:90
 msgid "Now"

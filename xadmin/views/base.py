@@ -20,6 +20,7 @@ from django.utils import six
 from django.utils.decorators import method_decorator, classonlymethod
 from django.utils.encoding import force_text, smart_text, smart_str
 from django.utils.functional import Promise
+from django.utils.html import escape
 from django.utils.http import urlencode
 from django.utils.itercompat import is_iterable
 from django.utils.safestring import mark_safe
@@ -188,7 +189,7 @@ class BaseAdminObject(object):
             else:
                 p[k] = v
         return mark_safe(''.join(
-            '<input type="hidden" name="%s" value="%s"/>' % (k, v) for k, v in p.items() if v))
+            '<input type="hidden" name="%s" value="%s"/>' % (k, escape(v)) for k, v in p.items() if v))
 
     def render_response(self, content, response_type='json'):
         if response_type == 'json':

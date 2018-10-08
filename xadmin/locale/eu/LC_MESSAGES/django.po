@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xadmin-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-30 11:31+0800\n"
+"POT-Creation-Date: 2018-10-08 23:25+0800\n"
 "PO-Revision-Date: 2013-11-20 10:21+0000\n"
 "Last-Translator: sshwsfc <sshwsfc@gmail.com>\n"
 "Language-Team: Basque (http://www.transifex.com/projects/p/xadmin/language/"
@@ -31,11 +31,11 @@ msgstr ""
 msgid "All"
 msgstr "Guztia"
 
-#: filters.py:172 plugins/export.py:167
+#: filters.py:172 plugins/export.py:169
 msgid "Yes"
 msgstr "Bai"
 
-#: filters.py:173 plugins/export.py:167
+#: filters.py:173 plugins/export.py:169
 msgid "No"
 msgstr "Ez"
 
@@ -452,11 +452,11 @@ msgstr "Sartu %s"
 msgid "%(name)s object with primary key %(key)r does not exist."
 msgstr "Ez da %(key)r eremua nagusitzat duen %(name)srik."
 
-#: plugins/export.py:100 plugins/export.py:137
+#: plugins/export.py:102 plugins/export.py:139
 msgid "Sheet"
 msgstr "Xafla"
 
-#: plugins/filters.py:144 plugins/quickfilter.py:146
+#: plugins/filters.py:145 plugins/quickfilter.py:146
 #, python-format
 msgid "<b>Filtering error:</b> %s"
 msgstr ""
@@ -648,7 +648,7 @@ msgstr "Sentitzen dugu baina eskatutako orria ezin izan da aurkitu."
 #: templates/xadmin/views/recover_form.html:8
 #: templates/xadmin/views/recover_list.html:8
 #: templates/xadmin/views/revision_diff.html:8
-#: templates/xadmin/views/revision_form.html:8 views/base.py:478
+#: templates/xadmin/views/revision_form.html:8 views/base.py:479
 msgid "Home"
 msgstr "Hasiera"
 
@@ -1147,7 +1147,7 @@ msgstr "Lehioa Itxi"
 msgid "Log in again"
 msgstr "Saioa hasi berriro"
 
-#: templates/xadmin/views/login.html:39 views/website.py:39
+#: templates/xadmin/views/login.html:39 views/website.py:115
 msgid "Please Login"
 msgstr "Hasi Saioa mesedez"
 
@@ -1365,11 +1365,11 @@ msgstr "Widget Aukerak"
 msgid "Save changes"
 msgstr "Aldaketak gorde"
 
-#: views/base.py:252
+#: views/base.py:253
 msgid "Django Xadmin"
 msgstr "Django Xadmin"
 
-#: views/base.py:253
+#: views/base.py:254
 msgid "my-company.inc"
 msgstr ""
 
@@ -1500,9 +1500,16 @@ msgstr "BEH Ordenatu"
 msgid "Cancel Sort"
 msgstr "Ezeztatu Ordenaketa"
 
-#: views/website.py:17
+#: views/website.py:93
 msgid "Main Dashboard"
 msgstr "Arbela Nagusia"
+
+#: views/website.py:156
+#, fuzzy
+#| msgid "Please correct the error below."
+#| msgid_plural "Please correct the errors below."
+msgid "Please check the above verify box!"
+msgstr "Beheko errorea zuzendu mesedez."
 
 #: widgets.py:53 widgets.py:90
 msgid "Now"
