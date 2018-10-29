@@ -126,11 +126,11 @@ class EditPatchView(ModelFormAdminView, ListAdminView):
         helper.include_media = False
         form.helper = helper
 
-        s = '{% load i18n crispy_forms_tags %}<form method="post" action="{{action_url}}">{% crispy form %}' + \
+        s = '{% load i18n crispy_forms_tags %}<form method="post" action="{{action_url}}">{% csrf_token %}{% crispy form %}' + \
             '<button type="submit" class="btn btn-success btn-block btn-sm">{% trans "Apply" %}</button></form>'
         t = template.Template(s)
 #         c = template.Context({'form': form, 'action_url': self.model_admin_url('patch', self.org_obj.pk)})
-        c = template.Context({'form': form, 'action_url': self.request.get_full_path()})
+        c = template.RequestContext(request, {'form': form, 'action_url': self.request.get_full_path()})
 
         return HttpResponse(t.render(c))
 

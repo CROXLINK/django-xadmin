@@ -99,6 +99,13 @@ class AdminSplitDateTime(forms.SplitDateTimeWidget):
 class AdminRadioInput(forms.CheckboxInput):
     input_type = 'radio'
 
+    def format_value(self, value):
+        """Only return the 'value' attribute if value isn't None or boolean."""
+        if value is True or value is False or value is None:
+            return
+
+        return force_text(value)
+
     # move to AdminRadioSelect.render to be compatible with django 1.11
 #     def render(self, name=None, value=None, attrs=None, choices=()):
 #         name = name or self.name
