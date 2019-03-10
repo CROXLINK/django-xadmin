@@ -160,7 +160,7 @@ class Log(models.Model):
     )
     object_id = models.CharField(_('object id'), max_length=191, blank=True, null=True, db_index=True)
     object_repr = models.CharField(_('object repr'), max_length=200)
-    action_flag = models.CharField(_('action flag'), max_length=32)
+    action_flag = models.CharField(_('action flag'), max_length=32, db_index=True)
     message = models.TextField(_('change message'), blank=True)
 
     class Meta:

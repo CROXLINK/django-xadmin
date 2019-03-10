@@ -5,15 +5,15 @@ from setuptools import setup
 # version = ".".join([str(v) for v in version_tuple])
 
 setup(
-    name='xadmin',
-    version='0.6.1',
+    name='xadmin_croxlink',
+    version='0.6.2',
     description='Drop-in replacement of Django admin comes with lots of goodies, fully extensible with plugin support, pretty UI based on Twitter Bootstrap.',
     long_description=open('README.rst', encoding='utf-8').read(),
-    author='sshwsfc',
-    author_email='sshwsfc@gmail.com',
+    author='Croxlink',
+    author_email='developer@croxlink.com',
     license=open('LICENSE', encoding='utf-8').read(),
-    url='http://www.xadmin.io',
-    download_url='http://github.com/sshwsfc/django-xadmin/archive/master.zip',
+    url='http://www.croxlink.com',
+    download_url='https://github.com/CROXLINK/django-xadmin/archive/master.zip',
     packages=['xadmin', 'xadmin.migrations', 'xadmin.plugins', 'xadmin.templatetags', 'xadmin.views'],
     include_package_data=True,
     install_requires=[

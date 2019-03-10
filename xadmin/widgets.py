@@ -183,7 +183,10 @@ class AdminRadioSelect(RadioChoiceInput):
         return mark_safe(u'\n'.join(output))
 
 
-class AdminCheckboxSelect(forms.CheckboxSelectMultiple):
+class AdminCheckboxSelect(RadioChoiceInput):
+    allow_multiple_selected = True
+    input_type = 'checkbox'
+
     def __init__(self, attrs=None, can_add_related=True):
         self.can_add_related = can_add_related
 
