@@ -61,7 +61,7 @@ class ShowField(Field):
 class ResultField(object):
 
     def __init__(self, obj, field_name, admin_view=None):
-        self.text = '&nbsp;'
+        self.text = ''
         self.wraps = []
         self.allow_tags = False
         self.obj = obj

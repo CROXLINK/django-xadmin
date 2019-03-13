@@ -35,10 +35,12 @@ class AdminImageField(forms.ImageField):
         return {'label': self.label}
 
 
-class AdminImageWidget(forms.FileInput):
+class AdminImageWidget(forms.ClearableFileInput):
     """
     A ImageField Widget that shows its current value if it has one.
     """
+    template_name = 'xadmin/forms/clearable_file_input.html'
+
     def __init__(self, attrs={}):
         super(AdminImageWidget, self).__init__(attrs)
 
@@ -46,8 +48,8 @@ class AdminImageWidget(forms.FileInput):
         output = []
         if value and hasattr(value, "url"):
             label = self.attrs.get('label', name)
-            output.append('<a href="%s" target="_blank" title="%s" data-gallery="gallery"><img src="%s" class="field_img"/></a><br/>%s ' %
-                         (value.url, label, value.url, _('Change:')))
+            output.append('<a href="%s" target="_blank" title="%s" data-gallery="gallery"><img src="%s" class="field_img"/></a><br/>' %
+                         (value.url, label, value.url))
         output.append(super(AdminImageWidget, self).render(name, value, attrs))
         return mark_safe(u''.join(output))
 

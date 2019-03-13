@@ -87,7 +87,7 @@ class ExportPlugin(BaseAdminPlugin):
 
         new_rows = [[self._format_value(o) for o in
             filter(lambda c:getattr(c, 'export', False), r.cells)] for r in rows]
-        new_rows.insert(0, [force_text(c.text) for c in context['result_headers'].cells if c.export])
+        new_rows.insert(0, [force_text(c.text).replace('&nbsp;', '').strip() for c in context['result_headers'].cells if c.export])
         return new_rows
 
     def get_xlsx_export(self, context):
