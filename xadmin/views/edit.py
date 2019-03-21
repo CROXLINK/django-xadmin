@@ -181,10 +181,9 @@ class ModelFormAdminView(ModelAdminView):
         if defaults['fields'] is None and not modelform_defines_fields(defaults['form']):
             defaults['fields'] = forms.ALL_FIELDS
 
-#         return modelform_factory(self.model, **defaults)
-
         try:
             return modelform_factory(self.model, **defaults)
+
         except FieldError as e:
             raise FieldError('%s. Check fields/fieldsets/exclude attributes of class %s.'
                              % (e, self.__class__.__name__))

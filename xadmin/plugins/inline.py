@@ -30,7 +30,7 @@ class ShowField(Field):
         html = ''
         detail = form.detail
         for field in self.fields:
-            if not isinstance(form.fields[field].widget, forms.HiddenInput):
+            if field in form.fields and not isinstance(form.fields[field].widget, forms.HiddenInput):
                 result = detail.get_field_result(field)
                 html += loader.render_to_string(
                     self.template, context={'field': form[field], 'result': result})

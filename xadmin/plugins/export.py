@@ -8,6 +8,7 @@ from django.template import loader
 from django.utils import six
 from django.utils.encoding import force_text, smart_text
 from django.utils.html import escape
+from django.utils.http import quote
 from django.utils.translation import ugettext as _
 from django.utils.xmlutils import SimplerXMLGenerator
 from django.db.models import BooleanField, NullBooleanField
@@ -226,8 +227,11 @@ class ExportPlugin(BaseAdminPlugin):
             content_type="%s; charset=UTF-8" % self.export_mimes[file_type])
 
         file_name = self.opts.verbose_name.replace(' ', '_')
-        response['Content-Disposition'] = ('attachment; filename=%s.%s' % (
-            file_name, file_type)).encode('utf-8')
+        if isinstance(file_name, unicode):
+            # QP encode for unicode
+            file_name = quote(file_name.encode('utf-8'))
+
+        response['Content-Disposition'] = 'attachment; filename="%s.%s"' % (file_name, file_type)
 
         response.write(getattr(self, 'get_%s_export' % file_type)(context))
         return response
