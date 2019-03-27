@@ -435,7 +435,7 @@ class CreateAdminView(ModelFormAdminView):
 
         if "_addanother" in request.POST:
             self.message_user(msg + ' ' + (_("You may add another %s below.") % force_text(self.opts.verbose_name)), 'success')
-            return request.path
+            return request.get_full_path()
         else:
             self.message_user(msg, 'success')
 
@@ -444,6 +444,8 @@ class CreateAdminView(ModelFormAdminView):
             # redirect to the admin index.
             if "_redirect" in request.POST:
                 return request.POST["_redirect"]
+            elif "_redirect" in request.GET:
+                return request.GET["_redirect"]
             elif self.has_view_permission():
                 return self.model_admin_url('changelist')
             else:
@@ -526,7 +528,7 @@ class UpdateAdminView(ModelFormAdminView):
         if "_continue" in request.POST:
             self.message_user(
                 msg + ' ' + _("You may edit it again below."), 'success')
-            return request.path
+            return request.get_full_path()
         elif "_addanother" in request.POST:
             self.message_user(msg + ' ' + (_("You may add another %s below.")
                               % force_text(verbose_name)), 'success')
@@ -538,6 +540,8 @@ class UpdateAdminView(ModelFormAdminView):
             # redirect to the admin index.
             if "_redirect" in request.POST:
                 return request.POST["_redirect"]
+            elif "_redirect" in request.GET:
+                return request.GET["_redirect"]
             elif self.has_view_permission():
                 change_list_url = self.model_admin_url('changelist')
                 if 'LIST_QUERY' in self.request.session \
