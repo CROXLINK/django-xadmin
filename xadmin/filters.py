@@ -114,6 +114,9 @@ class FieldFilter(BaseFilter):
         self.title = getattr(field, 'verbose_name', field_path)
         self.context_params = {}
 
+        # prevent changes on parameters
+        params = params.copy()
+
         super(FieldFilter, self).__init__(request, params, model, admin_view)
 
         for name, format in self.lookup_formats.items():

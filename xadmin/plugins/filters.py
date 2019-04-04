@@ -167,8 +167,8 @@ class FilterPlugin(BaseAdminPlugin):
             if isinstance(queryset, models.query.QuerySet) and lookup_params:
                 new_lookup_parames = dict()
                 for k, v in lookup_params.iteritems():
-                    if not v:
-                        continue
+#                     if not v:
+#                         continue
 
                     if k.endswith('__in'):
                         v = v.split(',')

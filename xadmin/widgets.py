@@ -153,7 +153,6 @@ class AdminRadioSelect(RadioChoiceInput):
 
         attrs['class'] = attrs.get('class', '').replace('form-control', '')
 
-        has_id = attrs and 'id' in attrs
         if DJANGO_11:
             final_attrs = self.build_attrs(attrs, extra_attrs={'name': name})
         else:
@@ -162,23 +161,15 @@ class AdminRadioSelect(RadioChoiceInput):
         # Normalize to strings
         str_values = set([force_text(v) for v in value])
         for i, (option_value, option_label) in enumerate(chain(self.choices, choices)):
-            # If an ID attribute was given, add a numeric index as a suffix,
-            # so that the checkboxes don't all have the same ID attribute.
-            if has_id:
-                label_for = ' for="%s_%s"' % (attrs['id'], i)
-                # label_for = u' for="%s"' % final_attrs['id']
-            else:
-                label_for = ''
-
             radio_input = AdminRadioInput(final_attrs, check_test=lambda value: value in str_values)
             option_value = force_text(option_value)
             rendered_radio_input = radio_input.render(name, option_value)
             option_label = conditional_escape(force_text(option_label))
 
             if final_attrs.get('inline', False):
-                output.append(u'<label%s class="radio-inline">%s %s</label>' % (label_for, rendered_radio_input, option_label))
+                output.append(u'<label class="radio-inline">%s %s</label>' % (rendered_radio_input, option_label))
             else:
-                output.append(u'<div class="radio"><label%s>%s %s</label></div>' % (label_for, rendered_radio_input, option_label))
+                output.append(u'<div class="radio"><label>%s %s</label></div>' % (rendered_radio_input, option_label))
 
         return mark_safe(u'\n'.join(output))
 

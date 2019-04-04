@@ -13,7 +13,8 @@ from django.utils.encoding import smart_text
 from django.utils.translation import ugettext as _
 from django.views.decorators.debug import sensitive_post_parameters
 from django.forms import ModelMultipleChoiceField
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, update_session_auth_hash
+
 from xadmin.layout import Fieldset, Main, Side, Row, FormHelper
 from xadmin.sites import site
 from xadmin.util import unquote
@@ -241,6 +242,7 @@ class ChangePasswordView(ModelAdminView):
         if self.form.is_valid():
             self.form.save()
             self.message_user(_('Password changed successfully.'), 'success')
+            update_session_auth_hash(request, self.form.user)
             return HttpResponseRedirect(self.model_admin_url('change', self.obj.pk))
         else:
             return self.get_response()
@@ -273,6 +275,7 @@ class ChangeAccountPasswordView(ChangePasswordView):
         if self.form.is_valid():
             self.form.save()
             self.message_user(_('Password changed successfully.'), 'success')
+            update_session_auth_hash(request, self.form.user)
             return HttpResponseRedirect(self.get_admin_url('index'))
         else:
             return self.get_response()
