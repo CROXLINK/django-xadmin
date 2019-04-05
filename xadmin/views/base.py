@@ -161,7 +161,7 @@ class BaseAdminObject(object):
         arr_keys = list(p.keys())
         for r in remove:
             for k in arr_keys:
-                if k.startswith(r):
+                if k.startswith(r) and k in p:
                     del p[k]
         for k, v in new_params.items():
             if v is None:
@@ -180,7 +180,7 @@ class BaseAdminObject(object):
         arr_keys = list(p.keys())
         for r in remove:
             for k in arr_keys:
-                if k.startswith(r):
+                if k.startswith(r) and k in p:
                     del p[k]
         for k, v in new_params.items():
             if v is None:
