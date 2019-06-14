@@ -239,7 +239,14 @@ class ExportPlugin(BaseAdminPlugin):
     # View Methods
     def get_result_list(self, __):
         if self.request.GET.get('all', 'off') == 'on':
-            self.admin_view.list_per_page = sys.maxsize
+            if self.request.GET.get('export_type') == 'xls':
+                # worksheet rows limit
+                self.admin_view.list_per_page = 2 ** 16
+            elif self.request.GET.get('export_type') == 'xlsx':
+                # worksheet rows limit
+                self.admin_view.list_per_page = 2 ** 20
+            else:
+                self.admin_view.list_per_page = sys.maxsize
         return __()
 
     def result_header(self, item, field_name, row):

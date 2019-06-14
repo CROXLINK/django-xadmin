@@ -1,7 +1,7 @@
 # coding: utf-8
 """
-Make items sortable by drag-drop in list view. Diffierent from
-builtin plugin sortable, it touches model field indeed intead
+Make items sortable by drag-drop in list view. Different from
+builtin plugin sortable, it touches model field indeed instead
 of only for display.
 """
 

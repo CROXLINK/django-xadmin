@@ -54,7 +54,7 @@ select.selectmultiple {
 .controls > .checkbox:first-child,
 .control-wrap > .radio:first-child,
 .control-wrap > .checkbox:first-child {
-  margin-top: -7px;
+  margin-right: 7px;
 }
 .controls > span {
   padding: 5px 0;

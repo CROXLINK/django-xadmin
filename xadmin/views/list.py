@@ -149,8 +149,30 @@ class ListAdminView(ModelAdminView):
         """
         Return a sequence containing the fields to be displayed on the list.
         """
-        self.base_list_display = (COL_LIST_VAR in self.request.GET and self.request.GET[COL_LIST_VAR] != "" and \
-            self.request.GET[COL_LIST_VAR].split('.')) or self.list_display
+        columns_in_url = []
+        if COL_LIST_VAR in self.request.GET:
+            if self.request.GET[COL_LIST_VAR]:
+                # new column settings
+                columns_in_url = self.request.GET[COL_LIST_VAR].split('.')
+            else:
+                # clear previous column settings
+                columns_in_url = None
+
+        if not self.request.is_ajax():
+            # store column settings in session if request is not ajax
+            if columns_in_url:
+                self.request.session['LIST_DISPLAY_%s' % self.__class__.__name__] = columns_in_url
+            elif columns_in_url is None:
+                try:
+                    del self.request.session['LIST_DISPLAY_%s' % self.__class__.__name__]
+
+                except:
+                    pass
+
+        self.base_list_display = self.request.session.get('LIST_DISPLAY_%s' % self.__class__.__name__) or\
+                                 columns_in_url or\
+                                 self.list_display
+
         return list(self.base_list_display)
 
     @filter_hook
@@ -385,7 +407,7 @@ class ListAdminView(ModelAdminView):
             'title': self.title,
             'cl': self,
             'model_fields': model_fields,
-            'clean_select_field_url': self.get_query_string(remove=[COL_LIST_VAR]),
+            'clean_select_field_url': self.get_query_string(new_params={COL_LIST_VAR: ''}),
             'has_add_permission': self.has_add_permission(),
             'app_label': self.app_label,
             'brand_name': self.opts.verbose_name_plural,
