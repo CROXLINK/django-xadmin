@@ -120,11 +120,6 @@ Changelogs
 
 .. _Detail: ./changelog.md
 
-Online Group
-------------
-
--  QQ群 : 282936295
-
 Run Demo Locally
 ----------------
 

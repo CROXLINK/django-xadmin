@@ -1,3 +1,4 @@
+# coding=utf-8
 #!/usr/bin/env python
 from io import open
 from setuptools import setup
@@ -8,7 +9,8 @@ setup(
     name='xadmin_croxlink',
     version='0.6.9.7',
     description='Drop-in replacement of Django admin comes with lots of goodies, fully extensible with plugin support, pretty UI based on Twitter Bootstrap.',
-    long_description=open('README.rst', encoding='utf-8').read(),
+#     long_description=open('README.rst', encoding='utf-8').read(),
+#     long_description_content_type="text/x-rst",
     author='Croxlink',
     author_email='developer@croxlink.com',
     license=open('LICENSE', encoding='utf-8').read(),
