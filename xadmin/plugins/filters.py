@@ -81,6 +81,7 @@ class FilterPlugin(BaseAdminPlugin):
     def get_list_queryset(self, queryset):
         lookup_params = dict([(smart_str(k)[len(FILTER_PREFIX):], v) for k, v in self.admin_view.params.items()
                               if smart_str(k).startswith(FILTER_PREFIX) and v != ''])
+
         for p_key, p_val in iteritems(lookup_params):
             if p_val == "False":
                 lookup_params[p_key] = False
@@ -140,13 +141,15 @@ class FilterPlugin(BaseAdminPlugin):
                 if spec and spec.has_output():
                     try:
                         new_qs = spec.do_filte(queryset)
+
                     except ValidationError as e:
                         new_qs = None
                         self.admin_view.message_user(_("<b>Filtering error:</b> %s") % escape(e.messages[0]), 'error')
+
                     if new_qs is not None:
                         queryset = new_qs
 
-                    self.filter_specs.append(spec)
+                        self.filter_specs.append(spec)
 
         self.has_filters = bool(self.filter_specs)
         self.admin_view.filter_specs = self.filter_specs
@@ -165,7 +168,7 @@ class FilterPlugin(BaseAdminPlugin):
         try:
             # fix a bug by david: In demo, quick filter by IDC Name() cannot be used.
             if isinstance(queryset, models.query.QuerySet) and lookup_params:
-                new_lookup_parames = dict()
+                new_lookup_params = dict()
                 for k, v in lookup_params.iteritems():
 #                     if not v:
 #                         continue
@@ -173,13 +176,23 @@ class FilterPlugin(BaseAdminPlugin):
                     if k.endswith('__in'):
                         v = v.split(',')
 
-                    new_lookup_parames.update({k: v})
+                    new_lookup_params.update({k: v})
 
-                queryset = queryset.filter(**new_lookup_parames)
+                queryset = queryset.filter(**new_lookup_params)
+
         except (SuspiciousOperation, ImproperlyConfigured):
             raise
+
+        except ValueError as e:
+            self.admin_view.message_user(_("<b>Filtering error:</b> %s") % escape(unicode(e)), 'error')
+
+        except ValidationError:
+            # already show message in previous ValidationError catcher, skip here
+            pass
+
         except Exception as e:
             raise IncorrectLookupParameters(e)
+
         else:
             if not isinstance(queryset, models.query.QuerySet):
                 pass
