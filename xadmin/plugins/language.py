@@ -14,6 +14,7 @@ class SetLangNavPlugin(BaseAdminPlugin):
         context['redirect_to'] = self.request.get_full_path()
         nodes.append(loader.render_to_string('xadmin/blocks/comm.top.setlang.html', context=context))
 
+
 class SetLangView(BaseAdminView):
 
     def post(self, request, *args, **kwargs):
@@ -21,7 +22,7 @@ class SetLangView(BaseAdminView):
             del request.session['nav_menu']
         return set_language(request)
 
-if settings.LANGUAGES and ((settings.MIDDLEWARE_CLASSES and 'django.middleware.locale.LocaleMiddleware' in settings.MIDDLEWARE_CLASSES) or
-                           (settings.MIDDLEWARE and 'django.middleware.locale.LocaleMiddleware' in settings.MIDDLEWARE)):
+
+if settings.LANGUAGES and (settings.MIDDLEWARE and 'django.middleware.locale.LocaleMiddleware' in settings.MIDDLEWARE):
     site.register_plugin(SetLangNavPlugin, CommAdminView)
     site.register_view(r'^i18n/setlang/$', SetLangView, 'set_language')

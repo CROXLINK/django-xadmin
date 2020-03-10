@@ -14,7 +14,7 @@ vendors = {
             'common_cdn': 'https://maxcdn.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'
         },
         'responsive': {
-            'css':{
+            'css': {
                 'dev': 'xadmin/vendor/bootstrap/bootstrap-responsive.css',
                 'production': 'xadmin/vendor/bootstrap/bootstrap-responsive.css'
             }
@@ -121,6 +121,11 @@ vendors = {
         },
         "js": {
             'dev': 'xadmin/vendor/snapjs/snap.js',
+        }
+    },
+    "css-loader": {
+        "css": {
+            'dev': 'xadmin/vendor/css-loader/css-loader.css',
         }
     },
 }

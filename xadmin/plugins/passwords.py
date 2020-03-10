@@ -2,7 +2,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.views import password_reset_confirm
+from django.contrib.auth.views import PasswordResetConfirmView as password_reset_confirm
 # from django.contrib.auth.models import User
 from django.db.models import Q
 from django.template.response import TemplateResponse
@@ -98,7 +98,7 @@ class ResetLinkPlugin(BaseAdminPlugin):
 site.register_plugin(ResetLinkPlugin, LoginView)
 
 
-class ResetPasswordComfirmView(BaseAdminView):
+class ResetPasswordConfirmView(BaseAdminView):
 
     need_site_permission = False
 
@@ -107,7 +107,7 @@ class ResetPasswordComfirmView(BaseAdminView):
     password_reset_token_generator = default_token_generator
 
     def do_view(self, request, uidb36, token, *args, **kwargs):
-        context = super(ResetPasswordComfirmView, self).get_context()
+        context = super(ResetPasswordConfirmView, self).get_context()
         return password_reset_confirm(request, uidb36, token,
                    template_name=self.password_reset_confirm_template,
                    token_generator=self.password_reset_token_generator,
@@ -122,11 +122,11 @@ class ResetPasswordComfirmView(BaseAdminView):
         return self.do_view(request, uidb36, token)
 
     def get_media(self):
-        return super(ResetPasswordComfirmView, self).get_media() + \
+        return super(ResetPasswordConfirmView, self).get_media() + \
             self.vendor('xadmin.page.form.js', 'xadmin.form.css')
 
 site.register_view(r'^password_reset/(?P<uidb36>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-    ResetPasswordComfirmView, name='xadmin_password_reset_confirm')
+    ResetPasswordConfirmView, name='xadmin_password_reset_confirm')
 
 
 class ResetPasswordCompleteView(BaseAdminView):

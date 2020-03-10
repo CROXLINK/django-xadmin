@@ -104,7 +104,7 @@ class QuickAddBtnPlugin(BaseAdminPlugin):
             if rel_model in self.admin_site._registry and self.has_model_perm(rel_model, 'add'):
                 add_url = self.get_model_url(rel_model, 'add')
                 formfield.widget = RelatedFieldWidgetWrapper(
-                    formfield.widget, db_field.rel, add_url, self.get_model_url(self.model, 'add'))
+                    formfield.widget, db_field.remote_field, add_url, self.get_model_url(self.model, 'add'))
         return formfield
 
 site.register_plugin(QuickFormPlugin, ModelFormAdminView)

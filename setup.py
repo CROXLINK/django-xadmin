@@ -6,8 +6,8 @@ from setuptools import setup
 # version = ".".join([str(v) for v in version_tuple])
 
 setup(
-    name='xadmin_croxlink',
-    version='0.6.9.8.1',
+    name='xadmin_croxlink2',
+    version='0.6.9.8.2',
     description='Drop-in replacement of Django admin comes with lots of goodies, fully extensible with plugin support, pretty UI based on Twitter Bootstrap.',
 #     long_description=open('README.rst', encoding='utf-8').read(),
 #     long_description_content_type="text/x-rst",
@@ -15,12 +15,12 @@ setup(
     author_email='developer@croxlink.com',
     license=open('LICENSE', encoding='utf-8').read(),
     url='http://www.croxlink.com',
-    download_url='https://github.com/CROXLINK/django-xadmin/archive/master.zip',
+    download_url='https://github.com/CROXLINK/django-xadmin/archive/django2.zip',
     packages=['xadmin', 'xadmin.migrations', 'xadmin.plugins', 'xadmin.templatetags', 'xadmin.views'],
     include_package_data=True,
     install_requires=[
         'setuptools',
-        'django>=1.9.0,<2',
+        'django>=2,<3',
         'django-crispy-forms>=1.6.0',
         'django-reversion>=2.0.0',
         'django-formtools>=1.0',

@@ -62,10 +62,10 @@ def _register_model(admin, model):
                 fk_name = getattr(inline, 'fk_name', None)
                 if not fk_name:
                     for field in inline_model._meta.fields:
-                        if isinstance(field, (models.ForeignKey, models.OneToOneField)) and issubclass(model, field.rel.to):
+                        if isinstance(field, (models.ForeignKey, models.OneToOneField)) and issubclass(model, field.remote_field.model):
                             fk_name = field.name
                 _autoregister(admin, inline_model, follow=[fk_name])
-                if not inline_model._meta.get_field(fk_name).rel.is_hidden():
+                if not inline_model._meta.get_field(fk_name).remote_field.is_hidden():
                     accessor = inline_model._meta.get_field(fk_name).remote_field.get_accessor_name()
                     inline_fields.append(accessor)
         _autoregister(admin, model, inline_fields)
@@ -269,9 +269,8 @@ class RevisionListView(BaseReversionView):
 
         for field_name, pks in obj_version.m2m_data.items():
             f = self.opts.get_field(field_name)
-            if f.rel and isinstance(f.rel, models.ManyToManyRel):
-                setattr(obj, f.name, f.rel.to._default_manager.get_query_set(
-                ).filter(pk__in=pks).all())
+            if f.remote_field and isinstance(f.remote_field, models.ManyToManyRel):
+                setattr(obj, f.name, f.remote_field.to._default_manager.get_query_set().filter(pk__in=pks).all())
 
         detail = self.get_model_view(DetailAdminUtil, self.model, obj)
 

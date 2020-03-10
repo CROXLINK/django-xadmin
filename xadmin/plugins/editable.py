@@ -99,7 +99,7 @@ class EditPatchView(ModelFormAdminView, ListAdminView):
                 else:
                     text = smart_text(value)
             else:
-                if isinstance(f.rel, models.ManyToOneRel):
+                if isinstance(f.remote_field, models.ManyToOneRel):
                     field_val = getattr(self.org_obj, f.name)
                     if field_val is None:
                         text = EMPTY_CHANGELIST_VALUE

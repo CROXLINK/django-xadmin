@@ -291,7 +291,7 @@ class AdminSite(object):
         return self.get_view_class(admin_view_class, option_class).as_view()
 
     def get_urls(self):
-        from django.conf.urls import url, include
+        from django.urls import re_path, include
         from xadmin.views.base import BaseAdminView
 
         if settings.DEBUG:
@@ -304,41 +304,41 @@ class AdminSite(object):
 
         # Admin-site-wide views.
         urlpatterns = [
-            url(r'^jsi18n/$', wrap(self.i18n_javascript, cacheable=True), name='jsi18n')
+            re_path(r'^jsi18n/$', wrap(self.i18n_javascript, cacheable=True), name='jsi18n')
         ]
 
-        # Registed admin views
+        # Registered admin views
         # inspect[isclass]: Only checks if the object is a class. With it lets you create an custom view that
         # inherits from multiple views and have more of a metaclass.
         urlpatterns += [
-            url(
-                path,
+            re_path(
+                url_path,
                 wrap(self.create_admin_view(clz_or_func))
                 if inspect.isclass(clz_or_func) and issubclass(clz_or_func, BaseAdminView)
                 else include(clz_or_func(self)),
                 name=name
             )
-            for path, clz_or_func, name in self._registry_views
+            for url_path, clz_or_func, name in self._registry_views
         ]
 
         # Add in each model's views.
         for model, admin_class in iteritems(self._registry):
             view_urls = [
-                url(
-                    path,
+                re_path(
+                    url_path,
                     wrap(self.create_model_admin_view(clz, model, admin_class)),
                     name=name % (model._meta.app_label, model._meta.model_name)
                 )
-                for path, clz, name in self._registry_modelviews
+                for url_path, clz, name in self._registry_modelviews
             ]
             urlpatterns += [
-                url(r'^%s/%s/' % (model._meta.app_label, model._meta.model_name), include(view_urls))
+                re_path(r'^%s/%s/' % (model._meta.app_label, model._meta.model_name), include(view_urls))
             ]
         return urlpatterns
 
     @property
     def urls(self):
-        return self.get_urls(), self.name, self.app_name
+        return self.get_urls(), self.name
 
     def i18n_javascript(self, request, extra_context=None):
         """

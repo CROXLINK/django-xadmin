@@ -87,7 +87,7 @@ class ModelFormAdminView(ModelAdminView):
     def formfield_for_dbfield(self, db_field, **kwargs):
         # If it uses an intermediary model that isn't auto created, don't show
         # a field in admin.
-        if isinstance(db_field, models.ManyToManyField) and not db_field.rel.through._meta.auto_created:
+        if isinstance(db_field, models.ManyToManyField) and not db_field.remote_field.through._meta.auto_created:
             return None
 
         attrs = self.get_field_attrs(db_field, **kwargs)
@@ -118,8 +118,8 @@ class ModelFormAdminView(ModelAdminView):
             if attrs:
                 return attrs
 
-        if hasattr(db_field, "rel") and db_field.rel:
-            related_modeladmin = self.admin_site._registry.get(db_field.rel.to)
+        if hasattr(db_field, "remote_field") and db_field.remote_field:
+            related_modeladmin = self.admin_site._registry.get(db_field.remote_field.to)
             if related_modeladmin and hasattr(related_modeladmin, 'relfield_style'):
                 attrs = self.get_field_style(
                     db_field, related_modeladmin.relfield_style, **kwargs)

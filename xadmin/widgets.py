@@ -24,13 +24,13 @@ class AdminDateWidget(forms.DateInput):
         return vendor('datepicker.js', 'datepicker.css', 'xadmin.widget.datetime.js')
 
     def __init__(self, attrs=None, format=None):
-        final_attrs = {'class': 'date-field', 'size': '10'}
+        final_attrs = {'class': 'date-field form-control', 'size': '10'}
         if attrs is not None:
             final_attrs.update(attrs)
         super(AdminDateWidget, self).__init__(attrs=final_attrs, format=format)
 
-    def render(self, name, value, attrs=None):
-        input_html = super(AdminDateWidget, self).render(name, value, attrs)
+    def render(self, name, value, attrs=None, **kwargs):
+        input_html = super(AdminDateWidget, self).render(name, value, attrs=attrs, **kwargs)
         return mark_safe('<div class="input-group date bootstrap-datepicker"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>%s'
                          '<span class="input-group-btn"><button class="btn btn-default" type="button">%s</button></span></div>' % (input_html, _(u'Today')))
 
@@ -42,24 +42,24 @@ class AdminTimeWidget(forms.TimeInput):
         return vendor('datepicker.js', 'clockpicker.js', 'clockpicker.css', 'xadmin.widget.datetime.js')
 
     def __init__(self, attrs=None, format=None):
-        final_attrs = {'class': 'time-field', 'size': '8'}
+        final_attrs = {'class': 'time-field form-control', 'size': '8'}
         if attrs is not None:
             final_attrs.update(attrs)
         super(AdminTimeWidget, self).__init__(attrs=final_attrs, format=format)
 
-    def render(self, name, value, attrs=None):
-        input_html = super(AdminTimeWidget, self).render(name, value, attrs)
+    def render(self, name, value, attrs=None, **kwargs):
+        input_html = super(AdminTimeWidget, self).render(name, value, attrs=attrs, **kwargs)
         return mark_safe('<div class="input-group time bootstrap-clockpicker"><span class="input-group-addon"><i class="fa fa-clock-o">'
                          '</i></span>%s<span class="input-group-btn"><button class="btn btn-default" type="button">%s</button></span></div>' % (input_html, _(u'Now')))
 
 
 class AdminSelectWidget(forms.Select):
 
-    def render(self, name, value, attrs=None, renderer=None):
+    def render(self, name, value, attrs=None, **kwargs):
 
         attrs['class'] = attrs.get('class', '') + 'select form-control'
 
-        return super(AdminSelectWidget, self).render(name, value, attrs=attrs, renderer=renderer)
+        return super(AdminSelectWidget, self).render(name, value, attrs=attrs, **kwargs)
 
     @property
     def media(self):
@@ -77,19 +77,19 @@ class AdminSplitDateTime(forms.SplitDateTimeWidget):
         # we want to define widgets.
         forms.MultiWidget.__init__(self, widgets, attrs)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, **kwargs):
         if DJANGO_11:
             # insert \n to inputs as separator
-            input_html = super(AdminSplitDateTime, self).render(name, value, attrs).replace('/><input', '/>\n<input')
-
-            input_htmls = [ht for ht in input_html.split('\n') if ht != '']
+            input_html = [ht for ht in
+                          super(AdminSplitDateTime, self).render(name, value, attrs=attrs, **kwargs).replace('><input',
+                                                                                                             '>\n<input').split('\n') if ht != '']
             # return input_html
             return mark_safe('<div class="datetime clearfix"><div class="input-group date bootstrap-datepicker"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>%s'
                              '<span class="input-group-btn"><button class="btn btn-default" type="button">%s</button></span></div>'
                              '<div class="input-group time bootstrap-clockpicker"><span class="input-group-addon"><i class="fa fa-clock-o">'
-                             '</i></span>%s<span class="input-group-btn"><button class="btn btn-default" type="button">%s</button></span></div></div>' % (input_htmls[0], _(u'Today'), input_htmls[1], _(u'Now')))
+                             '</i></span>%s<span class="input-group-btn"><button class="btn btn-default" type="button">%s</button></span></div></div>' % (input_html[0], _(u'Today'), input_html[1], _(u'Now')))
         else:
-            return super(AdminSplitDateTime, self).render(name, value, attrs)
+            return super(AdminSplitDateTime, self).render(name, value, attrs=attrs, **kwargs)
 
     def format_output(self, rendered_widgets):
         return mark_safe(u'<div class="datetime clearfix">%s%s</div>' %
@@ -139,7 +139,7 @@ class AdminRadioInput(forms.CheckboxInput):
 
 class AdminRadioSelect(RadioChoiceInput):
 #     renderer = AdminRadioFieldRenderer
-    def render(self, name, value, attrs=None, choices=()):
+    def render(self, name, value, attrs=None, choices=(), **kwargs):
         if value is None:
             value = []
         elif type(value) not in (list, tuple):
@@ -183,7 +183,7 @@ class AdminCheckboxSelect(RadioChoiceInput):
 
         super(AdminCheckboxSelect, self).__init__(attrs=attrs)
 
-    def render(self, name, value, attrs=None, choices=()):
+    def render(self, name, value, attrs=None, choices=(), **kwargs):
         if value is None:
             value = []
 
@@ -258,13 +258,13 @@ class AdminTextInputWidget(forms.TextInput):
             final_attrs.update(attrs)
         super(AdminTextInputWidget, self).__init__(attrs=final_attrs)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, **kwargs):
         if self.attrs.get('readonly') and self.attrs.get('class'):
             # use form-control-static style instead
             self.attrs['class'] = self.attrs['class'].replace('form-control', 'form-control-static')
 #             self.attrs['style'] = "padding-top: 0px; border-width: 0px;"
             self.attrs['style'] = "border-width: 0px;"
-        return super(AdminTextInputWidget, self).render(name, value, attrs=attrs)
+        return super(AdminTextInputWidget, self).render(name, value, attrs=attrs, **kwargs)
 
 
 class AdminURLFieldWidget(forms.TextInput):

@@ -285,7 +285,7 @@ class InlineModelAdmin(ModelFormAdminView):
         opts = self.opts
         if opts.auto_created:
             for field in opts.fields:
-                if field.rel and field.rel.to != self.parent_model:
+                if field.remote_field and field.remote_field.to != self.parent_model:
                     opts = field.rel.to._meta
                     break
 

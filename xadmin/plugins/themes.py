@@ -93,6 +93,10 @@ class ThemePlugin(BaseAdminPlugin):
                         h = httplib2.Http(".cache", disable_ssl_certificate_validation=True)
                         resp, content = h.request("https://bootswatch.com/api/3.json", 'GET', '',
                             headers={"Accept": "application/json", "User-Agent": self.request.META['HTTP_USER_AGENT']})
+
+                        if six.PY3:
+                            content = content.decode()
+
                     else:
                         try:
                             resp = requests.get("https://bootswatch.com/api/3.json",
@@ -104,9 +108,6 @@ class ThemePlugin(BaseAdminPlugin):
                         except:
                             # empty theme
                             content = "{'themes': []}"
-
-                    if six.PY3:
-                        content = content.decode()
 
                 try:
                     watch_themes = json.loads(content)['themes']

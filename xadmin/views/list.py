@@ -3,7 +3,7 @@ from __future__ import absolute_import
 from collections import OrderedDict
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.core.paginator import InvalidPage, Paginator
-from django.core.urlresolvers import NoReverseMatch
+from django.urls import NoReverseMatch
 from django.db import models
 from django.http import HttpResponseRedirect
 from django.template.response import SimpleTemplateResponse, TemplateResponse
@@ -253,7 +253,7 @@ class ListAdminView(ModelAdminView):
                     except models.FieldDoesNotExist:
                         pass
                     else:
-                        if isinstance(field.rel, models.ManyToOneRel):
+                        if isinstance(field.remote_field, models.ManyToOneRel):
                             if '%s__%s__isnull' % (field.name, field.related_model._meta.pk.name) not in self.request.META['QUERY_STRING']:
                                 # WORK AROUND for isnull empty result problem -- TBD
                                 related_fields.append(field_name)
@@ -594,7 +594,7 @@ class ListAdminView(ModelAdminView):
                 else:
                     item.text = smart_text(value)
             else:
-                if isinstance(f.rel, models.ManyToOneRel):
+                if isinstance(f.remote_field, models.ManyToOneRel):
                     field_val = getattr(obj, f.name)
                     if field_val is None:
                         item.text = mark_safe("<span class='text-muted'>%s</span>" % EMPTY_CHANGELIST_VALUE)

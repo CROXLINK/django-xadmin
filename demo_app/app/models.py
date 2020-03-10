@@ -46,7 +46,7 @@ class IDC(models.Model):
 
 @python_2_unicode_compatible
 class Host(models.Model):
-    idc = models.ForeignKey(IDC)
+    idc = models.ForeignKey(IDC, on_delete=models.CASCADE, )
     name = models.CharField(max_length=64)
     nagios_name = models.CharField(u"Nagios Host ID", max_length=64, blank=True, null=True)
     ip = models.GenericIPAddressField(blank=True, null=True)
@@ -72,7 +72,7 @@ class Host(models.Model):
     service_type = models.CharField(max_length=32, choices=SERVICE_TYPES)
     description = models.TextField()
 
-    administrator = models.ForeignKey(AUTH_USER_MODEL, verbose_name="Admin")
+    administrator = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Admin")
 
     def __str__(self):
         return self.name
@@ -84,7 +84,7 @@ class Host(models.Model):
 
 @python_2_unicode_compatible
 class MaintainLog(models.Model):
-    host = models.ForeignKey(Host)
+    host = models.ForeignKey(Host, on_delete=models.CASCADE)
     maintain_type = models.CharField(max_length=32)
     hard_type = models.CharField(max_length=16)
     time = models.DateTimeField()

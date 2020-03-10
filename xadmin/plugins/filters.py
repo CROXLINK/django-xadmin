@@ -8,7 +8,7 @@ from django.contrib.admin.utils import get_fields_from_path, lookup_needs_distin
 from django.core.exceptions import SuspiciousOperation, ImproperlyConfigured, ValidationError
 from django.db import models
 from django.db.models.fields import FieldDoesNotExist
-from django.db.models.sql.query import LOOKUP_SEP, QUERY_TERMS
+from django.db.models.sql.query import LOOKUP_SEP
 from django.template import loader
 from django.utils import six
 from django.utils.encoding import smart_str
@@ -22,6 +22,17 @@ from xadmin.views import BaseAdminPlugin, ListAdminView
 from xadmin.util import is_related_field
 from xadmin.views.list import COL_LIST_VAR, ORDER_VAR
 from functools import reduce
+
+
+# Valid query types (a set is used for speedy lookups). These are (currently)
+# considered SQL-specific; other storage systems may choose to use different
+# lookup types.
+QUERY_TERMS = {
+    'exact', 'iexact', 'contains', 'icontains', 'gt', 'gte', 'lt', 'lte', 'in',
+    'startswith', 'istartswith', 'endswith', 'iendswith', 'range', 'year',
+    'month', 'day', 'week_day', 'hour', 'minute', 'second', 'isnull', 'search',
+    'regex', 'iregex',
+}
 
 
 class IncorrectLookupParameters(Exception):
@@ -62,9 +73,9 @@ class FilterPlugin(BaseAdminPlugin):
                 # Lookups on non-existants fields are ok, since they're ignored
                 # later.
                 return True
-            if hasattr(field, 'rel'):
-                model = field.rel.to
-                rel_name = field.rel.get_related_field().name
+            if hasattr(field, 'remote_field'):
+                model = field.remote_field.to
+                rel_name = field.remote_field.get_related_field().name
             elif is_related_field(field):
                 model = field.model
                 rel_name = model._meta.pk.name
@@ -186,9 +197,8 @@ class FilterPlugin(BaseAdminPlugin):
         except ValueError as e:
             self.admin_view.message_user(_("<b>Filtering error:</b> %s") % escape(unicode(e)), 'error')
 
-        except ValidationError:
-            # already show message in previous ValidationError catcher, skip here
-            pass
+        except ValidationError as e:
+            self.admin_view.message_user(_("<b>Filtering error:</b> %s") % escape(e.messages[0]), 'error')
 
         except Exception as e:
             raise IncorrectLookupParameters(e)

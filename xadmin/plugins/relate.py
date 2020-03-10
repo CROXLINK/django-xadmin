@@ -1,7 +1,7 @@
 # coding=UTF-8
 from itertools import chain
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models.options import PROXY_PARENTS
 from django.utils import six
 from django.utils.encoding import force_text
@@ -10,7 +10,6 @@ from django.utils.safestring import mark_safe
 from django.db.models.sql.query import LOOKUP_SEP
 from django.utils.translation import ugettext as _
 from django.db import models
-
 
 from xadmin.sites import site
 from xadmin.views import BaseAdminPlugin, ListAdminView, CreateAdminView, UpdateAdminView, DeleteAdminView
