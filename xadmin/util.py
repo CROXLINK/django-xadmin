@@ -55,13 +55,14 @@ def xstatic(*tags):
         try:
             for p in tag.split('.'):
                 node = node[p]
+
         except Exception as e:
-            if tag.startswith('xadmin'):
-                file_type = tag.split('.')[-1]
-                if file_type in ('css', 'js'):
+            file_type = tag.split('.')[-1]
+            if file_type in ('css', 'js'):
+                if tag.startswith('xadmin'):
                     node = "xadmin/%s/%s" % (file_type, tag)
                 else:
-                    raise e
+                    node = tag
             else:
                 raise e
 
@@ -319,7 +320,14 @@ def lookup_field(name, obj, model_admin=None):
         f = None
     else:
         attr = None
-        value = getattr(obj, name)
+        value = None
+
+        try:
+            value = getattr(obj, name)
+        except:
+            # blank ManyToManyField?
+            pass
+
     return f, attr, value
 
 

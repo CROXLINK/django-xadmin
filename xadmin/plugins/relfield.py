@@ -19,7 +19,7 @@ class ForeignKeySearchWidget(forms.Widget):
         super(ForeignKeySearchWidget, self).__init__(attrs)
 
     def build_attrs(self, attrs={}, extra_attrs=None, **kwargs):
-        to_opts = self.rel.to._meta
+        to_opts = self.rel.model._meta
         if "class" not in attrs:
             attrs['class'] = 'select-search'
         else:
@@ -55,10 +55,10 @@ class ForeignKeySearchWidget(forms.Widget):
     def label_for_value(self, value):
         key = self.rel.get_related_field().name
         try:
-            obj = self.rel.to._default_manager.using(self.db).get(**{key: value})
+            obj = self.rel.model._default_manager.using(self.db).get(**{key: value})
             return '%s' % escape(Truncator(obj).words(14, truncate='...'))
 
-        except (ValueError, self.rel.to.DoesNotExist):
+        except (ValueError, self.rel.model.DoesNotExist):
             return ""
 
     @property
@@ -74,7 +74,7 @@ class ForeignKeySelectWidget(ForeignKeySearchWidget):
             attrs['class'] = 'select-preload'
         else:
             attrs['class'] = attrs['class'] + ' select-preload'
-        attrs['data-placeholder'] = _('Select %s') % self.rel.to._meta.verbose_name
+        attrs['data-placeholder'] = _('Select %s') % self.rel.model._meta.verbose_name
         return attrs
 
 
@@ -83,11 +83,12 @@ class RelateFieldPlugin(BaseAdminPlugin):
     def get_field_style(self, attrs, db_field, style, **kwargs):
         # search able fk field
         if style in ('fk-ajax', 'fk-select') and isinstance(db_field, models.ForeignKey):
-            if (db_field.remote_field.to in self.admin_view.admin_site._registry) and \
-                    self.has_model_perm(db_field.remote_field.to, 'view'):
+            if (db_field.remote_field.model in self.admin_view.admin_site._registry) and \
+                    self.has_model_perm(db_field.remote_field.model, 'view'):
                 db = kwargs.get('using')
                 return dict(attrs or {},
                             widget=(style == 'fk-ajax' and ForeignKeySearchWidget or ForeignKeySelectWidget)(db_field.remote_field, self.admin_view, using=db))
         return attrs
+
 
 site.register_plugin(RelateFieldPlugin, ModelFormAdminView)

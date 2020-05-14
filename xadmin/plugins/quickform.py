@@ -76,8 +76,9 @@ class RelatedFieldWidgetWrapper(forms.Widget):
         output = []
         if self.add_url and getattr(self.widget, 'can_add_related', True):
             output.append(u'<a href="%s" title="%s" class="btn btn-primary btn-sm btn-ajax pull-right" data-for-id="id_%s" data-refresh-url="%s"><i class="fa fa-plus"></i></a>'
-                          % (
-                              self.add_url, (_('Create New %s') % self.rel.to._meta.verbose_name), name,
+                          % (self.add_url,
+                             (_('Create New %s') % self.rel.model._meta.verbose_name),
+                             name,
                               "%s?_field=%s&%s=" % (self.rel_add_url, name, name)))
         output.extend(['<div class="control-wrap" id="id_%s_wrap_container">' % name,
                        self.widget.render(name, value, *args, **kwargs), '</div>'])
