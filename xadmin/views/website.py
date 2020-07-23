@@ -128,10 +128,10 @@ class LoginView(BaseAdminView):
         helper.form_tag = False
         helper.include_media = False
                 
-        if request.get_full_path() == self.get_admin_url('login'):
-            next_url = self.get_admin_url('index')
-        else:
-            next_url = request.get_full_path()
+        # if request.get_full_path() == self.get_admin_url('login'):
+        #     next_url = self.get_admin_url('index')
+        # else:
+        #     next_url = request.get_full_path()
 
         context.update({
             'title': self.title,
@@ -139,7 +139,7 @@ class LoginView(BaseAdminView):
             'app_path': request.get_full_path(),
             'site_title': self.site_title,
             'site_footer': self.site_footer,
-            REDIRECT_FIELD_NAME: next_url,
+            # REDIRECT_FIELD_NAME: next_url,
         })
         defaults = {
             'extra_context': context,
